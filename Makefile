@@ -11,7 +11,11 @@ export AWS_DEFAULT_REGION = $(AWS_REGION)
 BUCKET = $(shell node -e "try{console.log(require('./amplify_outputs.json').storage.bucket_name)}catch(e){console.log('')}")
 
 .PHONY: help install deploy backend backend-watch delete web web-build \
-        web-preview host upload-videos sandbox-info
+        web-preview host gen-videos gen-videos-sample upload-videos sandbox-info
+
+COMFY_BASE ?= http://192.168.21.236:8082
+VIDEO_OUT  ?= ./generated-videos
+DIR        ?= $(VIDEO_OUT)
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -43,6 +47,12 @@ web-preview: ## Preview the production build locally
 
 host: ## Build + deploy the web app to Amplify Hosting (public URL)
 	AWS_PROFILE=$(AWS_PROFILE) ./scripts/deploy-hosting.sh
+
+gen-videos-sample: ## Generate 3 sample exercise videos on ComfyUI (to judge quality)
+	node scripts/generate-videos.mjs --base $(COMFY_BASE) --out $(VIDEO_OUT) --sample
+
+gen-videos: ## Generate ALL exercise videos on ComfyUI into $(VIDEO_OUT)
+	node scripts/generate-videos.mjs --base $(COMFY_BASE) --out $(VIDEO_OUT) --all
 
 # Upload exercise demo videos. Name each file <exerciseId>.mp4 (ids are in
 # content/exercises.json). Usage: make upload-videos DIR=./my-videos

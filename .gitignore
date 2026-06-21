@@ -8,3 +8,6 @@ amplifyconfiguration*
 
 # web build output
 web/dist
+
+# generated exercise videos (large; uploaded to S3 instead)
+generated-videos

@@ -5,12 +5,25 @@ type VideoWithAirplay = HTMLVideoElement & {
   webkitShowPlaybackTargetPicker?: () => void;
 };
 
+/** YouTube search for a real human form demo — a search link never rots. */
+const formSearchUrl = (name?: string) =>
+  `https://www.youtube.com/results?search_query=${encodeURIComponent(
+    `${name ?? 'exercise'} proper form how to`
+  )}`;
+
 /**
- * Plays the looping demo video for an exercise (muted — music + beeps come from
- * elsewhere). Shows a "Cast to TV" button only when a nearby display is
- * detected, using the Remote Playback API (Chromecast) with an AirPlay fallback.
+ * Shows the exercise demo. Prefers an owned, silent, looping clip from S3; when
+ * none exists it falls back to a "Watch real form" button that opens a YouTube
+ * search for the move (always-correct human demos, zero maintenance). A "Cast to
+ * TV" button appears when a nearby display is detected (Remote Playback/AirPlay).
  */
-const ExerciseVideo = ({ exerciseId }: { exerciseId?: string }) => {
+const ExerciseVideo = ({
+  exerciseId,
+  exerciseName,
+}: {
+  exerciseId?: string;
+  exerciseName?: string;
+}) => {
   const ref = useRef<HTMLVideoElement>(null);
   const [url, setUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -72,29 +85,38 @@ const ExerciseVideo = ({ exerciseId }: { exerciseId?: string }) => {
     }
   };
 
+  const openForm = () =>
+    window.open(formSearchUrl(exerciseName), '_blank', 'noopener');
+
   return (
     <div className="timer-video">
       {loading && <div className="placeholder">Loading…</div>}
+
       {!loading && url && (
         <>
           <video ref={ref} src={url} autoPlay muted loop playsInline />
-          {canCast && (
-            <button
-              className="tctrl"
-              style={{ position: 'absolute', top: 10, right: 10 }}
-              onClick={cast}
-              aria-label="Cast video to TV"
-            >
-              📺
+          <div className="video-actions">
+            <button className="tctrl sm" onClick={openForm} aria-label="Watch real form on YouTube">
+              ▶
             </button>
-          )}
+            {canCast && (
+              <button className="tctrl sm" onClick={cast} aria-label="Cast video to TV">
+                📺
+              </button>
+            )}
+          </div>
         </>
       )}
+
       {!loading && !url && (
         <div className="placeholder">
-          🎬 No demo video yet.
-          <br />
-          Upload one to <code>videos/{exerciseId}.mp4</code>
+          <div style={{ fontSize: 40, marginBottom: 6 }}>🏋️</div>
+          <button className="btn primary" onClick={openForm}>
+            ▶ Watch real form
+          </button>
+          <div style={{ fontSize: 11, opacity: 0.7, marginTop: 8 }}>
+            Opens a YouTube demo of this move
+          </div>
         </div>
       )}
     </div>

@@ -206,7 +206,7 @@ const WorkoutScreen = () => {
                 Level up: {exercise!.progressions.join(', ')}
               </div>
             )}
-            <ExerciseVideo exerciseId={exercise?.id} />
+            <ExerciseVideo exerciseId={exercise?.id} exerciseName={exercise?.name} />
           </>
         )}
       </div>
