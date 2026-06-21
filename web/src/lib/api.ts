@@ -1,0 +1,177 @@
+import { fetchUserAttributes, getCurrentUser } from 'aws-amplify/auth';
+import { getUrl, remove, uploadData } from 'aws-amplify/storage';
+import { client } from './amplify';
+import type { Schema } from './amplify';
+
+export type UserProfile = Schema['UserProfile']['type'];
+export type WorkoutLog = Schema['WorkoutLog']['type'];
+export type CheckIn = Schema['CheckIn']['type'];
+
+const todayISO = () => new Date().toISOString().slice(0, 10);
+
+/* ----------------------------- Profile ----------------------------------- */
+
+export const getMyProfile = async (): Promise<UserProfile | null> => {
+  const { data } = await client.models.UserProfile.list({ limit: 1 });
+  return data[0] ?? null;
+};
+
+export const createProfile = async (input: {
+  plan: 'lean' | 'bulk';
+  displayName?: string;
+  sex?: 'male' | 'female' | 'other';
+  birthYear?: number;
+  heightCm?: number;
+  goal?: string;
+}): Promise<UserProfile> => {
+  const { data, errors } = await client.models.UserProfile.create({
+    ...input,
+    startDate: todayISO(),
+    currentDay: 1,
+    onboardedAt: new Date().toISOString(),
+  });
+  if (errors?.length) throw new Error(errors.map((e) => e.message).join('; '));
+  return data!;
+};
+
+export const updateProfile = async (
+  id: string,
+  patch: Partial<UserProfile>
+): Promise<UserProfile> => {
+  const { data, errors } = await client.models.UserProfile.update({
+    id,
+    ...patch,
+  });
+  if (errors?.length) throw new Error(errors.map((e) => e.message).join('; '));
+  return data!;
+};
+
+export const advanceDay = async (profile: UserProfile): Promise<UserProfile> => {
+  const next = (profile.currentDay ?? 1) + 1;
+  return updateProfile(profile.id, { currentDay: next });
+};
+
+/* --------------------------- Workout logs -------------------------------- */
+
+export const logWorkout = async (input: {
+  planId: string;
+  dayNumber: number;
+  groupKeys: string[];
+  durationSec?: number;
+}): Promise<WorkoutLog> => {
+  const { data, errors } = await client.models.WorkoutLog.create({
+    date: todayISO(),
+    completed: true,
+    ...input,
+  });
+  if (errors?.length) throw new Error(errors.map((e) => e.message).join('; '));
+  return data!;
+};
+
+export const listWorkouts = async (): Promise<WorkoutLog[]> => {
+  const { data } = await client.models.WorkoutLog.list({ limit: 500 });
+  return data;
+};
+
+/* --------------------------- Check-ins ----------------------------------- */
+
+export const uploadPhoto = async (
+  file: Blob,
+  ext = 'jpg'
+): Promise<string> => {
+  const name = `${Date.now()}.${ext}`;
+  const result = await uploadData({
+    path: ({ identityId }) => `photos/${identityId}/${name}`,
+    data: file,
+    options: { contentType: file.type || 'image/jpeg' },
+  }).result;
+  return result.path;
+};
+
+export const photoUrl = async (path: string): Promise<string> => {
+  const { url } = await getUrl({ path });
+  return url.toString();
+};
+
+export const createCheckIn = async (input: {
+  photoPath: string;
+  kind: 'onboarding' | 'monthly';
+  weightKg?: number;
+}): Promise<CheckIn> => {
+  const { data, errors } = await client.models.CheckIn.create({
+    date: todayISO(),
+    analyzed: false,
+    ...input,
+  });
+  if (errors?.length) throw new Error(errors.map((e) => e.message).join('; '));
+  return data!;
+};
+
+/** Calls the Bedrock-backed mutation, then persists the result onto the CheckIn. */
+export const analyzeCheckIn = async (checkIn: CheckIn): Promise<CheckIn> => {
+  const { data, errors } = await client.mutations.analyzeCheckIn({
+    photoPath: checkIn.photoPath,
+  });
+  if (errors?.length) throw new Error(errors.map((e) => e.message).join('; '));
+  const { data: updated } = await client.models.CheckIn.update({
+    id: checkIn.id,
+    aiBodyFatPct: data?.bodyFatPct ?? null,
+    aiSummary: data?.summary ?? null,
+    aiRaw: data?.raw ?? null,
+    analyzed: true,
+  });
+  return updated!;
+};
+
+export const listCheckIns = async (): Promise<CheckIn[]> => {
+  const { data } = await client.models.CheckIn.list({ limit: 200 });
+  return data.sort((a, b) => (a.date < b.date ? 1 : -1));
+};
+
+export const deleteCheckIn = async (checkIn: CheckIn): Promise<void> => {
+  try {
+    await remove({ path: checkIn.photoPath });
+  } catch {
+    /* photo may already be gone */
+  }
+  await client.models.CheckIn.delete({ id: checkIn.id });
+};
+
+/* --------------------------- Videos -------------------------------------- */
+
+const videoUrlCache = new Map<string, string>();
+
+/** Signed URL for an exercise demo video (videos/<exerciseId>.mp4). */
+export const exerciseVideoUrl = async (
+  exerciseId: string
+): Promise<string | null> => {
+  if (videoUrlCache.has(exerciseId)) return videoUrlCache.get(exerciseId)!;
+  try {
+    const { url } = await getUrl({
+      path: `videos/${exerciseId}.mp4`,
+      options: { validateObjectExistence: true },
+    });
+    const str = url.toString();
+    videoUrlCache.set(exerciseId, str);
+    return str;
+  } catch {
+    return null; // no video uploaded yet
+  }
+};
+
+/* --------------------------- Identity ------------------------------------ */
+
+export const getDisplayName = async (): Promise<string> => {
+  try {
+    const attrs = await fetchUserAttributes();
+    return (
+      attrs.preferred_username ||
+      attrs.given_name ||
+      attrs.email?.split('@')[0] ||
+      'Athlete'
+    );
+  } catch {
+    const u = await getCurrentUser();
+    return u.username;
+  }
+};

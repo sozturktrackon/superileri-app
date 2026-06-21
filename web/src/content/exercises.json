@@ -1,0 +1,118 @@
+{
+  "_comment": "Source: Motivated_Exercises.pdf. All workouts run 4 rounds x (30s on / 30s off). 'id' is a stable slug used for video filenames in S3 (videos/<id>.mp4). 'progressions' are harder variants mentioned in the source.",
+  "groups": [
+    {
+      "id": "chest",
+      "name": "Chest Strength",
+      "key": "Chest",
+      "exercises": [
+        { "id": "traditional-push-up", "name": "Traditional Push-Up", "progressions": ["Clapping Push-Up"] },
+        { "id": "wide-push-up", "name": "Wide Push-Up", "progressions": [] },
+        { "id": "diamond-push-up", "name": "Diamond Push-Up", "progressions": [] },
+        { "id": "incline-push-up", "name": "Incline Push-Up", "progressions": [] },
+        { "id": "decline-push-up", "name": "Decline Push-Up", "progressions": [] },
+        { "id": "fly-slides", "name": "Fly Slides", "progressions": [] }
+      ]
+    },
+    {
+      "id": "back",
+      "name": "Back Strength",
+      "key": "Back",
+      "exercises": [
+        { "id": "back-extensions", "name": "Back Extensions", "progressions": [] },
+        { "id": "supermans", "name": "Supermans", "progressions": [] },
+        { "id": "hindu-push-ups", "name": "Hindu Push-Ups", "progressions": [] },
+        { "id": "lat-slides", "name": "Lat Slides", "progressions": [] }
+      ]
+    },
+    {
+      "id": "shoulders",
+      "name": "Shoulder Strength",
+      "key": "Shoulders",
+      "exercises": [
+        { "id": "pike-push-up", "name": "Pike Push-Up", "progressions": ["Chair Pike Push-Up", "Wall Push-Up"] },
+        { "id": "pulling-lat-raise", "name": "Pulling Lat Raise", "progressions": [] },
+        { "id": "tomahawk-shoulder-raise", "name": "Tomahawk Shoulder Raise", "progressions": [] },
+        { "id": "front-raise", "name": "Front Raise", "progressions": [] },
+        { "id": "y-up-to-pull-down", "name": "Y-Up to Pull Down", "progressions": [] }
+      ]
+    },
+    {
+      "id": "legs",
+      "name": "Leg Strength",
+      "key": "Legs",
+      "exercises": [
+        { "id": "timed-squats", "name": "Timed Squats", "progressions": [] },
+        { "id": "wall-sits", "name": "Wall Sits", "progressions": ["One Leg Wall Sit"] },
+        { "id": "alternating-reverse-lunge", "name": "Alternating Reverse Lunge", "progressions": ["Jumping Split Lunges"] },
+        { "id": "isolated-lunge-pulse", "name": "Isolated Lunge Pulse", "progressions": [] },
+        { "id": "alternating-curtsy-lunge", "name": "Alternating Curtsy Lunge", "progressions": ["Leaping Curtsy Lunge"] },
+        { "id": "isolated-curtsy-lunge-pulse", "name": "Isolated Curtsy Lunge Pulse", "progressions": [] },
+        { "id": "hip-thrusts", "name": "Hip Thrusts", "progressions": ["Sliding Leg Curl w/ Hip Thrust"] }
+      ]
+    },
+    {
+      "id": "uph",
+      "name": "Upper Body HIIT",
+      "key": "UPH",
+      "exercises": [
+        { "id": "plank-jacks", "name": "Plank Jacks", "progressions": [] },
+        { "id": "crawl-outs", "name": "Crawl Outs", "progressions": ["Crawl Outs w/ Jump"] },
+        { "id": "plank-oblique-hops", "name": "Plank Oblique Hops", "progressions": [] },
+        { "id": "plank-toe-taps", "name": "Plank Toe Taps", "progressions": [] }
+      ]
+    },
+    {
+      "id": "lbh",
+      "name": "Lower Body HIIT",
+      "key": "LBH",
+      "exercises": [
+        { "id": "alternating-side-lunges", "name": "Alternating Side Lunges", "progressions": [] },
+        { "id": "lunge-jumps", "name": "Lunge Jumps", "progressions": [] },
+        { "id": "low-in-out-squats", "name": "Low In-Out Squats", "progressions": [] },
+        { "id": "jump-squats", "name": "Jump Squats", "progressions": [] }
+      ]
+    },
+    {
+      "id": "ch",
+      "name": "Cardio HIIT",
+      "key": "CH",
+      "exercises": [
+        { "id": "high-knees", "name": "High Knees", "progressions": [] },
+        { "id": "jumping-jacks", "name": "Jumping Jacks", "progressions": [] },
+        { "id": "burpees", "name": "Burpees", "progressions": [] },
+        { "id": "mountain-climbers", "name": "Mountain Climbers", "progressions": [] }
+      ]
+    },
+    {
+      "id": "game",
+      "name": "Grow Like Game Circuit",
+      "key": "GAME",
+      "exercises": [
+        { "id": "plank-push-ups", "name": "Plank Push-Ups", "progressions": [] },
+        { "id": "isolated-chest-hold-oblique-toe-taps", "name": "Isolated Chest Hold with Oblique Toe Taps", "progressions": [] },
+        { "id": "scapular-holds-wide-push-up", "name": "Scapular Holds w/ Wide Push-Up", "progressions": [] },
+        { "id": "chair-dips", "name": "Chair Dips", "progressions": [] }
+      ]
+    },
+    {
+      "id": "royce",
+      "name": "Abs Like Prince Royce Circuit",
+      "key": "Royce",
+      "exercises": [
+        { "id": "squat-to-oblique-cross", "name": "Squat to Oblique Cross", "progressions": [] },
+        { "id": "v-sit", "name": "V-Sit", "progressions": ["V-Sit with Leg Drops", "V-Sit with Scissors"] },
+        { "id": "single-side-bicycle-crunch-isolations", "name": "Single Side Bicycle Crunch Isolations", "progressions": [] },
+        { "id": "plank-slides", "name": "Plank Slides", "progressions": [] }
+      ]
+    },
+    {
+      "id": "jlo",
+      "name": "Booty Like J-Lo Circuit",
+      "key": "J-Lo",
+      "_missing": true,
+      "_note": "Referenced in both calendars but the exercise list is MISSING from the source Exercises PDF. Provide the 4 exercises to complete this circuit.",
+      "exercises": []
+    }
+  ]
+}

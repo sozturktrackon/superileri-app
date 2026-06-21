@@ -1,0 +1,8 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+
+# synced from repo root at dev/build time
+src/amplify_outputs.json

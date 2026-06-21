@@ -1,0 +1,10 @@
+node_modules
+.DS_Store
+
+# amplify
+.amplify
+amplify_outputs*
+amplifyconfiguration*
+
+# web build output
+web/dist
