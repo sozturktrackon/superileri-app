@@ -8,6 +8,8 @@ monthly photo check-ins with AI body-composition estimates.
 Built to start tiny (just you) and scale to millions without a rewrite —
 because it runs on standard serverless AWS primitives via **AWS Amplify Gen 2**.
 
+**🌐 Live:** https://main.d1jwmrz4ddo322.amplifyapp.com
+
 ---
 
 ## Architecture
@@ -88,6 +90,7 @@ MANUAL-SETUP.md     One-time manual configuration steps
 | `make backend-watch` | Deploy + watch (live backend dev) |
 | `make web` | Run the PWA locally |
 | `make web-build` | Production build → `web/dist` |
+| `make host` | Build + deploy to Amplify Hosting (public URL) |
 | `make upload-videos DIR=…` | Push exercise videos to S3 |
 | `make delete` | Tear down the cloud backend |
 | `make sandbox-info` | Print backend resource IDs |

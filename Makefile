@@ -11,7 +11,7 @@ export AWS_DEFAULT_REGION = $(AWS_REGION)
 BUCKET = $(shell node -e "try{console.log(require('./amplify_outputs.json').storage.bucket_name)}catch(e){console.log('')}")
 
 .PHONY: help install deploy backend backend-watch delete web web-build \
-        web-preview upload-videos sandbox-info
+        web-preview host upload-videos sandbox-info
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -40,6 +40,9 @@ web-build: ## Build the web app for production into web/dist
 
 web-preview: ## Preview the production build locally
 	cd web && npm run preview
+
+host: ## Build + deploy the web app to Amplify Hosting (public URL)
+	AWS_PROFILE=$(AWS_PROFILE) ./scripts/deploy-hosting.sh
 
 # Upload exercise demo videos. Name each file <exerciseId>.mp4 (ids are in
 # content/exercises.json). Usage: make upload-videos DIR=./my-videos

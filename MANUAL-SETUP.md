@@ -27,23 +27,21 @@ re-run `make backend`.
 
 ---
 
-## 2. Public hosting via CloudFront (when you're ready to share)
+## 2. Public hosting via CloudFront — ✅ DONE
 
-For tomorrow's workout you don't need this — `make web` serves the app on your
-laptop and you open it on your phone over Wi-Fi. When you want a real URL:
+The app is live behind Amplify Hosting (CloudFront) at:
 
-**Easiest (Amplify Hosting, gives you CloudFront automatically):**
+**https://main.d1jwmrz4ddo322.amplifyapp.com**
 
-1. Push this repo to GitHub.
-2. AWS console → **Amplify** → **Create app** → **Host web app** → connect the
-   GitHub repo/branch.
-3. Set the app root to `web` (build) and confirm the build settings; Amplify
-   detects Vite. It builds, deploys behind CloudFront, and gives you an HTTPS
-   URL. Add a custom domain there if you want one.
+This was deployed with a CLI **manual deploy** (no GitHub needed) — see
+`scripts/deploy-hosting.sh`. To ship a new version after any frontend change:
 
-(Alternative: `make web-build` then `aws s3 sync web/dist s3://<bucket>` to your
-own S3+CloudFront, mirroring the tradingdocs-ui flow. Amplify Hosting is less
-work and includes CI/CD.)
+```bash
+make host        # rebuilds web/ and redeploys to the same URL
+```
+
+Optional later: connect a custom domain in the Amplify console (Hosting →
+Custom domains), or wire GitHub for automatic CI/CD deploys on push.
 
 ---
 
