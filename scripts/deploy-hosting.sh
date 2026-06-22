@@ -19,7 +19,7 @@ echo "▶ Resolving Amplify app…"
 APP_ID="$(aws amplify list-apps --profile "$PROFILE" \
   --query "apps[?name=='$APP_NAME'].appId | [0]" --output text)"
 if [ "$APP_ID" = "None" ] || [ -z "$APP_ID" ]; then
-  echo "  creating app $APP_NAME…"
+  echo "  creating app ${APP_NAME} ..."
   APP_ID="$(aws amplify create-app --name "$APP_NAME" --platform WEB \
     --profile "$PROFILE" --query "app.appId" --output text)"
   aws amplify create-branch --app-id "$APP_ID" --branch-name "$BRANCH" \

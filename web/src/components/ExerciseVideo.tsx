@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { exerciseVideoUrl } from '../lib/api';
+import { exEmbedUrl, loadExVideos, type ExVid } from '../lib/exerciseVideos';
 
 type VideoWithAirplay = HTMLVideoElement & {
   webkitShowPlaybackTargetPicker?: () => void;
@@ -28,6 +29,11 @@ const ExerciseVideo = ({
   const [url, setUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [canCast, setCanCast] = useState(false);
+
+  // A curated YouTube clip for this exercise (if the user has set one).
+  const curated: ExVid | undefined = exerciseId
+    ? loadExVideos()[exerciseId]
+    : undefined;
 
   useEffect(() => {
     let active = true;
@@ -108,14 +114,26 @@ const ExerciseVideo = ({
         </>
       )}
 
-      {!loading && !url && (
+      {/* Curated YouTube clip: autoplays muted + looping, swaps per exercise. */}
+      {!loading && !url && curated && (
+        <iframe
+          key={`${exerciseId}-${curated.ytId}`}
+          title="exercise-demo"
+          src={exEmbedUrl(curated)}
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
+          style={{ width: '100%', height: '100%', border: 0 }}
+        />
+      )}
+
+      {!loading && !url && !curated && (
         <div className="placeholder">
           <div style={{ fontSize: 40, marginBottom: 6 }}>🏋️</div>
           <button className="btn primary" onClick={openForm}>
             ▶ Watch real form
           </button>
           <div style={{ fontSize: 11, opacity: 0.7, marginTop: 8 }}>
-            Opens a YouTube demo of this move
+            Opens a YouTube demo · add a clip in Progress → Demo videos
           </div>
         </div>
       )}

@@ -8,6 +8,7 @@ import {
 import { useProfile } from '../state';
 import { getPlan, normalizeDay } from '../lib/content';
 import MusicSettings from '../components/MusicSettings';
+import ExerciseVideoSettings from '../components/ExerciseVideoSettings';
 
 type Shot = CheckIn & { url?: string };
 
@@ -106,6 +107,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
       )}
 
       <h3 style={{ margin: '22px 0 10px' }}>Settings</h3>
+      <ExerciseVideoSettings />
       <MusicSettings />
 
       <div className="card">
