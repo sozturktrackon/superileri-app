@@ -25,9 +25,9 @@ export const CUES = {
   'diamond-push-up': 'diamond push-ups with both hands together forming a triangle under the chest, elbows tucked, lowering and pressing up, side view',
   'incline-push-up': 'incline push-ups with both hands resting on the edge of a couch, body straight, lowering the chest to the couch and pressing up, side view',
   'decline-push-up': 'decline push-ups with both feet elevated on a couch and hands on the floor, lowering the chest down and pressing up, side view',
-  'fly-slides': 'a kneeling chest fly with both hands on paper plates on a smooth floor, sliding the hands out wide to the sides then squeezing the chest to pull them back together, side-front view',
+  'fly-slides': 'kneeling on a smooth floor with both hands flat on two sliding plates in front, slowly sliding both hands straight outward to the sides lowering the chest toward the floor, then squeezing the chest to slide the hands back inward together, side-front view',
   // Back
-  'back-extensions': 'lying face down on the floor holding a towel taut overhead with both hands, lifting the chest while pulling the towel apart and down toward the upper back, then reaching the arms back overhead, side-front view',
+  'back-extensions': 'lying face down on the floor holding a towel horizontally in front with both hands wide, lifting the chest off the floor while pulling the towel back toward the upper chest and squeezing the shoulder blades, then extending the arms forward again, side-front view',
   'supermans': 'superman exercise lying face down, simultaneously raising both arms and legs off the floor then lowering, side view',
   'hindu-push-ups': 'hindu push-ups, flowing from downward-dog into a sweeping dive forward to upward facing cobra and back, side view',
   'lat-slides': 'kneeling with both hands on paper plates on a smooth floor, sliding both arms forward overhead to stretch the lats then pulling back to engage the back, side view',
