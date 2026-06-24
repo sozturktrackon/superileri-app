@@ -57,6 +57,7 @@ export const logWorkout = async (input: {
   planId: string;
   dayNumber: number;
   groupKeys: string[];
+  participants?: string[];
   durationSec?: number;
 }): Promise<WorkoutLog> => {
   const { data, errors } = await client.models.WorkoutLog.create({
@@ -156,6 +157,59 @@ export const exerciseVideoUrl = async (
     return str;
   } catch {
     return null; // no video uploaded yet
+  }
+};
+
+/* --------------------------- Partners ------------------------------------ */
+
+export type Partner = Schema['Partner']['type'];
+
+export const listPartners = async (): Promise<Partner[]> => {
+  const { data } = await client.models.Partner.list({ limit: 50 });
+  return data.sort((a, b) =>
+    (a.name || a.email).toLowerCase() < (b.name || b.email).toLowerCase() ? -1 : 1
+  );
+};
+
+export const addPartner = async (
+  email: string,
+  name?: string
+): Promise<Partner> => {
+  const { data, errors } = await client.models.Partner.create({
+    email: email.trim().toLowerCase(),
+    name: name?.trim() || undefined,
+  });
+  if (errors?.length) throw new Error(errors.map((e) => e.message).join('; '));
+  return data!;
+};
+
+export const removePartner = async (id: string): Promise<void> => {
+  await client.models.Partner.delete({ id });
+};
+
+/** Mark a completed circuit on a linked partner's calendar (cross-account). */
+export const logForPartner = async (input: {
+  partnerEmail: string;
+  planId: string;
+  dayNumber: number;
+  groupKeys: string[];
+  date?: string;
+  durationSec?: number;
+}): Promise<{ ok: boolean; message: string }> => {
+  const { data, errors } = await client.mutations.logForPartner({
+    ...input,
+    date: input.date ?? todayISO(),
+  });
+  if (errors?.length) throw new Error(errors.map((e) => e.message).join('; '));
+  return { ok: !!data?.ok, message: data?.message ?? '' };
+};
+
+export const getMyEmail = async (): Promise<string> => {
+  try {
+    const attrs = await fetchUserAttributes();
+    return attrs.email ?? '';
+  } catch {
+    return '';
   }
 };
 

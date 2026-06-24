@@ -5,7 +5,7 @@ import { buildPhases, fmtClock, totalSeconds } from '../lib/timer';
 import { useWorkoutTimer } from '../lib/useWorkoutTimer';
 import { unlockAudio } from '../lib/sound';
 import { releaseWakeLock, requestWakeLock } from '../lib/wakeLock';
-import { logWorkout } from '../lib/api';
+import { listPartners, logForPartner, logWorkout, type Partner } from '../lib/api';
 import ExerciseVideo from '../components/ExerciseVideo';
 import YouTubeMusic from '../components/YouTubeMusic';
 
@@ -33,6 +33,10 @@ const WorkoutScreen = () => {
   const screenRef = useRef<HTMLDivElement>(null);
   const startedRef = useRef(false);
   const activeSecRef = useRef(0); // real seconds actually spent running
+  const [partners, setPartners] = useState<Partner[]>([]);
+  const [partnerState, setPartnerState] = useState<
+    Record<string, { state: 'idle' | 'logging' | 'done' | 'error'; msg?: string }>
+  >({});
 
   // Wake lock for the duration of the screen.
   useEffect(() => {
@@ -41,6 +45,33 @@ const WorkoutScreen = () => {
       releaseWakeLock();
     };
   }, []);
+
+  // Load training partners (for the "mark for partner" option on completion).
+  useEffect(() => {
+    listPartners().then(setPartners).catch(() => {});
+  }, []);
+
+  const markForPartner = async (p: Partner) => {
+    setPartnerState((s) => ({ ...s, [p.id]: { state: 'logging' } }));
+    try {
+      const res = await logForPartner({
+        partnerEmail: p.email,
+        planId: planId ?? 'lean',
+        dayNumber: Number(day) || 1,
+        groupKeys: group ? [group.key] : [],
+        durationSec: activeSecRef.current,
+      });
+      setPartnerState((s) => ({
+        ...s,
+        [p.id]: { state: res.ok ? 'done' : 'error', msg: res.message },
+      }));
+    } catch (e) {
+      setPartnerState((s) => ({
+        ...s,
+        [p.id]: { state: 'error', msg: e instanceof Error ? e.message : 'Failed' },
+      }));
+    }
+  };
 
   // Accumulate genuine "running" time so skipping to the end doesn't count.
   useEffect(() => {
@@ -187,6 +218,63 @@ const WorkoutScreen = () => {
                 Done →
               </button>
             </div>
+
+            {counted && partners.length > 0 && (
+              <div
+                style={{
+                  marginTop: 26,
+                  width: 'min(90vw, 380px)',
+                  background: 'rgba(0,0,0,0.22)',
+                  borderRadius: 16,
+                  padding: 14,
+                }}
+              >
+                <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 10 }}>
+                  🤝 Also mark complete for:
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  {partners.map((p) => {
+                    const st = partnerState[p.id]?.state ?? 'idle';
+                    return (
+                      <div key={p.id}>
+                        <button
+                          className="btn ghost block"
+                          disabled={st === 'logging' || st === 'done'}
+                          onClick={() => markForPartner(p)}
+                          style={{
+                            justifyContent: 'space-between',
+                            borderColor:
+                              st === 'done'
+                                ? 'var(--rest)'
+                                : st === 'error'
+                                ? 'var(--accent-2)'
+                                : undefined,
+                          }}
+                        >
+                          <span>{p.name || p.email}</span>
+                          <span>
+                            {st === 'logging'
+                              ? '…'
+                              : st === 'done'
+                              ? '✓'
+                              : st === 'error'
+                              ? '!'
+                              : '＋'}
+                          </span>
+                        </button>
+                        {st === 'error' && (
+                          <div
+                            style={{ fontSize: 11, opacity: 0.85, marginTop: 4 }}
+                          >
+                            {partnerState[p.id]?.msg}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </>
         ) : (
           <>

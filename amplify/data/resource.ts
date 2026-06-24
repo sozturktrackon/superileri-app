@@ -1,5 +1,6 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 import { checkInAnalyzer } from '../functions/check-in-analyzer/resource';
+import { partnerLogger } from '../functions/partner-logger/resource';
 
 /**
  * Data model for Superileri Fitness.
@@ -32,6 +33,7 @@ const schema = a.schema({
       planId: a.string().required(), // 'lean' | 'bulk'
       dayNumber: a.integer().required(), // 1..30
       groupKeys: a.string().array(), // e.g. ["Chest","CH"]
+      participants: a.string().array(), // names of people who did this circuit
       completed: a.boolean().default(false),
       durationSec: a.integer(),
       notes: a.string(),
@@ -68,6 +70,37 @@ const schema = a.schema({
     .returns(a.ref('CheckInAnalysis'))
     .authorization((allow) => [allow.authenticated()])
     .handler(a.handler.function(checkInAnalyzer)),
+
+  // A training partner you've linked by email. Logging on a partner's behalf is
+  // only allowed when BOTH have added each other (mutual consent), enforced in
+  // the partner-logger Lambda.
+  Partner: a
+    .model({
+      email: a.string().required(),
+      name: a.string(),
+    })
+    .authorization((allow) => [allow.owner()]),
+
+  PartnerLogResult: a.customType({
+    ok: a.boolean(),
+    message: a.string(),
+  }),
+
+  // Mark a completed circuit on a linked partner's calendar too. The Lambda
+  // verifies the mutual link, then writes a WorkoutLog owned by the partner.
+  logForPartner: a
+    .mutation()
+    .arguments({
+      partnerEmail: a.string().required(),
+      planId: a.string().required(),
+      dayNumber: a.integer().required(),
+      groupKeys: a.string().array().required(),
+      date: a.string().required(),
+      durationSec: a.integer(),
+    })
+    .returns(a.ref('PartnerLogResult'))
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(partnerLogger)),
 });
 
 export type Schema = ClientSchema<typeof schema>;
