@@ -51,7 +51,7 @@ const DEFAULT_VIDEOS: Record<string, string> = {
   'lat-slides': 'https://youtu.be/qgawPyQpt6Y',
   // Shoulders
   'pike-push-up': 'https://youtu.be/XckEEwa1BPI',
-  'pulling-lat-raise': 'https://youtu.be/7UJ_ZN05Vfs',
+  'pulling-lat-raise': 'https://youtu.be/9znwemlha0U',
   'tomahawk-shoulder-raise': 'https://youtu.be/yuXnSshSxh4',
   'front-raise': 'https://youtu.be/ncwdQUl5Apw',
   'y-up-to-pull-down': 'https://youtu.be/RepHlMy9m60',
