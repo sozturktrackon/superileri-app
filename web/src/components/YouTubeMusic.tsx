@@ -16,9 +16,11 @@ import {
 const YouTubeMusic = ({
   active,
   groupKey,
+  day,
 }: {
   active: boolean;
   groupKey?: string;
+  day?: number;
 }) => {
   const [cfg, setCfg] = useState<MusicConfig>(loadMusic);
   const [open, setOpen] = useState(false);
@@ -31,8 +33,8 @@ const YouTubeMusic = ({
   }, [active]);
 
   const current = useMemo(
-    () => playlistForCategory(cfg, groupKey),
-    [cfg, groupKey]
+    () => playlistForCategory(cfg, groupKey, day),
+    [cfg, groupKey, day]
   );
 
   return (

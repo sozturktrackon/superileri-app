@@ -528,6 +528,27 @@ button {
   border-radius: 12px;
   background: var(--bg-elev-2);
 }
+.photo-del {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 15px;
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(4px);
+}
+.photo-del:active {
+  transform: scale(0.92);
+}
+.photo-del:disabled {
+  opacity: 0.6;
+}
 
 .banner {
   background: rgba(255, 122, 47, 0.1);

@@ -39,7 +39,8 @@ const ExerciseVideo = ({
     let active = true;
     setLoading(true);
     setUrl(null);
-    if (!exerciseId) {
+    // A curated YouTube link OVERRIDES the AI clip — skip the S3 lookup entirely.
+    if (!exerciseId || curated) {
       setLoading(false);
       return;
     }
@@ -52,7 +53,8 @@ const ExerciseVideo = ({
     return () => {
       active = false;
     };
-  }, [exerciseId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [exerciseId, curated?.ytId]);
 
   // Detect whether a cast/AirPlay target exists.
   useEffect(() => {
@@ -98,7 +100,20 @@ const ExerciseVideo = ({
     <div className="timer-video">
       {loading && <div className="placeholder">Loading…</div>}
 
-      {!loading && url && (
+      {/* Curated YouTube clip wins: autoplays MUTED (music plays separately) +
+          looping, and overrides any AI clip. */}
+      {!loading && curated && (
+        <iframe
+          key={`${exerciseId}-${curated.ytId}`}
+          title="exercise-demo"
+          src={exEmbedUrl(curated)}
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
+          style={{ width: '100%', height: '100%', border: 0 }}
+        />
+      )}
+
+      {!loading && !curated && url && (
         <>
           <video ref={ref} src={url} autoPlay muted loop playsInline />
           <div className="video-actions">
@@ -114,19 +129,7 @@ const ExerciseVideo = ({
         </>
       )}
 
-      {/* Curated YouTube clip: autoplays muted + looping, swaps per exercise. */}
-      {!loading && !url && curated && (
-        <iframe
-          key={`${exerciseId}-${curated.ytId}`}
-          title="exercise-demo"
-          src={exEmbedUrl(curated)}
-          allow="autoplay; encrypted-media; picture-in-picture"
-          allowFullScreen
-          style={{ width: '100%', height: '100%', border: 0 }}
-        />
-      )}
-
-      {!loading && !url && !curated && (
+      {!loading && !curated && !url && (
         <div className="placeholder">
           <div style={{ fontSize: 40, marginBottom: 6 }}>🏋️</div>
           <button className="btn primary" onClick={openForm}>

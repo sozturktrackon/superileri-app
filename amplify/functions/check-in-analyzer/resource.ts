@@ -15,7 +15,7 @@ export const checkInAnalyzer = defineFunction({
   timeoutSeconds: 60,
   memoryMB: 512,
   environment: {
-    // Overridden in backend.ts with the region-correct inference profile.
-    BEDROCK_MODEL_ID: 'us.anthropic.claude-3-5-sonnet-20241022-v2:0',
+    // Claude Opus 4.8 via the global inference profile (matches trackon-aws-backend).
+    BEDROCK_MODEL_ID: 'global.anthropic.claude-opus-4-8',
   },
 });

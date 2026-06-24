@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
+  deleteCheckIn,
   listCheckIns,
   listWorkouts,
   photoUrl,
@@ -17,6 +18,20 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
   const [shots, setShots] = useState<Shot[]>([]);
   const [workoutCount, setWorkoutCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  const removeShot = async (shot: Shot) => {
+    if (!window.confirm(`Delete the check-in from ${shot.date}? This can't be undone.`)) return;
+    setDeletingId(shot.id);
+    try {
+      await deleteCheckIn(shot);
+      setShots((prev) => prev.filter((s) => s.id !== shot.id));
+    } catch (e) {
+      window.alert('Could not delete: ' + (e instanceof Error ? e.message : 'unknown error'));
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -101,6 +116,14 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
                   ? ` · ${s.aiBodyFatPct.toFixed(0)}%`
                   : ''}
               </span>
+              <button
+                className="photo-del"
+                onClick={() => removeShot(s)}
+                disabled={deletingId === s.id}
+                aria-label={`Delete check-in from ${s.date}`}
+              >
+                {deletingId === s.id ? '…' : '🗑'}
+              </button>
             </div>
           ))}
         </div>

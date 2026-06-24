@@ -7,7 +7,7 @@ import type { Schema } from '../../data/resource';
 
 const REGION = process.env.AWS_REGION ?? 'us-east-1';
 const MODEL_ID =
-  process.env.BEDROCK_MODEL_ID ?? 'us.anthropic.claude-3-5-sonnet-20241022-v2:0';
+  process.env.BEDROCK_MODEL_ID ?? 'global.anthropic.claude-opus-4-8';
 const PHOTOS_BUCKET = process.env.PHOTOS_BUCKET!;
 
 const bedrock = new BedrockRuntimeClient({ region: REGION });

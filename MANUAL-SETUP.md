@@ -14,13 +14,13 @@ off by default and can only be enabled from the console.
 2. Region selector → **US East (N. Virginia) / us-east-1**.
 3. Go to **Bedrock → Model access** (left nav).
 4. Click **Enable specific models** (or "Manage model access").
-5. Tick **Anthropic – Claude 3.5 Sonnet** (and Claude 3.5 Haiku if you want a
-   cheaper option). Submit. Access is usually granted within a minute.
+5. Tick **Anthropic – Claude Opus 4.8** (the app uses the
+   `global.anthropic.claude-opus-4-8` inference profile). Submit. Access is
+   usually granted within a minute.
 
-That's it — the app already has IAM permission to invoke it. If you enable a
-different model, set its inference-profile id in
-`amplify/functions/check-in-analyzer/resource.ts` (`BEDROCK_MODEL_ID`) and
-re-run `make backend`.
+That's it — the app already has IAM permission to invoke it. To use a different
+model, set its id in `amplify/functions/check-in-analyzer/resource.ts`
+(`BEDROCK_MODEL_ID`) and re-run `make backend`.
 
 > Until this is done, onboarding/check-in still work — the photo uploads and the
 > record is saved; only the AI summary will be empty.

@@ -12,8 +12,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import { promptFor, NEGATIVE } from './exercise-prompts.mjs';
 
+const execFileAsync = promisify(execFile);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
@@ -32,6 +35,21 @@ const HEIGHT = +arg('height', 480);
 const LENGTH = +arg('length', 49);
 const FPS = +arg('fps', 16);
 const SEED0 = +arg('seed', 42);
+const SKIP_EXISTING = has('skip-existing'); // skip ids already saved locally
+const UPLOAD = has('upload'); // aws s3 cp each finished clip to the app bucket
+
+// Resolve the app's media bucket for --upload.
+let BUCKET = '';
+if (UPLOAD) {
+  try {
+    BUCKET = JSON.parse(
+      fs.readFileSync(path.join(ROOT, 'amplify_outputs.json'), 'utf8')
+    ).storage.bucket_name;
+  } catch {
+    console.error('--upload needs amplify_outputs.json with storage.bucket_name');
+    process.exit(1);
+  }
+}
 
 const exercises = JSON.parse(
   fs.readFileSync(path.join(ROOT, 'content', 'exercises.json'), 'utf8')
@@ -47,8 +65,16 @@ else if (arg('only')) {
   console.error('Specify --all, --sample, or --only id1,id2');
   process.exit(1);
 }
+fs.mkdirSync(path.join(ROOT, 'generated-videos'), { recursive: true });
+if (SKIP_EXISTING) {
+  targets = targets.filter((e) => !fs.existsSync(path.join(OUT, `${e.id}.mp4`)));
+}
+if (arg('skip')) {
+  const skip = new Set(arg('skip').split(','));
+  targets = targets.filter((e) => !skip.has(e.id));
+}
 if (targets.length === 0) {
-  console.error('No matching exercises.');
+  console.error('No matching exercises (all skipped or none matched).');
   process.exit(1);
 }
 
@@ -104,7 +130,14 @@ const freeMemory = async (unloadModels = false) => {
   }
 };
 
-const waitForOutput = async (promptId, timeoutMs = 720000) => {
+const uploadToS3 = async (localPath, id) => {
+  await execFileAsync('aws', [
+    's3', 'cp', localPath, `s3://${BUCKET}/videos/${id}.mp4`,
+    '--profile', 'sandbox', '--region', 'us-east-1',
+  ]);
+};
+
+const waitForOutput = async (promptId, timeoutMs = 900000) => {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
     const res = await fetch(`${BASE}/history/${promptId}`);
@@ -161,14 +194,24 @@ for (let i = 0; i < targets.length; i++) {
     const ext = path.extname(vid.filename) || '.mp4';
     const dest = path.join(OUT, `${ex.id}${ext}`);
     const bytes = await download(vid, dest);
-    console.log(` ✓ ${(bytes / 1e6).toFixed(1)}MB -> ${path.basename(dest)}`);
+    let suffix = '';
+    if (UPLOAD) {
+      try {
+        await uploadToS3(dest, ex.id);
+        suffix = ' ⬆ S3';
+      } catch (e) {
+        suffix = ` (upload failed: ${e.message})`;
+      }
+    }
+    console.log(` ✓ ${(bytes / 1e6).toFixed(1)}MB -> ${path.basename(dest)}${suffix}`);
     ok++;
   } catch (e) {
     console.log(` ✗ ${e.message}`);
-    await freeMemory(true); // a failure may mean OOM — unload models to fully reset
   }
-  await freeMemory(); // free cache between every clip to prevent accumulation
+  // Free cache (NOT models) between every clip: prevents memory creep while
+  // keeping models warm, so the next clip doesn't pay a cold reload.
+  await freeMemory(false);
 }
 
 console.log(`\nDone: ${ok}/${targets.length} generated in ${OUT}`);
-console.log(`Next: review them, then  make upload-videos DIR=${OUT}`);
+if (!UPLOAD) console.log(`Next: review them, then  make upload-videos DIR=${OUT}`);

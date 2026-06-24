@@ -17,20 +17,23 @@ const backend = defineBackend({
 });
 
 const region = backend.stack.region;
+const account = backend.stack.account;
 const photosBucket = backend.storage.resources.bucket;
 const analyzerFn = backend.checkInAnalyzer.resources.lambda as LambdaFunction;
 
 // The analyzer needs the bucket name at runtime.
 analyzerFn.addEnvironment('PHOTOS_BUCKET', photosBucket.bucketName);
 
-// Allow the analyzer to invoke Claude on Bedrock. The model id used at runtime
-// is an inference profile, so allow both the profile ARN and underlying models.
+// Allow the analyzer to invoke Claude on Bedrock. The model is the GLOBAL
+// inference profile (global.anthropic.claude-opus-4-8), which routes across
+// regions — so grant the profile ARN plus foundation models in every region.
 analyzerFn.addToRolePolicy(
   new PolicyStatement({
-    actions: ['bedrock:InvokeModel'],
+    actions: ['bedrock:InvokeModel', 'bedrock:InvokeModelWithResponseStream'],
     resources: [
-      `arn:aws:bedrock:${region}::foundation-model/anthropic.*`,
-      `arn:aws:bedrock:*:*:inference-profile/*anthropic.*`,
+      `arn:aws:bedrock:*::foundation-model/anthropic.*`,
+      `arn:aws:bedrock:${region}:${account}:inference-profile/global.*`,
+      `arn:aws:bedrock:${region}:${account}:inference-profile/*anthropic.*`,
     ],
   })
 );

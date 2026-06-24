@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Phase } from './timer';
 import {
+  beepBell,
   beepCountdown,
   beepEnd,
   beepFinish,
-  beepGo,
   buzz,
 } from './sound';
 
@@ -45,8 +45,8 @@ export const useWorkoutTimer = (phases: Phase[]) => {
     if (!p) return;
     lastBeepSecRef.current = -1;
     if (p.type === 'on') {
-      beepGo();
-      buzz(120);
+      beepBell(); // boxing-ring bell — round begins
+      buzz([90, 50, 90, 50, 120]);
     } else if (p.type === 'rest') {
       beepEnd();
       buzz([60, 40, 60]);

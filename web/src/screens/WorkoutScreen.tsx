@@ -150,7 +150,11 @@ const WorkoutScreen = () => {
         </button>
       </div>
 
-      <YouTubeMusic active={state.status === 'running'} groupKey={group.key} />
+      <YouTubeMusic
+        active={state.status === 'running'}
+        groupKey={group.key}
+        day={Number(day) || 1}
+      />
 
       <div className="timer-mid">
         {type === 'done' ? (
