@@ -88,6 +88,12 @@ const DEFAULT_VIDEOS: Record<string, string> = {
   'v-sit': 'https://youtu.be/ILyGW-V0gGw',
   'single-side-bicycle-crunch-isolations': 'https://youtu.be/OhW2ez1OsFs',
   'plank-slides': 'https://youtu.be/cv-CTjDskBc',
+  // Booty Like J-Lo (reconstructed; Sumo Squats from the program's demo channel)
+  'glute-bridge': 'https://youtu.be/wPM8icPu6H8',
+  'single-leg-glute-bridge': 'https://youtu.be/sVfp4LN9niA',
+  'donkey-kicks': 'https://youtu.be/KgghFOMKnkE',
+  'fire-hydrants': 'https://youtu.be/7LnuhLi-78I',
+  'sumo-squats': 'https://youtu.be/DAD6BkE5hKs',
 };
 
 export const loadExVideos = (): Record<string, ExVid> => {

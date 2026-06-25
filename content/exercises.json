@@ -110,9 +110,14 @@
       "id": "jlo",
       "name": "Booty Like J-Lo Circuit",
       "key": "J-Lo",
-      "_missing": true,
-      "_note": "Referenced in both calendars but the exercise list is MISSING from the source Exercises PDF. Provide the 4 exercises to complete this circuit.",
-      "exercises": []
+      "_note": "Original list was lost with the old site and is not on the demo channel; reconstructed as a standard equipment-free glute circuit (Sumo Squats sourced from the program's demo channel).",
+      "exercises": [
+        { "id": "glute-bridge", "name": "Glute Bridge", "progressions": ["Marching Glute Bridge"] },
+        { "id": "donkey-kicks", "name": "Donkey Kicks", "progressions": ["Donkey Kick Pulses"] },
+        { "id": "single-leg-glute-bridge", "name": "Single-Leg Glute Bridge", "progressions": [] },
+        { "id": "fire-hydrants", "name": "Fire Hydrants", "progressions": [] },
+        { "id": "sumo-squats", "name": "Sumo Squats", "progressions": ["Sumo Squat Pulse"] }
+      ]
     }
   ]
 }
