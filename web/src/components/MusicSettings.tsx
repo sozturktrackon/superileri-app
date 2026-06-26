@@ -49,7 +49,7 @@ const MusicSettings = () => {
           </div>
         ))}
         {cfg.playlists.length === 0 && (
-          <p className="muted">No playlists yet — add one below.</p>
+          <p className="muted">No playlists yet. Add one below.</p>
         )}
       </div>
 
@@ -85,7 +85,7 @@ const MusicSettings = () => {
             Music per workout type
           </h3>
           <p className="muted" style={{ fontSize: 12, marginTop: 0 }}>
-            Optional — pick a specific playlist for certain circuits. Defaults to
+            Optional. Pick a specific playlist for certain circuits. Defaults to
             your default playlist.
           </p>
           <div className="stack" style={{ marginTop: 10 }}>

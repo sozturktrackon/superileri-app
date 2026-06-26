@@ -10,7 +10,7 @@ import {
 /**
  * Paste a YouTube link per exercise. Saved in-browser (no redeploy). During a
  * workout the box autoplays the matching clip (muted, looping) the moment the
- * timer reaches — or preps/rests for — that exercise.
+ * timer reaches (or preps/rests for) that exercise.
  */
 const ExerciseVideoSettings = () => {
   const [map, setMap] = useState<Record<string, ExVid>>(loadExVideos);
@@ -26,7 +26,7 @@ const ExerciseVideoSettings = () => {
     <div className="card">
       <h3 style={{ marginBottom: 4 }}>🎬 Demo videos</h3>
       <p className="muted" style={{ fontSize: 13, marginTop: 0 }}>
-        Paste a YouTube link for any exercise — it autoplays in the box during
+        Paste a YouTube link for any exercise. It autoplays in the box during
         that move. {setCount} set so far.
       </p>
 

@@ -1,6 +1,6 @@
 /**
  * Per-exercise YouTube demo links, stored in the browser (no redeploy needed to
- * add them). When set, the workout box autoplays the clip — muted and looping —
+ * add them). When set, the workout box autoplays the clip (muted and looping)
  * the moment the timer reaches (or preps/rests for) that exercise.
  */
 export type ExVid = { ytId: string; start?: number };

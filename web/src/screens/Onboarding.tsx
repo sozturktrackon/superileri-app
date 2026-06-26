@@ -141,7 +141,7 @@ const Onboarding = () => {
             <h3 style={{ marginBottom: 6 }}>📸 Your starting photo</h3>
             <p className="muted" style={{ fontSize: 13, marginTop: 0 }}>
               Take a full-body photo in good light. This is private to you and
-              becomes your Day 1 baseline — we'll compare future check-ins to it.
+              becomes your Day 1 baseline, and we'll compare future check-ins to it.
             </p>
             {preview && (
               <img

@@ -6,7 +6,7 @@ type VideoWithAirplay = HTMLVideoElement & {
   webkitShowPlaybackTargetPicker?: () => void;
 };
 
-/** YouTube search for a real human form demo — a search link never rots. */
+/** YouTube search for a real human form demo (a search link never rots). */
 const formSearchUrl = (name?: string) =>
   `https://www.youtube.com/results?search_query=${encodeURIComponent(
     `${name ?? 'exercise'} proper form how to`
@@ -39,7 +39,7 @@ const ExerciseVideo = ({
     let active = true;
     setLoading(true);
     setUrl(null);
-    // A curated YouTube link OVERRIDES the AI clip — skip the S3 lookup entirely.
+    // A curated YouTube link OVERRIDES the AI clip, so skip the S3 lookup entirely.
     if (!exerciseId || curated) {
       setLoading(false);
       return;

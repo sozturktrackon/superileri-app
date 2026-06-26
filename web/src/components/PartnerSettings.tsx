@@ -9,7 +9,7 @@ import {
 
 /**
  * Manage training partners (separate accounts you train with). Both people must
- * add each other for shared-session logging to work — adding someone here means
+ * add each other for shared-session logging to work. Adding someone here means
  * "I allow them to mark my workouts complete," and lets you mark theirs.
  */
 const PartnerSettings = () => {
@@ -64,7 +64,7 @@ const PartnerSettings = () => {
       <h3 style={{ marginBottom: 4 }}>🤝 Training partners</h3>
       <p className="muted" style={{ fontSize: 13, marginTop: 0 }}>
         Train together on one phone, mark both calendars. Add your partner's
-        email — and have them add yours (
+        email, and have them add yours (
         <strong>{myEmail || 'your email'}</strong>) so it works both ways.
       </p>
 

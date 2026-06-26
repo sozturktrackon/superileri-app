@@ -1,5 +1,5 @@
 /**
- * Tiny WebAudio beeper. No assets — tones are synthesized so there's nothing to
+ * Tiny WebAudio beeper. No assets; tones are synthesized so there's nothing to
  * download and it works offline. Must be unlocked by a user gesture first
  * (call unlock() inside a tap handler) to satisfy mobile autoplay policies.
  */
@@ -98,7 +98,7 @@ export const beepEnd = () => tone(523.25, 450, 0.4);
 export const beepGo = () => tone(1046.5, 300, 0.4);
 
 /**
- * Boxing-ring bell — a bright metallic triple "ding" that marks the start of a
+ * Boxing-ring bell: a bright metallic triple "ding" that marks the start of a
  * work round. Synthesized (two detuned partials + fast decay), played 3x.
  */
 export const beepBell = () => {
@@ -112,7 +112,7 @@ export const beepBell = () => {
     o1.type = 'triangle';
     o2.type = 'sine';
     o1.frequency.value = 880;
-    o2.frequency.value = 1318.5; // a fifth up — metallic shimmer
+    o2.frequency.value = 1318.5; // a fifth up (metallic shimmer)
     g.gain.setValueAtTime(0, t);
     g.gain.linearRampToValueAtTime(0.7, t + 0.006);
     g.gain.exponentialRampToValueAtTime(0.0008, t + 0.5);

@@ -148,7 +148,7 @@ const CheckInScreen = () => {
             </div>
           )}
           <p className="muted" style={{ fontSize: 12, marginTop: 8 }}>
-            Estimates are for personal motivation only — not medical advice.
+            Estimates are for personal motivation only, not medical advice.
           </p>
         </div>
       )}

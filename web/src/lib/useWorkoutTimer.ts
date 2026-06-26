@@ -46,7 +46,7 @@ export const useWorkoutTimer = (phases: Phase[]) => {
     if (!p) return;
     lastBeepSecRef.current = -1;
     if (p.type === 'on') {
-      beepBell(); // boxing-ring bell — round begins
+      beepBell(); // boxing-ring bell (round begins)
       buzz([90, 50, 90, 50, 120]);
     } else if (p.type === 'rest') {
       if (!say('rest')) beepEnd(); // voice "Rest", fall back to a tone

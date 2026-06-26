@@ -45,7 +45,7 @@ const Today = () => {
       </h1>
       <p className="page-sub">
         {day.rest
-          ? "It's a rest day — recovery is where growth happens."
+          ? "It's a rest day. Recovery is where growth happens."
           : `Today's session · ${intervals.rounds} rounds of 30s on / 30s off`}
       </p>
 

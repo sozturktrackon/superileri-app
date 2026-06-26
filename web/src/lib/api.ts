@@ -74,7 +74,7 @@ export const listWorkouts = async (): Promise<WorkoutLog[]> => {
   return data;
 };
 
-/** Manually tick a day done (e.g. trained offline/with a friend) — writes one
+/** Manually tick a day done (e.g. trained offline/with a friend). Writes one
  *  log covering all the day's circuits so the calendar shows it complete. */
 export const markDayComplete = async (
   planId: string,
@@ -92,7 +92,7 @@ export const markDayComplete = async (
   if (errors?.length) throw new Error(errors.map((e) => e.message).join('; '));
 };
 
-/** Undo only a MANUAL mark for a day — never deletes real workout sessions. */
+/** Undo only a MANUAL mark for a day (never deletes real workout sessions). */
 export const clearManualMark = async (
   planId: string,
   dayNumber: number

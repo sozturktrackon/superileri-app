@@ -120,7 +120,7 @@ const NutritionScreen = () => {
       </details>
 
       <p className="muted" style={{ fontSize: 11, textAlign: 'center', marginTop: 8 }}>
-        General guidance for healthy adults — not medical or dietary advice. Check
+        General guidance for healthy adults, not medical or dietary advice. Check
         with a professional for your situation.
       </p>
     </div>

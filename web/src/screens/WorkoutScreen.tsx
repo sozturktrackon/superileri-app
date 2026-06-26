@@ -87,7 +87,7 @@ const WorkoutScreen = () => {
     return () => window.clearInterval(id);
   }, [state.status]);
 
-  // Log completion once — but only if the circuit was genuinely worked through
+  // Log completion once, but only if the circuit was genuinely worked through
   // (at least 80% of its real duration). Closing the app early never reaches
   // 'finished', so nothing is logged in that case.
   useEffect(() => {
@@ -202,7 +202,7 @@ const WorkoutScreen = () => {
             <p className="timer-next">
               {counted
                 ? `${group.name} · ${intervals.rounds} rounds · ${fmtClock(total)}`
-                : 'Skipped ahead — finish the full circuit to check this day off.'}
+                : 'Skipped ahead. Finish the full circuit to check this day off.'}
             </p>
             <div
               style={{ display: 'flex', gap: 10, marginTop: 22, flexWrap: 'wrap', justifyContent: 'center' }}
