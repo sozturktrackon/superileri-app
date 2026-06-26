@@ -133,6 +133,20 @@ const CheckInScreen = () => {
             </div>
           )}
           <p style={{ lineHeight: 1.5 }}>{result.aiSummary}</p>
+          {result.aiComparison && (
+            <div
+              style={{
+                marginTop: 12,
+                paddingTop: 12,
+                borderTop: '1px solid var(--line)',
+              }}
+            >
+              <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 4 }}>
+                📈 Progress vs your first photo
+              </div>
+              <p style={{ lineHeight: 1.5, margin: 0 }}>{result.aiComparison}</p>
+            </div>
+          )}
           <p className="muted" style={{ fontSize: 12, marginTop: 8 }}>
             Estimates are for personal motivation only — not medical advice.
           </p>

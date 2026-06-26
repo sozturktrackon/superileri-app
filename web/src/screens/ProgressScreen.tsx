@@ -94,6 +94,15 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
         </div>
       )}
 
+      {shots[0]?.aiComparison && (
+        <div className="card">
+          <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 4 }}>
+            📈 AI progress (latest vs first)
+          </div>
+          <p style={{ lineHeight: 1.5, margin: 0 }}>{shots[0].aiComparison}</p>
+        </div>
+      )}
+
       <h3 style={{ margin: '18px 0 10px' }}>📸 Photo timeline</h3>
       {loading ? (
         <div className="center-screen" style={{ minHeight: 120 }}>

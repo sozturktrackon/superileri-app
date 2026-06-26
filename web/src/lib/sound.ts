@@ -37,6 +37,42 @@ export const unlockAudio = async (): Promise<void> => {
   }
 };
 
+/* ---- Voice cues (Amazon Polly "Matthew" neural clips) ------------------- */
+const VOICE_NAMES = ['ready', 'three', 'two', 'one', 'rest', 'go'] as const;
+const clips: Record<string, AudioBuffer> = {};
+
+/** Fetch + decode the voice clips. Safe to call repeatedly; no-op if loaded. */
+export const loadVoice = async (): Promise<void> => {
+  const c = getCtx();
+  if (!c) return;
+  await Promise.all(
+    VOICE_NAMES.map(async (n) => {
+      if (clips[n]) return;
+      try {
+        const res = await fetch(`/audio/${n}.mp3`);
+        if (!res.ok) return;
+        clips[n] = await c.decodeAudioData(await res.arrayBuffer());
+      } catch {
+        /* clip unavailable -> caller falls back to a beep */
+      }
+    })
+  );
+};
+
+/** Speak a cue. Returns false if the clip isn't ready (caller can fall back). */
+export const say = (name: string, volume = 1): boolean => {
+  const c = getCtx();
+  if (!c || !clips[name]) return false;
+  if (c.state === 'suspended') c.resume();
+  const src = c.createBufferSource();
+  const g = c.createGain();
+  g.gain.value = volume;
+  src.buffer = clips[name];
+  src.connect(g).connect(c.destination);
+  src.start();
+  return true;
+};
+
 const tone = (freq: number, durationMs: number, volume = 0.25) => {
   const c = getCtx();
   if (!c) return;

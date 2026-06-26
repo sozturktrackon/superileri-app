@@ -49,6 +49,7 @@ const schema = a.schema({
       weightKg: a.float(),
       aiBodyFatPct: a.float(),
       aiSummary: a.string(),
+      aiComparison: a.string(), // honest progress vs the first/baseline photo
       aiRaw: a.json(),
       analyzed: a.boolean().default(false),
     })
@@ -59,14 +60,19 @@ const schema = a.schema({
     bodyFatPct: a.float(),
     summary: a.string(),
     estimatedWeightNote: a.string(),
+    comparison: a.string(), // progress vs baseline (null if no baseline given)
     raw: a.json(),
   }),
 
   // Custom mutation: hand it the S3 path of an uploaded photo; it calls Bedrock
-  // (Claude vision) to estimate body composition and returns a structured result.
+  // (Claude Opus 4.8 vision) to estimate body composition. If baselinePhotoPath
+  // is given, it also compares the two photos and reports honest progress.
   analyzeCheckIn: a
     .mutation()
-    .arguments({ photoPath: a.string().required() })
+    .arguments({
+      photoPath: a.string().required(),
+      baselinePhotoPath: a.string(),
+    })
     .returns(a.ref('CheckInAnalysis'))
     .authorization((allow) => [allow.authenticated()])
     .handler(a.handler.function(checkInAnalyzer)),

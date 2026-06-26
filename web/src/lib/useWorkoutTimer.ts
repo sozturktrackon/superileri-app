@@ -6,6 +6,7 @@ import {
   beepEnd,
   beepFinish,
   buzz,
+  say,
 } from './sound';
 
 export type TimerStatus = 'idle' | 'running' | 'paused' | 'finished';
@@ -48,13 +49,26 @@ export const useWorkoutTimer = (phases: Phase[]) => {
       beepBell(); // boxing-ring bell — round begins
       buzz([90, 50, 90, 50, 120]);
     } else if (p.type === 'rest') {
-      beepEnd();
+      if (!say('rest')) beepEnd(); // voice "Rest", fall back to a tone
       buzz([60, 40, 60]);
     } else if (p.type === 'done') {
       beepFinish();
       buzz([100, 60, 100, 60, 200]);
     }
   }, []);
+
+  // Spoken (or beeped) countdown for the last seconds of a phase.
+  const countdownCue = (secs: number, leadIntoWork: boolean) => {
+    if (secs === 4 && leadIntoWork) {
+      say('ready'); // "Ready..." just before the bell
+      return;
+    }
+    if (secs <= 3 && secs >= 1) {
+      const word = secs === 3 ? 'three' : secs === 2 ? 'two' : 'one';
+      if (!say(word)) beepCountdown(); // voice, fall back to a blip
+      buzz(80);
+    }
+  };
 
   const goToPhase = useCallback(
     (nextIndex: number, autoStart: boolean) => {
@@ -85,10 +99,12 @@ export const useWorkoutTimer = (phases: Phase[]) => {
     const phase = phases[index];
 
     if (secs !== lastBeepSecRef.current) {
-      // Countdown blips on the last 3 seconds of an "on" interval.
-      if (phase?.type === 'on' && secs <= 3 && secs >= 1) {
-        beepCountdown();
-        buzz(80);
+      // prep/rest lead INTO work -> "Ready, three, two, one"; work leads into
+      // rest -> "three, two, one".
+      if (phase?.type === 'prep' || phase?.type === 'rest') {
+        countdownCue(secs, true);
+      } else if (phase?.type === 'on') {
+        countdownCue(secs, false);
       }
       lastBeepSecRef.current = secs;
       setSecondsLeft(secs);

@@ -49,6 +49,7 @@ body {
     Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior-y: none;
+  overflow-x: hidden; /* never allow a sideways pull on mobile */
 }
 
 [data-amplify-authenticator] {
@@ -481,43 +482,58 @@ button {
 
 .cal-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
+  /* minmax(0,1fr) lets the 7 tracks shrink below content so they always fit */
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  width: 100%;
 }
 .cal-cell {
-  aspect-ratio: 1;
-  border-radius: 10px;
-  background: var(--bg-elev);
+  min-width: 0; /* allow the cell to shrink within its track */
+  overflow: hidden;
+  aspect-ratio: 4 / 5; /* a touch taller so text breathes */
+  border-radius: 11px;
+  background: var(--bg-elev-2); /* lighter than before for contrast */
   border: 1px solid var(--line);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2px;
-  font-size: 10px;
+  gap: 2px;
+  padding: 3px 1px;
+  font-size: 9.5px;
+  font-weight: 700;
+  line-height: 1.05;
+  overflow-wrap: anywhere; /* wrap long labels like "Shoulders" */
+  word-break: break-word;
+  color: #cfd8e6; /* bright, readable workout-key text */
   text-align: center;
 }
 .cal-cell .d {
   font-weight: 800;
-  font-size: 12px;
+  font-size: 15px;
+  color: #ffffff; /* day number always crisp white */
 }
 .cal-cell.today {
   border-color: var(--accent);
-  background: rgba(255, 122, 47, 0.12);
+  background: rgba(255, 122, 47, 0.22);
 }
 .cal-cell.rest {
-  opacity: 0.6;
+  background: var(--bg-elev);
+  color: var(--text-dim); /* dim via color, not opacity, so it stays legible */
+}
+.cal-cell.rest .d {
+  color: var(--text-dim);
 }
 .cal-cell.done {
   border-color: var(--rest);
-  background: rgba(22, 163, 74, 0.14);
+  background: rgba(34, 197, 94, 0.22);
+}
+.cal-cell.done .d {
+  color: #eafff1; /* bright check on green */
 }
 .cal-cell.sel {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
-}
-.cal-cell.done .d {
-  color: var(--rest-2);
 }
 
 .gallery {

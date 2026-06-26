@@ -152,16 +152,25 @@ export const createCheckIn = async (input: {
   return data!;
 };
 
-/** Calls the Bedrock-backed mutation, then persists the result onto the CheckIn. */
+/** Analyze a check-in with Opus 4.8. If the user has an earlier check-in, its
+ *  photo is sent as the baseline so the AI reports honest progress vs the first. */
 export const analyzeCheckIn = async (checkIn: CheckIn): Promise<CheckIn> => {
+  const priors = (await listCheckIns()).filter((c) => c.id !== checkIn.id);
+  const baseline = priors.length
+    ? priors.reduce((a, b) => (a.date <= b.date ? a : b)) // earliest = first photo
+    : null;
+
   const { data, errors } = await client.mutations.analyzeCheckIn({
     photoPath: checkIn.photoPath,
+    baselinePhotoPath: baseline?.photoPath,
   });
   if (errors?.length) throw new Error(errors.map((e) => e.message).join('; '));
+
   const { data: updated } = await client.models.CheckIn.update({
     id: checkIn.id,
     aiBodyFatPct: data?.bodyFatPct ?? null,
     aiSummary: data?.summary ?? null,
+    aiComparison: data?.comparison ?? null,
     aiRaw: data?.raw ?? null,
     analyzed: true,
   });

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getGroupByKey, intervals } from '../lib/content';
 import { buildPhases, fmtClock, totalSeconds } from '../lib/timer';
 import { useWorkoutTimer } from '../lib/useWorkoutTimer';
-import { unlockAudio } from '../lib/sound';
+import { loadVoice, unlockAudio } from '../lib/sound';
 import { releaseWakeLock, requestWakeLock } from '../lib/wakeLock';
 import { listPartners, logForPartner, logWorkout, type Partner } from '../lib/api';
 import ExerciseVideo from '../components/ExerciseVideo';
@@ -44,6 +44,11 @@ const WorkoutScreen = () => {
     return () => {
       releaseWakeLock();
     };
+  }, []);
+
+  // Preload the spoken countdown clips so they play with zero latency.
+  useEffect(() => {
+    loadVoice();
   }, []);
 
   // Load training partners (for the "mark for partner" option on completion).

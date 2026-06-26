@@ -9,6 +9,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,mp3}'],
+      },
       manifest: {
         name: 'Superileri Fit',
         short_name: 'Superileri',
