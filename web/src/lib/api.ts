@@ -74,6 +74,50 @@ export const listWorkouts = async (): Promise<WorkoutLog[]> => {
   return data;
 };
 
+/** Manually tick a day done (e.g. trained offline/with a friend) — writes one
+ *  log covering all the day's circuits so the calendar shows it complete. */
+export const markDayComplete = async (
+  planId: string,
+  dayNumber: number,
+  groupKeys: string[]
+): Promise<void> => {
+  const { errors } = await client.models.WorkoutLog.create({
+    date: todayISO(),
+    planId,
+    dayNumber,
+    groupKeys,
+    completed: true,
+    notes: 'manual',
+  });
+  if (errors?.length) throw new Error(errors.map((e) => e.message).join('; '));
+};
+
+/** Undo only a MANUAL mark for a day — never deletes real workout sessions. */
+export const clearManualMark = async (
+  planId: string,
+  dayNumber: number
+): Promise<void> => {
+  const { data } = await client.models.WorkoutLog.list({ limit: 500 });
+  const toDelete = data.filter(
+    (l) =>
+      l.planId === planId &&
+      l.dayNumber === dayNumber &&
+      l.notes === 'manual'
+  );
+  await Promise.all(
+    toDelete.map((l) => client.models.WorkoutLog.delete({ id: l.id }))
+  );
+};
+
+/** Jump to a specific day (and plan); progression continues +1 from there. */
+export const setCurrentDay = async (
+  profileId: string,
+  day: number,
+  plan?: 'lean' | 'bulk'
+): Promise<UserProfile> => {
+  return updateProfile(profileId, { currentDay: day, ...(plan ? { plan } : {}) });
+};
+
 /* --------------------------- Check-ins ----------------------------------- */
 
 export const uploadPhoto = async (

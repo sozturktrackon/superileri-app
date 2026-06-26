@@ -512,6 +512,10 @@ button {
   border-color: var(--rest);
   background: rgba(22, 163, 74, 0.14);
 }
+.cal-cell.sel {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
 .cal-cell.done .d {
   color: var(--rest-2);
 }

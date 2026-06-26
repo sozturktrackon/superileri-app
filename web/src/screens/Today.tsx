@@ -94,7 +94,7 @@ const Today = () => {
                   </div>
                 </div>
                 <ol className="exercise-list" style={{ marginTop: 8 }}>
-                  {g.exercises.slice(0, 6).map((ex, idx) => (
+                  {g.exercises.map((ex, idx) => (
                     <li key={ex.id}>
                       <span className="exercise-num">{idx + 1}</span>
                       {ex.name}

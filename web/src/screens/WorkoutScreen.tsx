@@ -88,7 +88,7 @@ const WorkoutScreen = () => {
   useEffect(() => {
     if (state.status === 'finished' && !logged && group) {
       setLogged(true);
-      const earned = total > 0 && activeSecRef.current >= total * 0.8;
+      const earned = total > 0 && activeSecRef.current >= total * 0.5;
       setCounted(earned);
       if (earned) {
         logWorkout({
