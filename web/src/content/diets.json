@@ -1,0 +1,79 @@
+{
+  "_comment": "Evidence-based, diet-agnostic nutrition guidance. Goal + habits lead; the original Motivated Fit Lean/Bulk meal plan is an optional template. Static reference content (no logging/tracking).",
+  "goal": "A modest calorie deficit + enough protein — in whatever eating style you'll actually stick to. Aim to lose about 0.5–1% of your bodyweight per week. Slow loss keeps your muscle.",
+  "habits": [
+    {
+      "icon": "🍗",
+      "title": "Protein first, every meal",
+      "text": "Aim for ~1.6–2.2 g of protein per kg of bodyweight per day. Eat your protein and veggies before the carbs — you'll stay fuller and your energy stays steadier."
+    },
+    {
+      "icon": "🚶",
+      "title": "Move after you eat",
+      "text": "A 2–5 minute walk after a meal noticeably lowers the blood-sugar spike. Stuck at a desk? Do seated soleus push-ups (heel raises with the ball of your foot down) — they work even sitting."
+    },
+    {
+      "icon": "🥤",
+      "title": "Cut sugar & liquid calories",
+      "text": "Water, coffee, or tea — skip sugary drinks and added sugar. This single swap does a lot of the work."
+    },
+    {
+      "icon": "🥦",
+      "title": "Mostly whole foods",
+      "text": "Plenty of veggies and minimally-processed food. People eat noticeably less without trying when they cut ultra-processed food."
+    },
+    {
+      "icon": "🔁",
+      "title": "Pick a pattern you'll keep",
+      "text": "Keto, intermittent fasting, or set meals all work IF the above are met. The best diet is the one you actually stick to — consistency beats 'perfect'."
+    },
+    {
+      "icon": "😴",
+      "title": "Sleep & steps",
+      "text": "7–9 hours of sleep and daily steps quietly drive fat loss and crush cravings. Don't underrate them."
+    }
+  ],
+  "dinnerCarbNote": "Optional lever: going lighter on carbs at dinner helps many people control total intake. It's a handy tactic — not a rule. Calories matter far more than carb timing.",
+  "mealPlans": {
+    "lean": {
+      "name": "Lean — meal template",
+      "summary": "4 meals + snacks · lower carb & fat, higher protein · dinner has no carbs.",
+      "meals": [
+        { "name": "Breakfast", "items": "1 protein + 1 carb + 1 fruit (e.g. 2 eggs · ½ cup oats or 1 slice wheat toast · 1 apple)" },
+        { "name": "Lunch (×2)", "items": "Each: 1 protein + 1 carb + 1 veggie" },
+        { "name": "Dinner", "items": "1 protein + 1 veggie (no carb)" },
+        { "name": "Snacks (all, daily)", "items": "2 hard-boiled eggs · ½ avocado · ⅓ cup almonds (or Greek yogurt) · 1 apple/fruit" }
+      ],
+      "carbs": "Brown rice ½ cup · Sweet potato 4oz · Quinoa ½ cup · Wheat bread 1½ slices · Wheat pasta ⅔ cup (~22–25g each)"
+    },
+    "bulk": {
+      "name": "Bulk — meal template",
+      "summary": "5 meals + snacks · moderate-to-high across all macros · include 1 lean-beef or salmon meal daily.",
+      "meals": [
+        { "name": "Breakfast", "items": "1 protein + 1 carb + 1 fruit (e.g. 3 eggs · ½ cup oats · 1 apple)" },
+        { "name": "Lunch (×3)", "items": "Each: 1 protein + 1 carb + 1 veggie" },
+        { "name": "Dinner", "items": "1 protein + 1 carb + 1 veggie" },
+        { "name": "Snacks (all, daily)", "items": "2 hard-boiled eggs · ½ avocado · ⅓ cup almonds · 1 apple/fruit" }
+      ],
+      "carbs": "Brown rice ⅔ cup · Sweet potato 5oz · Quinoa ⅔ cup · Wheat bread 2 slices · Wheat pasta 1 cup (~30g each)"
+    }
+  },
+  "proteins": "Chicken breast 3.5oz · Ground turkey 5.5oz · Lean beef 4oz · Salmon 5.5oz · White fish 4oz (~30g protein each)",
+  "veggies": "1 cup of any (5 cups leafy greens = 1 cup): asparagus, broccoli, bell peppers, Brussels sprouts, spinach, kale, cauliflower, zucchini, mixed greens",
+  "grocery": [
+    { "group": "Protein", "items": "Eggs · Chicken breast · Ground turkey · Lean beef · Salmon · White fish" },
+    { "group": "Carbs", "items": "Brown rice · Sweet potato · Oats · Quinoa · Wheat bread · Wheat pasta" },
+    { "group": "Veggies", "items": "Asparagus · Broccoli · Bell peppers · Brussels sprouts · Spinach · Kale · Cauliflower · Zucchini · Mixed greens" },
+    { "group": "Fruit", "items": "Apples · Bananas · Berries · Cantaloupe · Pineapple · Grapefruit" },
+    { "group": "Healthy fats", "items": "Avocado · Almonds · Avocado oil · Olive oil · Coconut oil · Greek yogurt · Chia seeds" }
+  ],
+  "rules": [
+    "Weigh food cooked (in ounces).",
+    "Cook only with avocado, olive, or coconut oil.",
+    "No added sugar. Go easy on salt — use pepper, cumin, curry, herbs.",
+    "Drink only water (coffee/tea black is fine).",
+    "If the plan says \"or\", pick one option.",
+    "Eat all your snacks daily — spread them out.",
+    "It doesn't matter how late your last meal is, as long as it fits the plan."
+  ]
+}

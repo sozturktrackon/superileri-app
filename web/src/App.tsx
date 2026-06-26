@@ -13,6 +13,7 @@ import WorkoutScreen from './screens/WorkoutScreen';
 import CalendarScreen from './screens/CalendarScreen';
 import CheckInScreen from './screens/CheckInScreen';
 import ProgressScreen from './screens/ProgressScreen';
+import NutritionScreen from './screens/NutritionScreen';
 
 const Shell = ({ signOut }: { signOut?: () => void }) => {
   const { profile, loading } = useProfile();
@@ -36,6 +37,7 @@ const Shell = ({ signOut }: { signOut?: () => void }) => {
             <Route path="/" element={<Today />} />
             <Route path="/workout/:planId/:day/:groupKey" element={<WorkoutScreen />} />
             <Route path="/calendar" element={<CalendarScreen />} />
+            <Route path="/nutrition" element={<NutritionScreen />} />
             <Route path="/checkin" element={<CheckInScreen />} />
             <Route path="/progress" element={<ProgressScreen signOut={signOut} />} />
             <Route path="*" element={<Navigate to="/" replace />} />
