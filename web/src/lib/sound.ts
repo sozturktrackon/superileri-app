@@ -1,9 +1,18 @@
 /**
- * Tiny WebAudio beeper. No assets; tones are synthesized so there's nothing to
- * download and it works offline. Must be unlocked by a user gesture first
- * (call unlock() inside a tap handler) to satisfy mobile autoplay policies.
+ * Tiny WebAudio beeper. No assets for tones; they're synthesized so there's
+ * nothing to download and it works offline. Voice cues are short pre-recorded
+ * clips. Must be unlocked by a user gesture first (call unlock() inside a tap
+ * handler) to satisfy mobile autoplay policies.
+ *
+ * All cues route through one master gain -> compressor chain so we can push
+ * loudness up (to cut through background music) without harsh clipping, and
+ * so the music player can duck itself in response to a cue (see duckMusic in
+ * ytPlayer.ts, fired from say()/beep*() below).
  */
+import { duckMusic } from './ytPlayer';
+
 let ctx: AudioContext | null = null;
+let master: GainNode | null = null;
 
 const getCtx = (): AudioContext | null => {
   if (typeof window === 'undefined') return null;
@@ -15,6 +24,22 @@ const getCtx = (): AudioContext | null => {
     if (AC) ctx = new AC();
   }
   return ctx;
+};
+
+/** Shared master bus: gain (headroom for boosted cues) -> limiter -> speakers. */
+const getMaster = (c: AudioContext): GainNode => {
+  if (master) return master;
+  const compressor = c.createDynamicsCompressor();
+  compressor.threshold.value = -12;
+  compressor.knee.value = 6;
+  compressor.ratio.value = 8;
+  compressor.attack.value = 0.002;
+  compressor.release.value = 0.15;
+  master = c.createGain();
+  master.gain.value = 1;
+  master.connect(compressor);
+  compressor.connect(c.destination);
+  return master;
 };
 
 export const unlockAudio = async (): Promise<void> => {
@@ -31,7 +56,7 @@ export const unlockAudio = async (): Promise<void> => {
     const o = c.createOscillator();
     const g = c.createGain();
     g.gain.value = 0.0001;
-    o.connect(g).connect(c.destination);
+    o.connect(g).connect(getMaster(c));
     o.start();
     o.stop(c.currentTime + 0.01);
   }
@@ -59,17 +84,20 @@ export const loadVoice = async (): Promise<void> => {
   );
 };
 
-/** Speak a cue. Returns false if the clip isn't ready (caller can fall back). */
-export const say = (name: string, volume = 1): boolean => {
+/** Speak a cue, ducking any playing music for its rough duration. Returns
+ *  false if the clip isn't ready (caller can fall back to a beep). */
+export const say = (name: string, volume = 1.5): boolean => {
   const c = getCtx();
   if (!c || !clips[name]) return false;
   if (c.state === 'suspended') c.resume();
+  const buf = clips[name];
   const src = c.createBufferSource();
   const g = c.createGain();
   g.gain.value = volume;
-  src.buffer = clips[name];
-  src.connect(g).connect(c.destination);
+  src.buffer = buf;
+  src.connect(g).connect(getMaster(c));
   src.start();
+  duckMusic(Math.max(700, buf.duration * 1000 + 250));
   return true;
 };
 
@@ -85,17 +113,31 @@ const tone = (freq: number, durationMs: number, volume = 0.25) => {
   g.gain.setValueAtTime(0, now);
   g.gain.linearRampToValueAtTime(volume, now + 0.01);
   g.gain.linearRampToValueAtTime(0, now + durationMs / 1000);
-  o.connect(g).connect(c.destination);
+  o.connect(g).connect(getMaster(c));
   o.start(now);
   o.stop(now + durationMs / 1000 + 0.02);
 };
 
 /** Loud countdown blip for the last 3 seconds of an "on" interval. */
-export const beepCountdown = () => tone(1000, 200, 0.7);
+export const beepCountdown = () => {
+  duckMusic(700);
+  tone(1000, 200, 1.1);
+};
 /** Long tone marking the end of an interval / start of rest. */
-export const beepEnd = () => tone(523.25, 450, 0.4);
+export const beepEnd = () => {
+  duckMusic(900);
+  tone(523.25, 450, 0.75);
+};
 /** Rising tone marking the start of an "on" interval. */
-export const beepGo = () => tone(1046.5, 300, 0.4);
+export const beepGo = () => {
+  duckMusic(700);
+  tone(1046.5, 300, 0.75);
+};
+/** Fallback tone for the "Ready" cue if the voice clip isn't loaded yet. */
+export const beepReady = () => {
+  duckMusic(700);
+  tone(700, 220, 0.85);
+};
 
 /**
  * Boxing-ring bell: a bright metallic triple "ding" that marks the start of a
@@ -105,6 +147,7 @@ export const beepBell = () => {
   const c = getCtx();
   if (!c) return;
   if (c.state === 'suspended') c.resume();
+  duckMusic(1000);
   const ding = (t: number) => {
     const o1 = c.createOscillator();
     const o2 = c.createOscillator();
@@ -114,11 +157,11 @@ export const beepBell = () => {
     o1.frequency.value = 880;
     o2.frequency.value = 1318.5; // a fifth up (metallic shimmer)
     g.gain.setValueAtTime(0, t);
-    g.gain.linearRampToValueAtTime(0.7, t + 0.006);
+    g.gain.linearRampToValueAtTime(1.2, t + 0.006);
     g.gain.exponentialRampToValueAtTime(0.0008, t + 0.5);
     o1.connect(g);
     o2.connect(g);
-    g.connect(c.destination);
+    g.connect(getMaster(c));
     o1.start(t);
     o2.start(t);
     o1.stop(t + 0.55);
@@ -131,9 +174,10 @@ export const beepBell = () => {
 };
 /** Triumphant little flourish when a workout completes. */
 export const beepFinish = () => {
-  tone(659.25, 180, 0.3);
-  setTimeout(() => tone(783.99, 180, 0.3), 160);
-  setTimeout(() => tone(1046.5, 350, 0.35), 320);
+  duckMusic(900);
+  tone(659.25, 180, 0.55);
+  setTimeout(() => tone(783.99, 180, 0.55), 160);
+  setTimeout(() => tone(1046.5, 350, 0.6), 320);
 };
 
 /** Vibrate if the device supports it (nice on phones). */

@@ -136,7 +136,11 @@ export const removeExVideo = (
   return next;
 };
 
-/** Autoplay, muted, looping, minimal-chrome embed that fills the box. */
+/** Autoplay, muted, looping, minimal-chrome embed that fills the box. Uses
+ *  youtube.com (not the "-nocookie" domain) — nocookie mode is specifically
+ *  designed to NOT use the viewer's YouTube session, which is the opposite of
+ *  what we want; the regular domain can use it wherever the browser allows
+ *  third-party cookies (varies by platform). */
 export const exEmbedUrl = (v: ExVid): string => {
   const p = new URLSearchParams({
     autoplay: '1',
@@ -147,7 +151,12 @@ export const exEmbedUrl = (v: ExVid): string => {
     playsinline: '1',
     modestbranding: '1',
     rel: '0',
+    origin: typeof window !== 'undefined' ? window.location.origin : '',
   });
   if (v.start) p.set('start', String(v.start));
-  return `https://www.youtube-nocookie.com/embed/${v.ytId}?${p}`;
+  return `https://www.youtube.com/embed/${v.ytId}?${p}`;
 };
+
+/** Real youtube.com watch page for this exercise's clip (fallback link). */
+export const exWatchUrl = (v: ExVid): string =>
+  `https://www.youtube.com/watch?v=${v.ytId}`;

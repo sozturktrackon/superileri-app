@@ -178,9 +178,10 @@ export const playlistForCategory = (
   return cfg.playlists.find((p) => p.id === cfg.activeId) ?? cfg.playlists[0] ?? null;
 };
 
-export const embedSrc = (pl: Playlist): string => {
-  const base = 'https://www.youtube-nocookie.com/embed';
-  return pl.kind === 'playlist'
-    ? `${base}/videoseries?list=${pl.ytId}&autoplay=1&loop=1`
-    : `${base}/${pl.ytId}?autoplay=1&loop=1&playlist=${pl.ytId}`;
-};
+/** The real youtube.com page for this playlist/video — used both as the "Open
+ *  in YouTube" fallback (runs in the user's own logged-in tab/app) and to
+ *  drive the embedded IFrame Player API. */
+export const playlistWatchUrl = (pl: Playlist): string =>
+  pl.kind === 'playlist'
+    ? `https://www.youtube.com/playlist?list=${pl.ytId}`
+    : `https://www.youtube.com/watch?v=${pl.ytId}`;

@@ -5,6 +5,7 @@ import {
   beepCountdown,
   beepEnd,
   beepFinish,
+  beepReady,
   buzz,
   say,
 } from './sound';
@@ -33,6 +34,7 @@ export const useWorkoutTimer = (phases: Phase[]) => {
   const remainingRef = useRef<number>((phases[0]?.seconds ?? 0) * 1000);
   const rafRef = useRef<number | null>(null);
   const lastBeepSecRef = useRef<number>(-1);
+  const firedCuesRef = useRef<Set<number>>(new Set()); // which thresholds already cued this phase
 
   const clearLoop = () => {
     if (rafRef.current != null) {
@@ -45,6 +47,7 @@ export const useWorkoutTimer = (phases: Phase[]) => {
   const announcePhaseStart = useCallback((p: Phase | undefined) => {
     if (!p) return;
     lastBeepSecRef.current = -1;
+    firedCuesRef.current = new Set();
     if (p.type === 'on') {
       beepBell(); // boxing-ring bell (round begins)
       buzz([90, 50, 90, 50, 120]);
@@ -57,16 +60,28 @@ export const useWorkoutTimer = (phases: Phase[]) => {
     }
   }, []);
 
-  // Spoken (or beeped) countdown for the last seconds of a phase.
-  const countdownCue = (secs: number, leadIntoWork: boolean) => {
-    if (secs === 4 && leadIntoWork) {
-      say('ready'); // "Ready..." just before the bell
-      return;
+  // Fire a single countdown cue (voice, falling back to a tone if unloaded).
+  const fireCue = (threshold: number) => {
+    if (threshold === 4) {
+      if (!say('ready')) beepReady();
+    } else {
+      const word = threshold === 3 ? 'three' : threshold === 2 ? 'two' : 'one';
+      if (!say(word)) beepCountdown();
     }
-    if (secs <= 3 && secs >= 1) {
-      const word = secs === 3 ? 'three' : secs === 2 ? 'two' : 'one';
-      if (!say(word)) beepCountdown(); // voice, fall back to a blip
-      buzz(80);
+    buzz(80);
+  };
+
+  // Spoken (or beeped) countdown for the last seconds of a phase. Uses
+  // "at-or-below threshold, not yet fired" catch-up logic (not an exact ===
+  // check) so a single skipped rAF frame — e.g. from main-thread work while
+  // the YouTube player loads — can never silently drop a cue.
+  const countdownCue = (secs: number, leadIntoWork: boolean) => {
+    const thresholds = leadIntoWork ? [4, 3, 2, 1] : [3, 2, 1];
+    for (const th of thresholds) {
+      if (secs <= th && !firedCuesRef.current.has(th)) {
+        firedCuesRef.current.add(th);
+        fireCue(th);
+      }
     }
   };
 
@@ -167,6 +182,7 @@ export const useWorkoutTimer = (phases: Phase[]) => {
     remainingRef.current = (phases[0]?.seconds ?? 0) * 1000;
     setSecondsLeft(phases[0]?.seconds ?? 0);
     lastBeepSecRef.current = -1;
+    firedCuesRef.current = new Set();
   }, [phases]);
 
   useEffect(() => clearLoop, []);

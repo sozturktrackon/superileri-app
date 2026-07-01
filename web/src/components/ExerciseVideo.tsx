@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { exerciseVideoUrl } from '../lib/api';
-import { exEmbedUrl, loadExVideos, type ExVid } from '../lib/exerciseVideos';
+import {
+  exEmbedUrl,
+  exWatchUrl,
+  loadExVideos,
+  type ExVid,
+} from '../lib/exerciseVideos';
 
 type VideoWithAirplay = HTMLVideoElement & {
   webkitShowPlaybackTargetPicker?: () => void;
@@ -101,16 +106,29 @@ const ExerciseVideo = ({
       {loading && <div className="placeholder">Loading…</div>}
 
       {/* Curated YouTube clip wins: autoplays MUTED (music plays separately) +
-          looping, and overrides any AI clip. */}
+          looping, and overrides any AI clip. A bare iframe can't tell us if
+          YouTube blocked/sign-in-walled it, so we always offer a one-tap
+          escape to the real video (opens in the user's own YouTube session). */}
       {!loading && curated && (
-        <iframe
-          key={`${exerciseId}-${curated.ytId}`}
-          title="exercise-demo"
-          src={exEmbedUrl(curated)}
-          allow="autoplay; encrypted-media; picture-in-picture"
-          allowFullScreen
-          style={{ width: '100%', height: '100%', border: 0 }}
-        />
+        <>
+          <iframe
+            key={`${exerciseId}-${curated.ytId}`}
+            title="exercise-demo"
+            src={exEmbedUrl(curated)}
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowFullScreen
+            style={{ width: '100%', height: '100%', border: 0 }}
+          />
+          <div className="video-actions">
+            <button
+              className="tctrl sm"
+              onClick={() => window.open(exWatchUrl(curated), '_blank', 'noopener')}
+              aria-label="Open in YouTube"
+            >
+              ▶
+            </button>
+          </div>
+        </>
       )}
 
       {!loading && !curated && url && (
