@@ -14,6 +14,7 @@ import CalendarScreen from './screens/CalendarScreen';
 import CheckInScreen from './screens/CheckInScreen';
 import ProgressScreen from './screens/ProgressScreen';
 import NutritionScreen from './screens/NutritionScreen';
+import TvDisplay from './screens/TvDisplay';
 
 const Shell = ({ signOut }: { signOut?: () => void }) => {
   const { profile, loading } = useProfile();
@@ -30,26 +31,24 @@ const Shell = ({ signOut }: { signOut?: () => void }) => {
   if (!profile) return <Onboarding />;
 
   return (
-    <Router>
-      <div className="app-shell">
-        <main className="app-main">
-          <Routes>
-            <Route path="/" element={<Today />} />
-            <Route path="/workout/:planId/:day/:groupKey" element={<WorkoutScreen />} />
-            <Route path="/calendar" element={<CalendarScreen />} />
-            <Route path="/nutrition" element={<NutritionScreen />} />
-            <Route path="/checkin" element={<CheckInScreen />} />
-            <Route path="/progress" element={<ProgressScreen signOut={signOut} />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </main>
-        <BottomNav />
-      </div>
-    </Router>
+    <div className="app-shell">
+      <main className="app-main">
+        <Routes>
+          <Route path="/" element={<Today />} />
+          <Route path="/workout/:planId/:day/:groupKey" element={<WorkoutScreen />} />
+          <Route path="/calendar" element={<CalendarScreen />} />
+          <Route path="/nutrition" element={<NutritionScreen />} />
+          <Route path="/checkin" element={<CheckInScreen />} />
+          <Route path="/progress" element={<ProgressScreen signOut={signOut} />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </main>
+      <BottomNav />
+    </div>
   );
 };
 
-const App = () => (
+const AuthenticatedApp = () => (
   <Authenticator
     signUpAttributes={['preferred_username']}
     formFields={{
@@ -71,6 +70,17 @@ const App = () => (
       </ProfileProvider>
     )}
   </Authenticator>
+);
+
+// Single top-level Router: /tv/:code is public (no login — it's just a
+// display), everything else lives behind the Authenticator.
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/tv/:code" element={<TvDisplay />} />
+      <Route path="*" element={<AuthenticatedApp />} />
+    </Routes>
+  </Router>
 );
 
 export default App;

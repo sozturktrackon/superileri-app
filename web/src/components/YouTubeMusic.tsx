@@ -10,6 +10,13 @@ import {
 } from '../lib/music';
 import { loadYouTubeApi, type YTPlayer } from '../lib/ytPlayer';
 
+export type MusicState = {
+  playing: boolean;
+  ytId: string | null;
+  kind: 'playlist' | 'video' | null;
+  label: string | null;
+};
+
 /**
  * In-workout music controller. Uses the real YouTube IFrame Player API (not a
  * bare iframe) so we can: control volume (duck it under voice cues, see
@@ -17,15 +24,22 @@ import { loadYouTubeApi, type YTPlayer } from '../lib/ytPlayer';
  * "Open in YouTube" automatically — which opens the REAL youtube.com in the
  * user's own logged-in tab/app (that's the only way to use their own YouTube
  * session; a cross-site embed can't borrow it due to browser privacy rules).
+ *
+ * When `broadcast` is true (casting to a TV), this player is paused so audio
+ * doesn't double up — the TV mounts its own player and plays the sound.
  */
 const YouTubeMusic = ({
   active,
   groupKey,
   day,
+  broadcast = false,
+  onStateChange,
 }: {
   active: boolean;
   groupKey?: string;
   day?: number;
+  broadcast?: boolean;
+  onStateChange?: (s: MusicState) => void;
 }) => {
   const [cfg, setCfg] = useState<MusicConfig>(loadMusic);
   const [open, setOpen] = useState(false);
@@ -46,6 +60,17 @@ const YouTubeMusic = ({
     () => playlistForCategory(cfg, groupKey, day),
     [cfg, groupKey, day]
   );
+
+  // Report state upward (so it can be broadcast to a paired TV).
+  useEffect(() => {
+    onStateChange?.({
+      playing,
+      ytId: current?.ytId ?? null,
+      kind: current?.kind ?? null,
+      label: current?.label ?? null,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playing, current?.ytId, current?.kind, current?.label]);
 
   const clearTimers = () => {
     timers.current.forEach((t) => window.clearTimeout(t));
@@ -124,18 +149,26 @@ const YouTubeMusic = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing, current?.ytId]);
 
+  // Casting to a TV: pause our own audio so it doesn't double up with the
+  // TV's own player (which plays the same playlist through its speakers).
+  useEffect(() => {
+    if (!playerRef.current) return;
+    if (broadcast) playerRef.current.pauseVideo();
+    else if (playing) playerRef.current.playVideo();
+  }, [broadcast, playing]);
+
   // Duck under voice cues (dispatched from sound.ts).
   useEffect(() => {
     const onDuck = (e: Event) => {
       const ms = (e as CustomEvent<{ ms: number }>).detail?.ms ?? 900;
       const p = playerRef.current;
-      if (!p) return;
+      if (!p || broadcast) return;
       p.setVolume(8);
       window.setTimeout(() => playerRef.current?.setVolume(100), ms);
     };
     window.addEventListener('superileri:duck', onDuck);
     return () => window.removeEventListener('superileri:duck', onDuck);
-  }, []);
+  }, [broadcast]);
 
   useEffect(() => () => playerRef.current?.destroy(), []);
 
@@ -173,9 +206,10 @@ const YouTubeMusic = ({
             style={{ background: 'rgba(0,0,0,0.3)', color: '#fff' }}
           >
             ♪ {current.label}
+            {broadcast ? ' (on TV)' : ''}
           </span>
         )}
-        {playing && current && failed && (
+        {playing && current && failed && !broadcast && (
           <button
             className="pill accent"
             style={{ border: 'none' }}

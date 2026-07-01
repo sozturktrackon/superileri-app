@@ -6,8 +6,14 @@ import { useWorkoutTimer } from '../lib/useWorkoutTimer';
 import { loadVoice, unlockAudio } from '../lib/sound';
 import { releaseWakeLock, requestWakeLock } from '../lib/wakeLock';
 import { listPartners, logForPartner, logWorkout, type Partner } from '../lib/api';
+import {
+  endLiveSession,
+  getOrCreateCode,
+  publishLiveSession,
+  tvUrl,
+} from '../lib/liveSession';
 import ExerciseVideo from '../components/ExerciseVideo';
-import YouTubeMusic from '../components/YouTubeMusic';
+import YouTubeMusic, { type MusicState } from '../components/YouTubeMusic';
 
 const phaseTitle: Record<string, string> = {
   prep: 'Get Ready',
@@ -37,6 +43,10 @@ const WorkoutScreen = () => {
   const [partnerState, setPartnerState] = useState<
     Record<string, { state: 'idle' | 'logging' | 'done' | 'error'; msg?: string }>
   >({});
+  const [broadcasting, setBroadcasting] = useState(false);
+  const [tvPanel, setTvPanel] = useState(false);
+  const musicRef = useRef<MusicState>({ playing: false, ytId: null, kind: null, label: null });
+  const tvCode = getOrCreateCode();
 
   // Wake lock for the duration of the screen.
   useEffect(() => {
@@ -86,6 +96,54 @@ const WorkoutScreen = () => {
     }, 1000);
     return () => window.clearInterval(id);
   }, [state.status]);
+
+  // While "Send to TV" is active, push the live state to the paired TV (it
+  // polls this record) — phase, exercise, countdown, and what music is
+  // playing (the TV mounts its own player for that; see YouTubeMusic).
+  useEffect(() => {
+    if (!broadcasting || !group) return;
+    const m = musicRef.current;
+    publishLiveSession(tvCode, {
+      phaseType: state.phase?.type,
+      exerciseName: state.phase?.exercise?.name,
+      exerciseId: state.phase?.exercise?.id,
+      groupName: group.name,
+      secondsLeft: state.secondsLeft,
+      totalSeconds: state.phase?.seconds,
+      round: state.phase?.round,
+      totalRounds: state.phase?.totalRounds,
+      status: state.status,
+      musicYtId: m.ytId,
+      musicKind: m.kind,
+      musicLabel: m.label,
+      musicPlaying: m.playing,
+    }).catch(() => {});
+  }, [
+    broadcasting,
+    tvCode,
+    group,
+    state.phase,
+    state.secondsLeft,
+    state.status,
+  ]);
+
+  // Stop broadcasting when leaving the workout screen.
+  useEffect(() => {
+    return () => {
+      if (broadcasting) endLiveSession(tvCode).catch(() => {});
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [broadcasting]);
+
+  const startBroadcast = () => {
+    setBroadcasting(true);
+    setTvPanel(true);
+  };
+
+  const stopBroadcast = () => {
+    setBroadcasting(false);
+    endLiveSession(tvCode).catch(() => {});
+  };
 
   // Log completion once, but only if the circuit was genuinely worked through
   // (at least 80% of its real duration). Closing the app early never reaches
@@ -177,19 +235,87 @@ const WorkoutScreen = () => {
             </div>
           )}
         </div>
-        <button
-          className="timer-close"
-          onClick={toggleFullscreen}
-          aria-label="Fullscreen / TV mode"
-        >
-          ⛶
-        </button>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button
+            className="timer-close"
+            onClick={() => (broadcasting ? setTvPanel((p) => !p) : startBroadcast())}
+            aria-label="Send to TV"
+            style={broadcasting ? { background: 'var(--accent)' } : undefined}
+          >
+            📺
+          </button>
+          <button
+            className="timer-close"
+            onClick={toggleFullscreen}
+            aria-label="Fullscreen / TV mode"
+          >
+            ⛶
+          </button>
+        </div>
       </div>
+
+      {tvPanel && (
+        <div
+          className="card"
+          style={{
+            position: 'absolute',
+            top: 'calc(var(--safe-t) + 60px)',
+            right: 12,
+            left: 12,
+            zIndex: 61,
+            color: 'var(--text)',
+          }}
+        >
+          <div className="card-row">
+            <strong>📺 Sending to TV</strong>
+            <button
+              className="btn ghost"
+              style={{ padding: '4px 8px' }}
+              onClick={() => setTvPanel(false)}
+            >
+              ✕
+            </button>
+          </div>
+          <p className="muted" style={{ fontSize: 13, margin: '8px 0' }}>
+            On your TV's browser, open:
+          </p>
+          <div
+            style={{
+              background: 'var(--bg-elev-2)',
+              borderRadius: 10,
+              padding: '10px 12px',
+              fontSize: 14,
+              wordBreak: 'break-all',
+              marginBottom: 10,
+            }}
+          >
+            {tvUrl(tvCode)}
+          </div>
+          <div className="btn-grid">
+            <button
+              className="btn ghost"
+              onClick={() => navigator.clipboard?.writeText(tvUrl(tvCode)).catch(() => {})}
+            >
+              Copy link
+            </button>
+            <button className="btn primary" onClick={stopBroadcast}>
+              Stop casting
+            </button>
+          </div>
+          <p className="muted" style={{ fontSize: 11, marginTop: 8, marginBottom: 0 }}>
+            Same code every time — pair once, reuse it for future workouts.
+          </p>
+        </div>
+      )}
 
       <YouTubeMusic
         active={state.status === 'running'}
         groupKey={group.key}
         day={Number(day) || 1}
+        broadcast={broadcasting}
+        onStateChange={(s) => {
+          musicRef.current = s;
+        }}
       />
 
       <div className="timer-mid">

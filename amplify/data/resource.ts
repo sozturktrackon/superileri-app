@@ -110,6 +110,30 @@ const schema = a.schema({
     .returns(a.ref('PartnerLogResult'))
     .authorization((allow) => [allow.authenticated()])
     .handler(a.handler.function(partnerLogger)),
+
+  // "Send to TV": the phone writes the live workout state here (~1x/sec) under
+  // a short shareable code; the TV page (no login) polls it by that code to
+  // render a synced, big-screen display. Guests can only READ — the phone
+  // (owner) is the only writer, so a TV can't be hijacked to control playback.
+  LiveSession: a
+    .model({
+      code: a.string().required(),
+      phaseType: a.string(), // 'prep' | 'on' | 'rest' | 'done'
+      exerciseName: a.string(),
+      exerciseId: a.string(),
+      groupName: a.string(),
+      secondsLeft: a.integer(),
+      totalSeconds: a.integer(),
+      round: a.integer(),
+      totalRounds: a.integer(),
+      status: a.string(), // 'running' | 'paused' | 'finished'
+      musicYtId: a.string(),
+      musicKind: a.string(), // 'playlist' | 'video'
+      musicLabel: a.string(),
+      musicPlaying: a.boolean(),
+    })
+    .identifier(['code'])
+    .authorization((allow) => [allow.owner(), allow.guest().to(['read'])]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
