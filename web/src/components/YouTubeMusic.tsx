@@ -130,7 +130,7 @@ const YouTubeMusic = ({
       const ms = (e as CustomEvent<{ ms: number }>).detail?.ms ?? 900;
       const p = playerRef.current;
       if (!p) return;
-      p.setVolume(22);
+      p.setVolume(8);
       window.setTimeout(() => playerRef.current?.setVolume(100), ms);
     };
     window.addEventListener('superileri:duck', onDuck);
