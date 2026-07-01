@@ -7,8 +7,11 @@ import type { Schema } from '../../data/resource';
 
 const REGION = process.env.AWS_REGION ?? 'us-east-1';
 const MODEL_ID =
-  process.env.BEDROCK_MODEL_ID ?? 'global.anthropic.claude-opus-4-8';
+  process.env.BEDROCK_MODEL_ID ?? 'global.anthropic.claude-sonnet-5';
 const PHOTOS_BUCKET = process.env.PHOTOS_BUCKET!;
+const MAX_IMAGES_PER_SET = 4; // front/back/left/right
+
+type AnglePhoto = { angle: string; path: string };
 
 const bedrock = new BedrockRuntimeClient({ region: REGION });
 const s3 = new S3Client({ region: REGION });
@@ -42,42 +45,66 @@ const fetchImage = async (key: string) => {
   };
 };
 
-const SOLO_PROMPT = `You are a fitness coach assistant. Estimate body composition from this full-body photo for PERSONAL progress tracking only (not medical advice).
+const label = (a: AnglePhoto) => a.angle.charAt(0).toUpperCase() + a.angle.slice(1);
+
+/** Fetch a labeled set of angle photos as [text-label, image, text-label, image, ...]. */
+const buildLabeledImages = async (photos: AnglePhoto[], setName: string) => {
+  const blocks: unknown[] = [];
+  for (const p of photos.slice(0, MAX_IMAGES_PER_SET)) {
+    blocks.push({ type: 'text', text: `${setName} - ${label(p)} view:` });
+    blocks.push(await fetchImage(p.path));
+  }
+  return blocks;
+};
+
+const SOLO_PROMPT = `You are a fitness coach assistant. You are given one or more full-body photos of the SAME person taken at the same time, from different angles (front, back, left side, and/or right side), each labeled. Use all provided angles together to make ONE combined, honest assessment for PERSONAL progress tracking only (not medical advice).
 
 Respond with ONLY a JSON object, no prose:
 {
-  "bodyFatPct": <number, best single estimate of body fat percentage, or null>,
-  "summary": "<2-3 sentence encouraging, honest summary of visible composition and posture>",
+  "bodyFatPct": <number, best single estimate of body fat percentage using all angles together, or null>,
+  "summary": "<2-3 sentence encouraging, honest summary of visible composition and posture, drawing on whichever angles were provided>",
   "estimatedWeightNote": "<short note about apparent muscularity/leanness; do NOT guess exact kg>"
 }
-If it's not a clear full-body photo of a person, set bodyFatPct null and explain in summary.`;
+If none of the images are a clear full-body photo of a person, set bodyFatPct null and explain in summary.`;
 
-const COMPARE_PROMPT = `You are a fitness coach assistant for PERSONAL progress tracking (not medical advice). Image 1 is the person's BASELINE (first) progress photo. Image 2 is their LATEST photo.
+const COMPARE_PROMPT = `You are a fitness coach assistant for PERSONAL progress tracking (not medical advice). You are given TWO labeled sets of full-body photos of the same person: a BASELINE set (their first check-in) and a LATEST set (today), each with one or more angles (front, back, left side, right side). Where the same angle exists in both sets, compare it directly; use whatever angles are available.
 
 Respond with ONLY a JSON object, no prose:
 {
-  "bodyFatPct": <number, best single estimate of body fat % from the LATEST photo (image 2), or null>,
-  "summary": "<2-3 sentence honest, encouraging read of the latest photo>",
+  "bodyFatPct": <number, best single estimate of body fat % from the LATEST set using all its angles together, or null>,
+  "summary": "<2-3 sentence honest, encouraging read of the latest photos>",
   "estimatedWeightNote": "<short note on apparent muscularity/leanness; do NOT guess exact kg>",
-  "comparison": "<3-4 sentences honestly comparing latest vs baseline: what visibly IMPROVED (leanness, muscle, posture, definition) and what has NOT changed yet. If there's no clear visible change, say so kindly and honestly. Be specific but supportive.>"
+  "comparison": "<3-5 sentences honestly comparing latest vs baseline across the available angles: what visibly IMPROVED (leanness, muscle, posture, definition, front AND back/side if provided) and what has NOT changed yet. If there's no clear visible change, say so kindly and honestly. Be specific but supportive.>"
 }
-If either image isn't a clear full-body person photo, set bodyFatPct null and explain in summary.`;
+If the images aren't clear full-body person photos, set bodyFatPct null and explain in summary.`;
 
 export const handler: Schema['analyzeCheckIn']['functionHandler'] = async (
   event
 ) => {
-  const photoPath = event.arguments.photoPath;
-  if (!photoPath) throw new Error('photoPath is required');
-  const baselinePath = event.arguments.baselinePhotoPath || null;
-
-  // Build the message content: [baseline?, current, prompt].
-  const content: unknown[] = [];
-  if (baselinePath && baselinePath !== photoPath) {
-    content.push(await fetchImage(baselinePath));
+  const photos = (event.arguments.photos ?? []) as AnglePhoto[];
+  if (!Array.isArray(photos) || photos.length === 0) {
+    throw new Error('At least one photo is required');
   }
-  content.push(await fetchImage(photoPath));
-  const comparing = content.length === 2;
-  content.push({ type: 'text', text: comparing ? COMPARE_PROMPT : SOLO_PROMPT });
+  const baselinePhotos = (event.arguments.baselinePhotos ?? null) as
+    | AnglePhoto[]
+    | null;
+
+  const hasBaseline =
+    Array.isArray(baselinePhotos) &&
+    baselinePhotos.length > 0 &&
+    baselinePhotos.some(
+      (b) => !photos.some((p) => p.path === b.path) // ignore if it's literally the same set
+    );
+
+  const content: unknown[] = [];
+  if (hasBaseline) {
+    content.push(...(await buildLabeledImages(baselinePhotos!, 'BASELINE')));
+    content.push(...(await buildLabeledImages(photos, 'LATEST')));
+    content.push({ type: 'text', text: COMPARE_PROMPT });
+  } else {
+    content.push(...(await buildLabeledImages(photos, 'PHOTO')));
+    content.push({ type: 'text', text: SOLO_PROMPT });
+  }
 
   const res = await bedrock.send(
     new InvokeModelCommand({
@@ -86,7 +113,7 @@ export const handler: Schema['analyzeCheckIn']['functionHandler'] = async (
       accept: 'application/json',
       body: JSON.stringify({
         anthropic_version: 'bedrock-2023-05-31',
-        max_tokens: 1000,
+        max_tokens: 1200,
         messages: [{ role: 'user', content }],
       }),
     })
@@ -111,7 +138,7 @@ export const handler: Schema['analyzeCheckIn']['functionHandler'] = async (
     bodyFatPct: typeof parsed.bodyFatPct === 'number' ? parsed.bodyFatPct : null,
     summary: parsed.summary ?? null,
     estimatedWeightNote: parsed.estimatedWeightNote ?? null,
-    comparison: comparing ? parsed.comparison ?? null : null,
-    raw: JSON.stringify({ model: MODEL_ID, compared: comparing, text }),
+    comparison: hasBaseline ? parsed.comparison ?? null : null,
+    raw: JSON.stringify({ model: MODEL_ID, compared: hasBaseline, text }),
   };
 };

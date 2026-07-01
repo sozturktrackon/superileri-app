@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
 import {
+  ANGLES,
+  checkInPhotos,
+  checkInThumbnail,
   deleteCheckIn,
   listCheckIns,
   listWorkouts,
+  mergeCheckIns,
   photoUrl,
+  type Angle,
   type CheckIn,
 } from '../lib/api';
 import { useProfile } from '../state';
@@ -12,7 +17,7 @@ import MusicSettings from '../components/MusicSettings';
 import ExerciseVideoSettings from '../components/ExerciseVideoSettings';
 import PartnerSettings from '../components/PartnerSettings';
 
-type Shot = CheckIn & { url?: string };
+type Shot = CheckIn & { url?: string; angleCount?: number };
 
 const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
   const { profile, displayName } = useProfile();
@@ -20,6 +25,35 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
   const [workoutCount, setWorkoutCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  // Merge mode: combine old single-photo check-ins into one angle-tagged one.
+  const [mergeMode, setMergeMode] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [assigning, setAssigning] = useState(false);
+  const [angleFor, setAngleFor] = useState<Record<string, Angle>>({});
+  const [merging, setMerging] = useState(false);
+  const [mergeError, setMergeError] = useState<string | null>(null);
+
+  const loadShots = async () => {
+    const [cis, logs] = await Promise.all([listCheckIns(), listWorkouts()]);
+    setWorkoutCount(logs.filter((l) => l.completed).length);
+    const withUrls = await Promise.all(
+      cis.map(async (c) => {
+        const thumb = checkInThumbnail(c);
+        return {
+          ...c,
+          url: thumb ? await photoUrl(thumb).catch(() => undefined) : undefined,
+          angleCount: checkInPhotos(c).length,
+        };
+      })
+    );
+    setShots(withUrls);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    loadShots();
+  }, []);
 
   const removeShot = async (shot: Shot) => {
     if (!window.confirm(`Delete the check-in from ${shot.date}? This can't be undone.`)) return;
@@ -34,17 +68,46 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
     }
   };
 
-  useEffect(() => {
-    (async () => {
-      const [cis, logs] = await Promise.all([listCheckIns(), listWorkouts()]);
-      setWorkoutCount(logs.filter((l) => l.completed).length);
-      const withUrls = await Promise.all(
-        cis.map(async (c) => ({ ...c, url: await photoUrl(c.photoPath).catch(() => undefined) }))
-      );
-      setShots(withUrls);
-      setLoading(false);
-    })();
-  }, []);
+  const toggleSelect = (id: string) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  };
+
+  const startAssigning = () => {
+    if (selectedIds.length < 2) return;
+    // Default each selection to the next unused angle, in front/back/left/right order.
+    const used = new Set<Angle>();
+    const next: Record<string, Angle> = {};
+    for (const id of selectedIds) {
+      const free = ANGLES.find((a) => !used.has(a.id))?.id ?? 'front';
+      used.add(free);
+      next[id] = free;
+    }
+    setAngleFor(next);
+    setAssigning(true);
+    setMergeError(null);
+  };
+
+  const confirmMerge = async () => {
+    setMerging(true);
+    setMergeError(null);
+    try {
+      const selections = selectedIds.map((id) => ({
+        checkIn: shots.find((s) => s.id === id)!,
+        angle: angleFor[id],
+      }));
+      await mergeCheckIns(selections);
+      setAssigning(false);
+      setMergeMode(false);
+      setSelectedIds([]);
+      await loadShots();
+    } catch (e) {
+      setMergeError(e instanceof Error ? e.message : 'Merge failed.');
+    } finally {
+      setMerging(false);
+    }
+  };
 
   const plan = getPlan(profile?.plan ?? 'lean');
   const day = normalizeDay(profile?.currentDay ?? 1);
@@ -103,7 +166,29 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
         </div>
       )}
 
-      <h3 style={{ margin: '18px 0 10px' }}>📸 Photo timeline</h3>
+      <div className="card-row" style={{ margin: '18px 0 10px' }}>
+        <h3 style={{ margin: 0 }}>📸 Photo timeline</h3>
+        {shots.length >= 2 && !assigning && (
+          <button
+            className="btn ghost"
+            style={{ padding: '6px 10px', fontSize: 12 }}
+            onClick={() => {
+              setMergeMode((m) => !m);
+              setSelectedIds([]);
+            }}
+          >
+            {mergeMode ? 'Cancel' : '🔗 Merge'}
+          </button>
+        )}
+      </div>
+
+      {mergeMode && !assigning && (
+        <p className="muted" style={{ fontSize: 12, marginTop: -4, marginBottom: 10 }}>
+          Select 2 or more single-photo check-ins from the same session (e.g.
+          front + back + sides taken the same day) to combine into one.
+        </p>
+      )}
+
       {loading ? (
         <div className="center-screen" style={{ minHeight: 120 }}>
           <div className="spinner" />
@@ -115,7 +200,11 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
       ) : (
         <div className="gallery">
           {shots.map((s) => (
-            <div key={s.id} style={{ position: 'relative' }}>
+            <div
+              key={s.id}
+              style={{ position: 'relative' }}
+              onClick={() => mergeMode && toggleSelect(s.id)}
+            >
               {s.url ? <img src={s.url} alt={s.date} /> : <div className="gallery" />}
               <span
                 className="pill"
@@ -125,17 +214,87 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
                 {typeof s.aiBodyFatPct === 'number'
                   ? ` · ${s.aiBodyFatPct.toFixed(0)}%`
                   : ''}
+                {(s.angleCount ?? 1) > 1 ? ` · ${s.angleCount} angles` : ''}
               </span>
-              <button
-                className="photo-del"
-                onClick={() => removeShot(s)}
-                disabled={deletingId === s.id}
-                aria-label={`Delete check-in from ${s.date}`}
-              >
-                {deletingId === s.id ? '…' : '🗑'}
-              </button>
+              {mergeMode ? (
+                <div
+                  className={`merge-check ${selectedIds.includes(s.id) ? 'on' : ''}`}
+                >
+                  {selectedIds.includes(s.id) ? '✓' : ''}
+                </div>
+              ) : (
+                <button
+                  className="photo-del"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeShot(s);
+                  }}
+                  disabled={deletingId === s.id}
+                  aria-label={`Delete check-in from ${s.date}`}
+                >
+                  {deletingId === s.id ? '…' : '🗑'}
+                </button>
+              )}
             </div>
           ))}
+        </div>
+      )}
+
+      {mergeMode && !assigning && selectedIds.length >= 2 && (
+        <button className="btn primary block" style={{ marginTop: 12 }} onClick={startAssigning}>
+          Merge {selectedIds.length} check-ins →
+        </button>
+      )}
+
+      {assigning && (
+        <div className="card" style={{ marginTop: 14 }}>
+          <h3 style={{ marginBottom: 8 }}>Assign an angle to each photo</h3>
+          <div className="stack">
+            {selectedIds.map((id) => {
+              const shot = shots.find((s) => s.id === id)!;
+              return (
+                <div className="card-row" key={id} style={{ margin: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    {shot.url && (
+                      <img
+                        src={shot.url}
+                        alt={shot.date}
+                        style={{
+                          width: 40,
+                          height: 50,
+                          objectFit: 'cover',
+                          borderRadius: 8,
+                        }}
+                      />
+                    )}
+                    <span className="muted" style={{ fontSize: 12 }}>{shot.date}</span>
+                  </div>
+                  <select
+                    value={angleFor[id]}
+                    onChange={(e) =>
+                      setAngleFor((prev) => ({ ...prev, [id]: e.target.value as Angle }))
+                    }
+                    style={{ maxWidth: 130 }}
+                  >
+                    {ANGLES.map((a) => (
+                      <option key={a.id} value={a.id}>
+                        {a.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              );
+            })}
+          </div>
+          {mergeError && <p className="error-text">{mergeError}</p>}
+          <div className="btn-grid" style={{ marginTop: 14 }}>
+            <button className="btn ghost" onClick={() => setAssigning(false)} disabled={merging}>
+              ← Back
+            </button>
+            <button className="btn primary" onClick={confirmMerge} disabled={merging}>
+              {merging ? 'Merging…' : 'Confirm merge'}
+            </button>
+          </div>
         </div>
       )}
 

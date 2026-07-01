@@ -1,11 +1,13 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import {
   analyzeCheckIn,
   createCheckIn,
   createProfile,
-  uploadPhoto,
+  uploadAnglePhotos,
+  type Angle,
 } from '../lib/api';
 import { useProfile } from '../state';
+import AnglePhotoCapture from '../components/AnglePhotoCapture';
 
 const Onboarding = () => {
   const { displayName, refresh } = useProfile();
@@ -17,31 +19,24 @@ const Onboarding = () => {
   const [heightCm, setHeightCm] = useState('');
   const [goal, setGoal] = useState('');
 
-  const [photo, setPhoto] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [files, setFiles] = useState<Partial<Record<Angle, File>>>({});
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
 
-  const pick = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0];
-    if (f) {
-      setPhoto(f);
-      setPreview(URL.createObjectURL(f));
-    }
+  const setAngle = (angle: Angle, file: File | undefined) => {
+    setFiles((f) => ({ ...f, [angle]: file }));
   };
 
   const finish = async () => {
-    if (!photo) {
-      setError('Please add a full-body photo so we can track your progress.');
+    if (!files.front) {
+      setError('Please add at least a front photo so we can track your progress.');
       return;
     }
     setBusy(true);
     setError(null);
     try {
-      const ext = photo.name.split('.').pop()?.toLowerCase() || 'jpg';
-      const path = await uploadPhoto(photo, ext);
-      const checkIn = await createCheckIn({ photoPath: path, kind: 'onboarding' });
+      const photos = await uploadAnglePhotos(files);
+      const checkIn = await createCheckIn({ photos, kind: 'onboarding' });
       await createProfile({
         plan,
         displayName: name,
@@ -138,39 +133,13 @@ const Onboarding = () => {
       {step === 2 && (
         <>
           <div className="card">
-            <h3 style={{ marginBottom: 6 }}>📸 Your starting photo</h3>
+            <h3 style={{ marginBottom: 6 }}>📸 Your starting photos</h3>
             <p className="muted" style={{ fontSize: 13, marginTop: 0 }}>
-              Take a full-body photo in good light. This is private to you and
-              becomes your Day 1 baseline, and we'll compare future check-ins to it.
+              Take full-body photos in good light. Front is required; add back
+              and side views too if you can. This is private to you and becomes
+              your Day 1 baseline, so we'll compare future check-ins to it.
             </p>
-            {preview && (
-              <img
-                src={preview}
-                alt="preview"
-                style={{
-                  width: '100%',
-                  borderRadius: 14,
-                  marginTop: 10,
-                  maxHeight: 360,
-                  objectFit: 'cover',
-                }}
-              />
-            )}
-            <input
-              ref={fileRef}
-              type="file"
-              accept="image/*"
-              capture="user"
-              onChange={pick}
-              style={{ display: 'none' }}
-            />
-            <button
-              className="btn ghost block"
-              style={{ marginTop: 12 }}
-              onClick={() => fileRef.current?.click()}
-            >
-              {preview ? 'Retake / choose another' : '📷 Take / choose photo'}
-            </button>
+            <AnglePhotoCapture files={files} onChange={setAngle} />
           </div>
 
           {error && <p className="error-text">{error}</p>}

@@ -40,16 +40,18 @@ const schema = a.schema({
     })
     .authorization((allow) => [allow.owner()]),
 
-  // Monthly progress check-in: a photo + optional measurements + AI analysis.
+  // Monthly progress check-in: one or more angle photos (front/back/left/right)
+  // + optional measurements + AI analysis.
   CheckIn: a
     .model({
       date: a.date().required(),
       kind: a.enum(['onboarding', 'monthly']),
-      photoPath: a.string().required(), // S3 key under photos/{identity}/...
+      photoPath: a.string(), // legacy/primary (front) photo, kept for quick thumbnails
+      photos: a.json(), // AnglePhoto[]: [{ angle: 'front'|'back'|'left'|'right', path }]
       weightKg: a.float(),
       aiBodyFatPct: a.float(),
       aiSummary: a.string(),
-      aiComparison: a.string(), // honest progress vs the first/baseline photo
+      aiComparison: a.string(), // honest progress vs the first/baseline photo set
       aiRaw: a.json(),
       analyzed: a.boolean().default(false),
     })
@@ -64,14 +66,15 @@ const schema = a.schema({
     raw: a.json(),
   }),
 
-  // Custom mutation: hand it the S3 path of an uploaded photo; it calls Bedrock
-  // (Claude Opus 4.8 vision) to estimate body composition. If baselinePhotoPath
-  // is given, it also compares the two photos and reports honest progress.
+  // Custom mutation: hand it this check-in's angle photos (front/back/left/
+  // right); it calls Bedrock (Claude vision) to estimate body composition using
+  // all angles together. If baselinePhotos is given, it also compares angle by
+  // angle against the first check-in and reports honest progress.
   analyzeCheckIn: a
     .mutation()
     .arguments({
-      photoPath: a.string().required(),
-      baselinePhotoPath: a.string(),
+      photos: a.json().required(), // AnglePhoto[]
+      baselinePhotos: a.json(), // AnglePhoto[] | undefined
     })
     .returns(a.ref('CheckInAnalysis'))
     .authorization((allow) => [allow.authenticated()])

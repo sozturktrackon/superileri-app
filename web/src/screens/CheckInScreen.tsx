@@ -1,53 +1,48 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   analyzeCheckIn,
   createCheckIn,
   listCheckIns,
-  uploadPhoto,
+  uploadAnglePhotos,
+  type Angle,
   type CheckIn,
 } from '../lib/api';
+import AnglePhotoCapture from '../components/AnglePhotoCapture';
 
 const daysSince = (iso: string) =>
   Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
 
 const CheckInScreen = () => {
   const [last, setLast] = useState<CheckIn | null>(null);
-  const [photo, setPhoto] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [files, setFiles] = useState<Partial<Record<Angle, File>>>({});
   const [weight, setWeight] = useState('');
   const [busy, setBusy] = useState(false);
   const [stage, setStage] = useState<string>('');
   const [result, setResult] = useState<CheckIn | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     listCheckIns().then((cs) => setLast(cs[0] ?? null));
   }, []);
 
-  const pick = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0];
-    if (f) {
-      setPhoto(f);
-      setPreview(URL.createObjectURL(f));
-      setResult(null);
-    }
+  const setAngle = (angle: Angle, file: File | undefined) => {
+    setFiles((f) => ({ ...f, [angle]: file }));
+    setResult(null);
   };
 
   const submit = async () => {
-    if (!photo) {
-      setError('Add a full-body photo first.');
+    if (!files.front) {
+      setError('At least a front photo is required.');
       return;
     }
     setBusy(true);
     setError(null);
     try {
-      setStage('Uploading photo…');
-      const ext = photo.name.split('.').pop()?.toLowerCase() || 'jpg';
-      const path = await uploadPhoto(photo, ext);
+      setStage('Uploading photos…');
+      const photos = await uploadAnglePhotos(files);
       setStage('Saving check-in…');
       const ci = await createCheckIn({
-        photoPath: path,
+        photos,
         kind: 'monthly',
         weightKg: weight ? Number(weight) : undefined,
       });
@@ -67,7 +62,8 @@ const CheckInScreen = () => {
     <div>
       <h1 className="page-title">Check-in</h1>
       <p className="page-sub">
-        Snap a monthly full-body photo to track real progress.
+        Snap full-body photos monthly to track real progress. Front is
+        required; add back and side views for a much better read.
       </p>
 
       {last && !result && (
@@ -80,30 +76,7 @@ const CheckInScreen = () => {
       )}
 
       <div className="card">
-        {preview && (
-          <img
-            src={preview}
-            alt="preview"
-            style={{
-              width: '100%',
-              borderRadius: 14,
-              marginBottom: 12,
-              maxHeight: 360,
-              objectFit: 'cover',
-            }}
-          />
-        )}
-        <input
-          ref={fileRef}
-          type="file"
-          accept="image/*"
-          capture="user"
-          onChange={pick}
-          style={{ display: 'none' }}
-        />
-        <button className="btn ghost block" onClick={() => fileRef.current?.click()}>
-          {preview ? 'Retake / choose another' : '📷 Take / choose photo'}
-        </button>
+        <AnglePhotoCapture files={files} onChange={setAngle} />
         <div className="field" style={{ marginTop: 14, marginBottom: 0 }}>
           <label>Weight today (kg, optional)</label>
           <input
@@ -142,7 +115,7 @@ const CheckInScreen = () => {
               }}
             >
               <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 4 }}>
-                📈 Progress vs your first photo
+                📈 Progress vs your first check-in
               </div>
               <p style={{ lineHeight: 1.5, margin: 0 }}>{result.aiComparison}</p>
             </div>
