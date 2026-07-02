@@ -7,13 +7,15 @@ import { loadVoice, unlockAudio } from '../lib/sound';
 import { releaseWakeLock, requestWakeLock } from '../lib/wakeLock';
 import { listPartners, logForPartner, logWorkout, type Partner } from '../lib/api';
 import {
+  clearTvCode,
   endLiveSession,
-  getOrCreateCode,
+  getSavedTvCode,
   publishLiveSession,
-  tvUrl,
+  saveTvCode,
 } from '../lib/liveSession';
 import ExerciseVideo from '../components/ExerciseVideo';
 import YouTubeMusic, { type MusicState } from '../components/YouTubeMusic';
+import QrScanner from '../components/QrScanner';
 
 const phaseTitle: Record<string, string> = {
   prep: 'Get Ready',
@@ -45,8 +47,10 @@ const WorkoutScreen = () => {
   >({});
   const [broadcasting, setBroadcasting] = useState(false);
   const [tvPanel, setTvPanel] = useState(false);
+  const [scanning, setScanning] = useState(false);
+  const [tvCode, setTvCode] = useState<string>(() => getSavedTvCode() ?? '');
+  const [codeDraft, setCodeDraft] = useState('');
   const musicRef = useRef<MusicState>({ playing: false, ytId: null, kind: null, label: null });
-  const tvCode = getOrCreateCode();
 
   // Wake lock for the duration of the screen.
   useEffect(() => {
@@ -101,7 +105,7 @@ const WorkoutScreen = () => {
   // polls this record) — phase, exercise, countdown, and what music is
   // playing (the TV mounts its own player for that; see YouTubeMusic).
   useEffect(() => {
-    if (!broadcasting || !group) return;
+    if (!broadcasting || !group || !tvCode) return;
     const m = musicRef.current;
     publishLiveSession(tvCode, {
       phaseType: state.phase?.type,
@@ -135,14 +139,35 @@ const WorkoutScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [broadcasting]);
 
-  const startBroadcast = () => {
+  // Connect to a TV by its code (from the QR scan or typed in). Remembers it so
+  // future workouts cast with one tap.
+  const connectToTv = (code: string) => {
+    if (!/^\d{6}$/.test(code)) return;
+    saveTvCode(code);
+    setTvCode(code);
+    setScanning(false);
+    setCodeDraft('');
     setBroadcasting(true);
     setTvPanel(true);
   };
 
+  const openTvPanel = () => {
+    if (broadcasting) setTvPanel((p) => !p);
+    else if (tvCode) {
+      setBroadcasting(true);
+      setTvPanel(true);
+    } else setTvPanel(true); // no TV yet -> panel offers scan / enter code
+  };
+
   const stopBroadcast = () => {
     setBroadcasting(false);
-    endLiveSession(tvCode).catch(() => {});
+    if (tvCode) endLiveSession(tvCode).catch(() => {});
+  };
+
+  const forgetTv = () => {
+    stopBroadcast();
+    clearTvCode();
+    setTvCode('');
   };
 
   // Log completion once, but only if the circuit was genuinely worked through
@@ -238,7 +263,7 @@ const WorkoutScreen = () => {
         <div style={{ display: 'flex', gap: 8 }}>
           <button
             className="timer-close"
-            onClick={() => (broadcasting ? setTvPanel((p) => !p) : startBroadcast())}
+            onClick={openTvPanel}
             aria-label="Send to TV"
             style={broadcasting ? { background: 'var(--accent)' } : undefined}
           >
@@ -254,6 +279,10 @@ const WorkoutScreen = () => {
         </div>
       </div>
 
+      {scanning && (
+        <QrScanner onDetected={connectToTv} onClose={() => setScanning(false)} />
+      )}
+
       {tvPanel && (
         <div
           className="card"
@@ -267,7 +296,7 @@ const WorkoutScreen = () => {
           }}
         >
           <div className="card-row">
-            <strong>📺 Sending to TV</strong>
+            <strong>📺 {broadcasting ? 'Sending to TV' : 'Send to TV'}</strong>
             <button
               className="btn ghost"
               style={{ padding: '4px 8px' }}
@@ -276,35 +305,67 @@ const WorkoutScreen = () => {
               ✕
             </button>
           </div>
-          <p className="muted" style={{ fontSize: 13, margin: '8px 0' }}>
-            On your TV's browser, open:
-          </p>
-          <div
-            style={{
-              background: 'var(--bg-elev-2)',
-              borderRadius: 10,
-              padding: '10px 12px',
-              fontSize: 14,
-              wordBreak: 'break-all',
-              marginBottom: 10,
-            }}
-          >
-            {tvUrl(tvCode)}
-          </div>
-          <div className="btn-grid">
-            <button
-              className="btn ghost"
-              onClick={() => navigator.clipboard?.writeText(tvUrl(tvCode)).catch(() => {})}
-            >
-              Copy link
-            </button>
-            <button className="btn primary" onClick={stopBroadcast}>
-              Stop casting
-            </button>
-          </div>
-          <p className="muted" style={{ fontSize: 11, marginTop: 8, marginBottom: 0 }}>
-            Same code every time — pair once, reuse it for future workouts.
-          </p>
+
+          {broadcasting && tvCode ? (
+            <>
+              <p className="muted" style={{ fontSize: 13, margin: '8px 0' }}>
+                Connected to TV <strong>{tvCode}</strong>. Your workout is live
+                on the big screen.
+              </p>
+              <div className="btn-grid">
+                <button className="btn ghost" onClick={forgetTv}>
+                  Change TV
+                </button>
+                <button className="btn primary" onClick={stopBroadcast}>
+                  Stop casting
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="muted" style={{ fontSize: 13, margin: '8px 0' }}>
+                On your TV open <strong>app.superileri.com/tv</strong>, then scan
+                the QR it shows:
+              </p>
+              <button
+                className="btn primary"
+                style={{ width: '100%' }}
+                onClick={() => setScanning(true)}
+              >
+                📷 Scan TV code
+              </button>
+              <p className="muted" style={{ fontSize: 12, margin: '12px 0 6px' }}>
+                Or enter the 6-digit code from the TV:
+              </p>
+              <div className="btn-grid">
+                <input
+                  value={codeDraft}
+                  onChange={(e) =>
+                    setCodeDraft(e.target.value.replace(/\D/g, '').slice(0, 6))
+                  }
+                  inputMode="numeric"
+                  placeholder="123456"
+                  style={{
+                    fontSize: 20,
+                    letterSpacing: '0.15em',
+                    textAlign: 'center',
+                    padding: '10px',
+                    borderRadius: 10,
+                    border: '1px solid var(--line)',
+                    background: 'var(--bg-elev-2)',
+                    color: 'var(--text)',
+                  }}
+                />
+                <button
+                  className="btn primary"
+                  disabled={!/^\d{6}$/.test(codeDraft)}
+                  onClick={() => connectToTv(codeDraft)}
+                >
+                  Connect
+                </button>
+              </div>
+            </>
+          )}
         </div>
       )}
 

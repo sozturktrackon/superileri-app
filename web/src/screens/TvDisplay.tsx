@@ -1,6 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchLiveSession, type LiveSession } from '../lib/liveSession';
+import { QRCodeSVG } from 'qrcode.react';
+import {
+  fetchLiveSession,
+  getOrCreateCode,
+  TV_ENTRY_URL,
+  type LiveSession,
+} from '../lib/liveSession';
 import { loadYouTubeApi, type YTPlayer } from '../lib/ytPlayer';
 
 const phaseTitle: Record<string, string> = {
@@ -17,9 +23,13 @@ const phaseTitle: Record<string, string> = {
  * (through the TV's own speakers) via its own YouTube player instance.
  */
 const TvDisplay = () => {
-  const { code } = useParams();
+  const params = useParams();
+  // `/tv` self-generates a stable code for this display; `/tv/:code` honors a
+  // code passed in the URL. The TV shows this as a QR for the phone to scan.
+  const code = useMemo(() => params.code ?? getOrCreateCode(), [params.code]);
   const [session, setSession] = useState<LiveSession | null>(null);
   const [stale, setStale] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
   const musicHost = useRef<HTMLDivElement>(null);
   const playerRef = useRef<YTPlayer | null>(null);
   const currentYtId = useRef<string | null>(null);
@@ -28,12 +38,17 @@ const TvDisplay = () => {
     if (!code) return;
     let cancelled = false;
     const poll = async () => {
-      const s = await fetchLiveSession(code);
-      if (cancelled) return;
-      setSession(s);
-      setStale(
-        !s?.updatedAt || Date.now() - new Date(s.updatedAt).getTime() > 8000
-      );
+      try {
+        const s = await fetchLiveSession(code);
+        if (cancelled) return;
+        setErr(null);
+        setSession(s);
+        setStale(
+          !s?.updatedAt || Date.now() - new Date(s.updatedAt).getTime() > 8000
+        );
+      } catch (e) {
+        if (!cancelled) setErr(e instanceof Error ? e.message : 'Connection error');
+      }
     };
     poll();
     const id = window.setInterval(poll, 900);
@@ -84,15 +99,32 @@ const TvDisplay = () => {
 
   useEffect(() => () => playerRef.current?.destroy(), []);
 
+  if (err) {
+    return (
+      <div className="tv-screen tv-waiting">
+        <div style={{ fontSize: 64, marginBottom: 16 }}>⚠️</div>
+        <h1>Couldn't connect</h1>
+        <p className="muted" style={{ maxWidth: 600 }}>{err}</p>
+        <p className="muted">Code: {code}</p>
+      </div>
+    );
+  }
+
   if (!session || stale) {
     return (
       <div className="tv-screen tv-waiting">
-        <div style={{ fontSize: 64, marginBottom: 16 }}>📺</div>
-        <h1>Waiting for your phone…</h1>
-        <p>
-          Open the workout on your phone and tap <strong>📺 Send to TV</strong>.
+        <h1 style={{ marginBottom: 4 }}>📺 Superileri Fit</h1>
+        <p className="muted" style={{ marginBottom: 22 }}>
+          Open a workout on your phone, tap <strong>📺 Send to TV</strong>, and
+          scan this code.
         </p>
-        <p className="muted">Code: {code}</p>
+        <div className="tv-qr">
+          <QRCodeSVG value={code} size={240} level="M" includeMargin />
+        </div>
+        <div className="tv-code">{code}</div>
+        <p className="muted" style={{ marginTop: 10 }}>
+          No camera? Enter this code in the app · {TV_ENTRY_URL}
+        </p>
       </div>
     );
   }

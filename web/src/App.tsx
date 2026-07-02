@@ -77,6 +77,7 @@ const AuthenticatedApp = () => (
 const App = () => (
   <Router>
     <Routes>
+      <Route path="/tv" element={<TvDisplay />} />
       <Route path="/tv/:code" element={<TvDisplay />} />
       <Route path="*" element={<AuthenticatedApp />} />
     </Routes>
