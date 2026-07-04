@@ -131,6 +131,8 @@ const schema = a.schema({
       musicKind: a.string(), // 'playlist' | 'video'
       musicLabel: a.string(),
       musicPlaying: a.boolean(),
+      videoYtId: a.string(), // current exercise's demo clip (resolved on the phone)
+      videoStart: a.integer(),
     })
     .identifier(['code'])
     .authorization((allow) => [allow.owner(), allow.guest().to(['read'])]),

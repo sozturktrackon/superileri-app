@@ -12,8 +12,17 @@ const todayISO = () => new Date().toISOString().slice(0, 10);
 /* ----------------------------- Profile ----------------------------------- */
 
 export const getMyProfile = async (): Promise<UserProfile | null> => {
-  const { data } = await client.models.UserProfile.list({ limit: 1 });
-  return data[0] ?? null;
+  // Never pass a small `limit` here: with owner auth, AppSync applies `limit`
+  // to the table scan BEFORE filtering by owner, so another user's row can
+  // fill the page and make YOUR profile query come back empty. Page through
+  // until we find our row or run out.
+  let nextToken: string | null | undefined;
+  do {
+    const page = await client.models.UserProfile.list({ nextToken });
+    if (page.data.length > 0) return page.data[0];
+    nextToken = page.nextToken;
+  } while (nextToken);
+  return null;
 };
 
 export const createProfile = async (input: {

@@ -9,6 +9,7 @@ import {
   buzz,
   say,
 } from './sound';
+import { duckMusic } from './ytPlayer';
 
 export type TimerStatus = 'idle' | 'running' | 'paused' | 'finished';
 
@@ -62,6 +63,10 @@ export const useWorkoutTimer = (phases: Phase[]) => {
 
   // Fire a single countdown cue (voice, falling back to a tone if unloaded).
   const fireCue = (threshold: number) => {
+    // Hold the music down through the REST of the countdown and into the next
+    // phase's announcement, not just this one word — per-word ducks leave the
+    // music popping back to full volume between "three", "two", and "one".
+    duckMusic(threshold * 1000 + 1500);
     if (threshold === 4) {
       if (!say('ready')) beepReady();
     } else {

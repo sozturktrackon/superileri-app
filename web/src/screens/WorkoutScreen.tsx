@@ -13,6 +13,7 @@ import {
   publishLiveSession,
   saveTvCode,
 } from '../lib/liveSession';
+import { loadExVideos } from '../lib/exerciseVideos';
 import ExerciseVideo from '../components/ExerciseVideo';
 import YouTubeMusic, { type MusicState } from '../components/YouTubeMusic';
 import QrScanner from '../components/QrScanner';
@@ -107,10 +108,16 @@ const WorkoutScreen = () => {
   useEffect(() => {
     if (!broadcasting || !group || !tvCode) return;
     const m = musicRef.current;
+    // Resolve the demo clip on the phone (defaults + the user's own overrides
+    // live in this device's localStorage) so the TV just plays what we send.
+    const exId = state.phase?.exercise?.id;
+    const vid = exId ? loadExVideos()[exId] : undefined;
     publishLiveSession(tvCode, {
       phaseType: state.phase?.type,
       exerciseName: state.phase?.exercise?.name,
       exerciseId: state.phase?.exercise?.id,
+      videoYtId: vid?.ytId ?? null,
+      videoStart: vid?.start ?? null,
       groupName: group.name,
       secondsLeft: state.secondsLeft,
       totalSeconds: state.phase?.seconds,

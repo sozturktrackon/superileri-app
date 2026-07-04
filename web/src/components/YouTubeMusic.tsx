@@ -157,14 +157,23 @@ const YouTubeMusic = ({
     else if (playing) playerRef.current.playVideo();
   }, [broadcast, playing]);
 
-  // Duck under voice cues (dispatched from sound.ts).
+  // Duck under voice cues (dispatched from sound.ts). Overlapping ducks
+  // extend each other: the volume only restores once the LATEST duck window
+  // has passed — otherwise an earlier cue's restore timer would pop the music
+  // back to full volume mid-countdown, swallowing "two" and "one".
+  const duckUntilRef = useRef(0);
   useEffect(() => {
     const onDuck = (e: Event) => {
       const ms = (e as CustomEvent<{ ms: number }>).detail?.ms ?? 900;
       const p = playerRef.current;
       if (!p || broadcast) return;
+      duckUntilRef.current = Math.max(duckUntilRef.current, performance.now() + ms);
       p.setVolume(8);
-      window.setTimeout(() => playerRef.current?.setVolume(100), ms);
+      window.setTimeout(() => {
+        if (performance.now() >= duckUntilRef.current - 25) {
+          playerRef.current?.setVolume(100);
+        }
+      }, ms + 30);
     };
     window.addEventListener('superileri:duck', onDuck);
     return () => window.removeEventListener('superileri:duck', onDuck);
