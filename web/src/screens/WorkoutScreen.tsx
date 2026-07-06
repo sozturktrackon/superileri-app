@@ -239,10 +239,11 @@ const WorkoutScreen = () => {
   };
 
   const onPrimary = () => {
-    if (!startedRef.current) {
-      startedRef.current = true;
-      unlockAudio();
-    }
+    startedRef.current = true;
+    // Re-unlock on EVERY tap, not just the first: iOS kills the audio session
+    // on screen lock / Siri / calls, and a fresh user gesture is the reliable
+    // way to bring it back. Idempotent and free when already running.
+    unlockAudio();
     toggle();
   };
 

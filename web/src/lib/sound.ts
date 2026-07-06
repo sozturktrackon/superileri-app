@@ -17,6 +17,18 @@ let master: GainNode | null = null;
 const getCtx = (): AudioContext | null => {
   if (typeof window === 'undefined') return null;
   if (!ctx) {
+    // iOS: by default WebAudio routes through the channel muted by the
+    // ring/silent side switch — with the switch on silent, every cue is
+    // inaudible. Declaring the session as 'playback' (iOS 17+) routes us like
+    // a media app, which ignores the switch (same as YouTube or Spotify).
+    const nav = navigator as Navigator & { audioSession?: { type: string } };
+    if (nav.audioSession) {
+      try {
+        nav.audioSession.type = 'playback';
+      } catch {
+        /* older iOS */
+      }
+    }
     const AC =
       window.AudioContext ||
       (window as unknown as { webkitAudioContext: typeof AudioContext })
@@ -25,6 +37,22 @@ const getCtx = (): AudioContext | null => {
   }
   return ctx;
 };
+
+/** iOS suspends (or marks 'interrupted') the context on screen lock, Siri,
+ *  calls, and app switches — and it does NOT always come back by itself. Kick
+ *  it before every cue and whenever the app returns to view. (A bare
+ *  `state === 'suspended'` check misses Safari's 'interrupted' state.) */
+const ensureRunning = (c: AudioContext): void => {
+  if (c.state !== 'running') {
+    c.resume().catch(() => {});
+  }
+};
+
+if (typeof document !== 'undefined') {
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && ctx) ensureRunning(ctx);
+  });
+}
 
 /** Shared master bus: gain (headroom for boosted cues) -> limiter -> speakers. */
 const getMaster = (c: AudioContext): GainNode => {
@@ -44,7 +72,7 @@ const getMaster = (c: AudioContext): GainNode => {
 
 export const unlockAudio = async (): Promise<void> => {
   const c = getCtx();
-  if (c && c.state === 'suspended') {
+  if (c && c.state !== 'running') {
     try {
       await c.resume();
     } catch {
@@ -89,7 +117,7 @@ export const loadVoice = async (): Promise<void> => {
 export const say = (name: string, volume = 1.5): boolean => {
   const c = getCtx();
   if (!c || !clips[name]) return false;
-  if (c.state === 'suspended') c.resume();
+  ensureRunning(c);
   const buf = clips[name];
   const src = c.createBufferSource();
   const g = c.createGain();
@@ -104,7 +132,7 @@ export const say = (name: string, volume = 1.5): boolean => {
 const tone = (freq: number, durationMs: number, volume = 0.25) => {
   const c = getCtx();
   if (!c) return;
-  if (c.state === 'suspended') c.resume();
+  ensureRunning(c);
   const o = c.createOscillator();
   const g = c.createGain();
   o.type = 'sine';
@@ -146,7 +174,7 @@ export const beepReady = () => {
 export const beepBell = () => {
   const c = getCtx();
   if (!c) return;
-  if (c.state === 'suspended') c.resume();
+  ensureRunning(c);
   duckMusic(1000);
   const ding = (t: number) => {
     const o1 = c.createOscillator();
