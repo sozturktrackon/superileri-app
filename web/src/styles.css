@@ -492,6 +492,31 @@ button {
   font-size: 20px;
   padding: 14px 32px;
 }
+.tv-controls {
+  position: absolute;
+  bottom: calc(6vh + 26px);
+  right: 8vw;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 999px;
+  padding: 8px 12px;
+}
+.tv-controls .btn {
+  font-size: 16px;
+  padding: 8px 16px;
+}
+.tv-controls .btn:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+.tv-vol {
+  min-width: 40px;
+  text-align: center;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
 @media (orientation: portrait) {
   .tv-layout {
     flex-direction: column;

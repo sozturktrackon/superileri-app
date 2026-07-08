@@ -8,7 +8,7 @@ import {
   type MusicConfig,
   type Playlist,
 } from '../lib/music';
-import { loadYouTubeApi, type YTPlayer } from '../lib/ytPlayer';
+import { loadYouTubeApi, ytCall, type YTPlayer } from '../lib/ytPlayer';
 
 export type MusicState = {
   playing: boolean;
@@ -81,7 +81,7 @@ const YouTubeMusic = ({
   useEffect(() => {
     clearTimers();
     if (!playing || !current || !hostRef.current) {
-      playerRef.current?.destroy();
+      ytCall(playerRef.current, 'destroy');
       playerRef.current = null;
       return;
     }
@@ -90,7 +90,7 @@ const YouTubeMusic = ({
 
     loadYouTubeApi().then((YT) => {
       if (cancelled || !hostRef.current) return;
-      playerRef.current?.destroy();
+      ytCall(playerRef.current, 'destroy');
 
       const opts =
         current.kind === 'playlist'
@@ -111,26 +111,26 @@ const YouTubeMusic = ({
         },
         events: {
           onReady: (e: { target: YTPlayer }) => {
-            e.target.setVolume(100);
-            e.target.playVideo();
+            ytCall(e.target, 'setVolume', 100);
+            ytCall(e.target, 'playVideo');
             // Some blocked/sign-in-walled embeds never error, they just never
             // reach "playing". If that happens, retry muted (autoplay is
             // always allowed muted), then unmute; if it STILL never plays,
             // surface the "Open in YouTube" fallback instead of staying silent.
             timers.current.push(
               window.setTimeout(() => {
-                if (playerRef.current?.getPlayerState() !== 1) {
-                  playerRef.current?.mute();
-                  playerRef.current?.playVideo();
+                if (ytCall(playerRef.current, 'getPlayerState') !== 1) {
+                  ytCall(playerRef.current, 'mute');
+                  ytCall(playerRef.current, 'playVideo');
                   timers.current.push(
-                    window.setTimeout(() => playerRef.current?.unMute(), 500)
+                    window.setTimeout(() => ytCall(playerRef.current, 'unMute'), 500)
                   );
                 }
               }, 1800)
             );
             timers.current.push(
               window.setTimeout(() => {
-                if (playerRef.current?.getPlayerState() !== 1) setFailed(true);
+                if (ytCall(playerRef.current, 'getPlayerState') !== 1) setFailed(true);
               }, 4200)
             );
           },
@@ -153,8 +153,8 @@ const YouTubeMusic = ({
   // TV's own player (which plays the same playlist through its speakers).
   useEffect(() => {
     if (!playerRef.current) return;
-    if (broadcast) playerRef.current.pauseVideo();
-    else if (playing) playerRef.current.playVideo();
+    if (broadcast) ytCall(playerRef.current, 'pauseVideo');
+    else if (playing) ytCall(playerRef.current, 'playVideo');
   }, [broadcast, playing]);
 
   // Duck under voice cues (dispatched from sound.ts). Overlapping ducks
@@ -168,10 +168,10 @@ const YouTubeMusic = ({
       const p = playerRef.current;
       if (!p || broadcast) return;
       duckUntilRef.current = Math.max(duckUntilRef.current, performance.now() + ms);
-      p.setVolume(8);
+      ytCall(p, 'setVolume', 8);
       window.setTimeout(() => {
         if (performance.now() >= duckUntilRef.current - 25) {
-          playerRef.current?.setVolume(100);
+          ytCall(playerRef.current, 'setVolume', 100);
         }
       }, ms + 30);
     };
@@ -179,7 +179,7 @@ const YouTubeMusic = ({
     return () => window.removeEventListener('superileri:duck', onDuck);
   }, [broadcast]);
 
-  useEffect(() => () => playerRef.current?.destroy(), []);
+  useEffect(() => () => ytCall(playerRef.current, 'destroy'), []);
 
   const openInYouTube = (pl: Playlist) =>
     window.open(playlistWatchUrl(pl), '_blank', 'noopener');

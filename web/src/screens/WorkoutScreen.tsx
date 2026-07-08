@@ -25,6 +25,44 @@ const phaseTitle: Record<string, string> = {
   done: 'Complete',
 };
 
+// Saved mid-circuit position, so a refresh (or crash recovery) resumes the
+// workout instead of restarting it. Session-scoped: gone when the tab closes.
+const PROGRESS_KEY = 'superileri.workoutProgress';
+
+type SavedProgress = {
+  planId?: string;
+  day: number;
+  groupKey?: string;
+  index: number;
+  secondsLeft: number;
+  activeSec: number;
+  savedAt: number;
+};
+
+const loadProgress = (
+  planId?: string,
+  day?: string,
+  groupKey?: string
+): SavedProgress | null => {
+  try {
+    const s = JSON.parse(
+      sessionStorage.getItem(PROGRESS_KEY) || 'null'
+    ) as SavedProgress | null;
+    if (
+      s &&
+      s.planId === planId &&
+      s.day === (Number(day) || 1) &&
+      s.groupKey === groupKey &&
+      Date.now() - s.savedAt < 3 * 3600e3
+    ) {
+      return s;
+    }
+  } catch {
+    /* corrupted -> ignore */
+  }
+  return null;
+};
+
 const WorkoutScreen = () => {
   const { planId, day, groupKey } = useParams();
   const navigate = useNavigate();
@@ -36,12 +74,22 @@ const WorkoutScreen = () => {
   );
   const total = useMemo(() => totalSeconds(phases), [phases]);
 
-  const { state, toggle, skip, prev, reset } = useWorkoutTimer(phases);
+  const savedProgress = useMemo(
+    () => loadProgress(planId, day, groupKey),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+  const { state, toggle, skip, prev, reset } = useWorkoutTimer(
+    phases,
+    savedProgress ?? undefined
+  );
   const [logged, setLogged] = useState(false);
   const [counted, setCounted] = useState(true);
   const screenRef = useRef<HTMLDivElement>(null);
   const startedRef = useRef(false);
-  const activeSecRef = useRef(0); // real seconds actually spent running
+  // Real seconds actually spent running (restored across a refresh so a
+  // resumed circuit still counts toward completion).
+  const activeSecRef = useRef(savedProgress?.activeSec ?? 0);
   const [partners, setPartners] = useState<Partner[]>([]);
   const [partnerState, setPartnerState] = useState<
     Record<string, { state: 'idle' | 'logging' | 'done' | 'error'; msg?: string }>
@@ -101,6 +149,31 @@ const WorkoutScreen = () => {
     }, 1000);
     return () => window.clearInterval(id);
   }, [state.status]);
+
+  // Persist the mid-circuit position each second; a refresh or crash-reload
+  // then resumes here (paused) instead of restarting the workout.
+  useEffect(() => {
+    if (state.status === 'finished') {
+      sessionStorage.removeItem(PROGRESS_KEY);
+      return;
+    }
+    if (state.status === 'idle' && !startedRef.current && !savedProgress) return;
+    const p: SavedProgress = {
+      planId,
+      day: Number(day) || 1,
+      groupKey,
+      index: state.index,
+      secondsLeft: state.secondsLeft,
+      activeSec: activeSecRef.current,
+      savedAt: Date.now(),
+    };
+    try {
+      sessionStorage.setItem(PROGRESS_KEY, JSON.stringify(p));
+    } catch {
+      /* storage full/blocked -> resume just won't work */
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.index, state.secondsLeft, state.status]);
 
   // While "Send to TV" is active, push the live state to the paired TV (it
   // polls this record) — phase, exercise, countdown, and what music is

@@ -15,6 +15,7 @@ import CheckInScreen from './screens/CheckInScreen';
 import ProgressScreen from './screens/ProgressScreen';
 import NutritionScreen from './screens/NutritionScreen';
 import TvDisplay from './screens/TvDisplay';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const Shell = ({ signOut }: { signOut?: () => void }) => {
   const { profile, loading } = useProfile();
@@ -75,13 +76,15 @@ const AuthenticatedApp = () => (
 // Single top-level Router: /tv/:code is public (no login — it's just a
 // display), everything else lives behind the Authenticator.
 const App = () => (
-  <Router>
-    <Routes>
-      <Route path="/tv" element={<TvDisplay />} />
-      <Route path="/tv/:code" element={<TvDisplay />} />
-      <Route path="*" element={<AuthenticatedApp />} />
-    </Routes>
-  </Router>
+  <ErrorBoundary>
+    <Router>
+      <Routes>
+        <Route path="/tv" element={<TvDisplay />} />
+        <Route path="/tv/:code" element={<TvDisplay />} />
+        <Route path="*" element={<AuthenticatedApp />} />
+      </Routes>
+    </Router>
+  </ErrorBoundary>
 );
 
 export default App;

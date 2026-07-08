@@ -49,6 +49,28 @@ export const loadYouTubeApi = (): Promise<NonNullable<Window['YT']>> => {
   return apiPromise;
 };
 
+/**
+ * Call a player method, tolerating not-ready and destroyed players. Between
+ * `new YT.Player(...)` and its onReady event the playback methods DON'T EXIST
+ * on the object, and after destroy() they throw — an uncaught throw inside a
+ * React effect unmounts the whole app (blank screen). Every player call must
+ * go through here.
+ */
+export const ytCall = <T = unknown>(
+  p: YTPlayer | null | undefined,
+  method: keyof YTPlayer,
+  ...args: unknown[]
+): T | undefined => {
+  if (!p) return undefined;
+  const fn = (p as unknown as Record<string, unknown>)[method];
+  if (typeof fn !== 'function') return undefined;
+  try {
+    return (fn as (...a: unknown[]) => T).apply(p, args);
+  } catch {
+    return undefined;
+  }
+};
+
 /** Tell any mounted player(s) to duck volume briefly (voice cue is playing). */
 export const duckMusic = (ms: number): void => {
   if (typeof window === 'undefined') return;

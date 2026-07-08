@@ -60,6 +60,28 @@ export const fetchLiveSession = async (
   return data ?? null;
 };
 
+/**
+ * Real-time updates for the TV: AppSync subscriptions (guest auth) push every
+ * change the phone publishes, no polling. `onError` fires if the socket can't
+ * be established — the caller should fall back to polling then. Returns an
+ * unsubscribe function.
+ */
+export const subscribeLiveSession = (
+  code: string,
+  onData: (s: LiveSession) => void,
+  onError: (e: unknown) => void
+): (() => void) => {
+  const opts = {
+    filter: { code: { eq: code } },
+    authMode: 'identityPool' as const,
+  };
+  const subs = [
+    client.models.LiveSession.onCreate(opts).subscribe({ next: onData, error: onError }),
+    client.models.LiveSession.onUpdate(opts).subscribe({ next: onData, error: onError }),
+  ];
+  return () => subs.forEach((s) => s.unsubscribe());
+};
+
 export const endLiveSession = async (code: string): Promise<void> => {
   try {
     await client.models.LiveSession.update({ code, status: 'finished' });

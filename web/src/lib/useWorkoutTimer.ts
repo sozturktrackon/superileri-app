@@ -26,13 +26,24 @@ export type TimerState = {
  * at the right moments: GO at the start of an "on", countdown blips on the last
  * 3 seconds, a tone into REST, and a flourish on finish.
  */
-export const useWorkoutTimer = (phases: Phase[]) => {
-  const [index, setIndex] = useState(0);
-  const [secondsLeft, setSecondsLeft] = useState(phases[0]?.seconds ?? 0);
+export const useWorkoutTimer = (
+  phases: Phase[],
+  // Restore point (e.g. saved progress from before a page refresh): start
+  // paused at this phase/seconds instead of from the beginning.
+  initial?: { index: number; secondsLeft: number }
+) => {
+  const initIndex =
+    initial && initial.index < phases.length ? initial.index : 0;
+  const initSeconds =
+    initial && initial.index < phases.length
+      ? initial.secondsLeft
+      : phases[0]?.seconds ?? 0;
+  const [index, setIndex] = useState(initIndex);
+  const [secondsLeft, setSecondsLeft] = useState(initSeconds);
   const [status, setStatus] = useState<TimerStatus>('idle');
 
   const endAtRef = useRef<number>(0); // wall-clock ms when current phase ends
-  const remainingRef = useRef<number>((phases[0]?.seconds ?? 0) * 1000);
+  const remainingRef = useRef<number>(initSeconds * 1000);
   const rafRef = useRef<number | null>(null);
   const lastBeepSecRef = useRef<number>(-1);
   const firedCuesRef = useRef<Set<number>>(new Set()); // which thresholds already cued this phase
