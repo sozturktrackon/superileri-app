@@ -4,6 +4,13 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  // Build stamp shown in Progress + crash reports, so "which version is this
+  // phone actually running?" is answerable at a glance.
+  define: {
+    __APP_VERSION__: JSON.stringify(
+      new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC'
+    ),
+  },
   plugins: [
     react(),
     VitePWA({

@@ -63,7 +63,10 @@ const TvDisplay = () => {
   const [musicOn, setMusicOn] = useState<boolean | null>(null);
   const [volume, setVolume] = useState(100);
   const volumeRef = useRef(100);
-  const musicHost = useRef<HTMLDivElement>(null);
+  // YT.Player REPLACES the element it's given with an <iframe>, so the host
+  // must NOT be React-rendered (React would later remove a node that's gone
+  // -> "removeChild" crash). It lives on document.body instead.
+  const musicHost = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<YTPlayer | null>(null);
   const currentYtId = useRef<string | null>(null);
   const lastEventAt = useRef(0);
@@ -74,6 +77,20 @@ const TvDisplay = () => {
   const syncRef = useRef<{ left: number; at: number } | null>(null);
   const endsAtRef = useRef<number | null>(null);
   const [displayLeft, setDisplayLeft] = useState<number | null>(null);
+
+  useEffect(() => {
+    const host = document.createElement('div');
+    host.style.cssText =
+      'position:fixed;bottom:0;left:0;width:1px;height:1px;opacity:0.01;pointer-events:none;overflow:hidden;';
+    document.body.appendChild(host);
+    musicHost.current = host;
+    return () => {
+      ytCall(playerRef.current, 'destroy');
+      playerRef.current = null;
+      musicHost.current = null;
+      host.remove();
+    };
+  }, []);
 
   const apply = useCallback((s: LiveSession | null) => {
     if (!s) return;
@@ -167,15 +184,20 @@ const TvDisplay = () => {
     currentYtId.current = want;
     ytCall(playerRef.current, 'destroy');
     playerRef.current = null;
-    if (!want || !musicHost.current) return;
+    if (musicHost.current) musicHost.current.innerHTML = '';
+    if (!want) return;
 
     loadYouTubeApi().then((YT) => {
-      if (!musicHost.current || currentYtId.current !== want) return;
+      const host = musicHost.current;
+      if (!host || currentYtId.current !== want) return;
+      host.innerHTML = '';
+      const el = document.createElement('div');
+      host.appendChild(el);
       const opts =
         session?.musicKind === 'playlist'
           ? { listType: 'playlist', list: want }
           : { videoId: want };
-      playerRef.current = new YT.Player(musicHost.current, {
+      playerRef.current = new YT.Player(el, {
         height: '1',
         width: '1',
         playerVars: {
@@ -204,8 +226,6 @@ const TvDisplay = () => {
       displayLeft != null && displayLeft <= 4 && session?.status === 'running';
     ytCall(playerRef.current, 'setVolume', counting ? Math.min(10, volume) : volume);
   }, [volume, displayLeft, session?.status]);
-
-  useEffect(() => () => ytCall(playerRef.current, 'destroy'), []);
 
   const controls = (
     <div className="tv-controls">
@@ -343,7 +363,6 @@ const TvDisplay = () => {
       <div className="tv-bar">
         <div style={{ width: `${pct}%` }} />
       </div>
-      <div ref={musicHost} style={{ position: 'absolute', width: 1, height: 1, opacity: 0 }} />
     </div>
   );
 };

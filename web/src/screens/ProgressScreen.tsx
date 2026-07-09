@@ -16,8 +16,54 @@ import { getPlan, normalizeDay } from '../lib/content';
 import MusicSettings from '../components/MusicSettings';
 import ExerciseVideoSettings from '../components/ExerciseVideoSettings';
 import PartnerSettings from '../components/PartnerSettings';
+import { clearCrashLog, getCrashLog } from '../lib/crashLog';
 
 type Shot = CheckIn & { url?: string; angleCount?: number };
+
+/** Recorded app errors (see lib/crashLog). Copy button puts them on the
+ *  clipboard so they can be pasted into a bug report. */
+const CrashReports = () => {
+  const [entries, setEntries] = useState(getCrashLog);
+  const [copied, setCopied] = useState(false);
+  if (entries.length === 0) return null;
+  return (
+    <details className="card">
+      <summary style={{ cursor: 'pointer', fontWeight: 800 }}>
+        🪲 Crash reports ({entries.length})
+      </summary>
+      <div className="stack" style={{ marginTop: 10 }}>
+        {entries.map((e, i) => (
+          <div key={i} style={{ fontSize: 11, fontFamily: 'monospace', wordBreak: 'break-word' }}>
+            <div className="muted">{e.at} · {e.type}</div>
+            <div>{e.message}</div>
+          </div>
+        ))}
+      </div>
+      <div className="btn-grid" style={{ marginTop: 10 }}>
+        <button
+          className="btn ghost"
+          onClick={() => {
+            navigator.clipboard
+              ?.writeText(JSON.stringify(getCrashLog(), null, 2))
+              .then(() => setCopied(true))
+              .catch(() => {});
+          }}
+        >
+          {copied ? 'Copied ✓' : 'Copy details'}
+        </button>
+        <button
+          className="btn ghost"
+          onClick={() => {
+            clearCrashLog();
+            setEntries([]);
+          }}
+        >
+          Clear
+        </button>
+      </div>
+    </details>
+  );
+};
 
 const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
   const { profile, displayName } = useProfile();
@@ -315,8 +361,10 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
         </div>
       </div>
 
+      <CrashReports />
+
       <p className="muted" style={{ fontSize: 11, textAlign: 'center', marginTop: 8 }}>
-        Superileri Fit · your data is private to your account.
+        Superileri Fit · your data is private to your account. · v{__APP_VERSION__}
       </p>
     </div>
   );

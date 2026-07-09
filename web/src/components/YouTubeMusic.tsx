@@ -48,9 +48,28 @@ const YouTubeMusic = ({
   const [newLabel, setNewLabel] = useState('');
   const [newLink, setNewLink] = useState('');
 
-  const hostRef = useRef<HTMLDivElement>(null);
+  // The YT IFrame API REPLACES the element we hand it with its own <iframe>.
+  // If that element is React-rendered, React later tries to remove a node
+  // that no longer exists ("removeChild ... not a child") and the whole app
+  // crashes. So the host lives on document.body, fully outside React's tree,
+  // and each player gets a fresh non-React child element.
+  const hostRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<YTPlayer | null>(null);
   const timers = useRef<number[]>([]);
+
+  useEffect(() => {
+    const host = document.createElement('div');
+    host.style.cssText =
+      'position:fixed;bottom:0;left:0;width:1px;height:1px;opacity:0.01;pointer-events:none;overflow:hidden;';
+    document.body.appendChild(host);
+    hostRef.current = host;
+    return () => {
+      ytCall(playerRef.current, 'destroy');
+      playerRef.current = null;
+      hostRef.current = null;
+      host.remove();
+    };
+  }, []);
 
   useEffect(() => {
     if (!active) setPlaying(false);
@@ -83,24 +102,29 @@ const YouTubeMusic = ({
   // hasn't finished booting, so phone + TV would both play, out of sync.)
   useEffect(() => {
     clearTimers();
-    if (!playing || !current || broadcast || !hostRef.current) {
+    if (!playing || !current || broadcast) {
       ytCall(playerRef.current, 'destroy');
       playerRef.current = null;
+      if (hostRef.current) hostRef.current.innerHTML = '';
       return;
     }
     setFailed(false);
     let cancelled = false;
 
     loadYouTubeApi().then((YT) => {
-      if (cancelled || !hostRef.current) return;
+      const host = hostRef.current;
+      if (cancelled || !host) return;
       ytCall(playerRef.current, 'destroy');
+      host.innerHTML = ''; // clear leftovers even if destroy failed
+      const el = document.createElement('div');
+      host.appendChild(el);
 
       const opts =
         current.kind === 'playlist'
           ? { listType: 'playlist', list: current.ytId }
           : { videoId: current.ytId };
 
-      playerRef.current = new YT.Player(hostRef.current, {
+      playerRef.current = new YT.Player(el, {
         height: '1',
         width: '1',
         playerVars: {
@@ -173,8 +197,6 @@ const YouTubeMusic = ({
     window.addEventListener('superileri:duck', onDuck);
     return () => window.removeEventListener('superileri:duck', onDuck);
   }, [broadcast]);
-
-  useEffect(() => () => ytCall(playerRef.current, 'destroy'), []);
 
   const openInYouTube = (pl: Playlist) =>
     window.open(playlistWatchUrl(pl), '_blank', 'noopener');
@@ -277,20 +299,6 @@ const YouTubeMusic = ({
         </div>
       )}
 
-      {/* Real IFrame Player API target — tiny and invisible but must stay
-          mounted (not display:none) for playback to work reliably. */}
-      {playing && current && (
-        <div
-          ref={hostRef}
-          style={{
-            position: 'absolute',
-            width: 1,
-            height: 1,
-            opacity: 0.01,
-            pointerEvents: 'none',
-          }}
-        />
-      )}
     </div>
   );
 };
