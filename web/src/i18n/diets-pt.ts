@@ -12,7 +12,7 @@ export const dietsPt = {
     {
       icon: '🚶',
       title: 'Mexa-se depois de comer',
-      text: 'Uma caminhada de 2 a 5 minutos depois da refeição reduz bem o pico de glicose no sangue. Preso na mesa de trabalho? Faça elevações de panturrilha sentado: com a ponta do pé no chão, suba e desça o calcanhar. Funciona até sentado.',
+      text: 'Uma caminhada de 2 a 5 minutos depois da refeição reduz bem o pico de glicose no sangue. Não dá para levantar do trabalho? Sem problema: com a ponta do pé no chão, suba e desça o calcanhar. Elevação de panturrilha funciona até sentado na cadeira.',
     },
     {
       icon: '🥤',
@@ -32,7 +32,7 @@ export const dietsPt = {
     {
       icon: '😴',
       title: 'Sono e passos',
-      text: 'Dormir de 7 a 9 horas e caminhar todos os dias aceleram a queima de gordura em silêncio e derrubam a vontade de beliscar. Não subestime esses dois.',
+      text: 'Dormir de 7 a 9 horas e caminhar todos os dias aceleram a queima de gordura sem você nem perceber e cortam a vontade de beliscar. Não subestime esses dois.',
     },
   ],
   dinnerCarbNote:

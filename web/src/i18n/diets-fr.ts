@@ -12,7 +12,7 @@ export const dietsFr = {
     {
       icon: '🚶',
       title: 'Bouge après avoir mangé',
-      text: 'Une marche de 2 à 5 minutes après le repas réduit nettement le pic de glycémie. Coincé au bureau ? Fais des extensions de mollets assis : pointe de pied au sol, tu lèves et tu baisses le talon. Ça marche même assis.',
+      text: 'Une marche de 2 à 5 minutes après le repas réduit nettement le pic de glycémie. Coincé au bureau ? Fais des extensions de mollets : pointe de pied au sol, monte et descends le talon. Ça fonctionne même assis.',
     },
     {
       icon: '🥤',
@@ -27,16 +27,16 @@ export const dietsFr = {
     {
       icon: '🔁',
       title: 'Choisis un rythme que tu vas garder',
-      text: 'Kéto, jeûne intermittent ou repas classiques : tout fonctionne si les principes ci-dessus sont respectés. Le meilleur régime, c\'est celui que tu tiens vraiment. La régularité bat la perfection.',
+      text: 'Kéto, jeûne intermittent ou repas classiques : tout fonctionne si les principes ci-dessus sont respectés. Le meilleur régime, c\'est celui que tu tiens vraiment. Mieux vaut être régulier que parfait.',
     },
     {
       icon: '😴',
       title: 'Sommeil et pas quotidiens',
-      text: '7 à 9 heures de sommeil et des pas chaque jour accélèrent discrètement la perte de gras et calment les fringales. Ne les sous-estime pas.',
+      text: '7 à 9 heures de sommeil et de la marche chaque jour accélèrent discrètement la perte de gras et calment les fringales. Ne les sous-estime pas.',
     },
   ],
   dinnerCarbNote:
-    'Levier facultatif : alléger les glucides au dîner aide beaucoup de gens à contrôler leur apport total. C\'est une astuce pratique, pas une règle. Les calories comptent bien plus que l\'horaire des glucides.',
+    'Levier facultatif : alléger les glucides au dîner aide beaucoup de gens à contrôler leur apport total. C\'est une astuce pratique, pas une règle. Les calories comptent bien plus que le timing des glucides.',
   mealPlans: {
     lean: {
       name: 'Plan de repas Lean',

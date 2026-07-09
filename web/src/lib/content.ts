@@ -2,6 +2,19 @@ import exercisesData from '../content/exercises.json';
 import calendarsData from '../content/calendars.json';
 import { getLang } from './i18n';
 import { trContent } from '../i18n/content-tr';
+import { hiContent } from '../i18n/content-hi';
+import { frContent } from '../i18n/content-fr';
+import { deContent } from '../i18n/content-de';
+import { esContent } from '../i18n/content-es';
+import { ptContent } from '../i18n/content-pt';
+import { tlContent } from '../i18n/content-tl';
+
+type ContentOverlay = typeof trContent;
+const OVERLAYS: Partial<Record<string, ContentOverlay>> = {
+  tr: trContent, hi: hiContent, fr: frContent, de: deContent,
+  es: esContent, pt: ptContent, tl: tlContent,
+};
+const overlay = (): ContentOverlay | undefined => OVERLAYS[getLang()];
 
 export type Exercise = {
   id: string;
@@ -51,24 +64,25 @@ export type PlanId = 'lean' | 'bulk' | 'lean2' | 'bulk2';
 // accessor level, so every screen gets localized content for free. English is
 // canonical; anything missing in an overlay falls back to it.
 const locGroup = (g: Group): Group => {
-  if (getLang() !== 'tr') return g;
+  const o = overlay();
+  if (!o) return g;
   return {
     ...g,
-    name: trContent.groups[g.key] ?? g.name,
+    name: o.groups[g.key] ?? g.name,
     exercises: g.exercises.map((e) => ({
       ...e,
-      name: trContent.exercises[e.id] ?? e.name,
+      name: o.exercises[e.id] ?? e.name,
       progressions: (e.progressions ?? []).map(
-        (pr) => trContent.progressions[pr] ?? pr
+        (pr) => o.progressions[pr] ?? pr
       ),
     })),
   };
 };
 
 const locPlan = (p: Plan): Plan => {
-  if (getLang() !== 'tr') return p;
-  const o = trContent.plans[p.id];
-  return o ? { ...p, name: o.name, note: o.note } : p;
+  const o = overlay();
+  const loc = o?.plans[p.id];
+  return loc ? { ...p, name: loc.name, note: loc.note } : p;
 };
 
 export const allGroups = (): Group[] => groups.map(locGroup);
@@ -103,10 +117,8 @@ const SHORT_LABELS: Record<string, string> = {
   JLo2: 'Glutes',
 };
 export const groupShort = (key: string): string => {
-  if (getLang() === 'tr') {
-    return trContent.shortLabels[key] ?? SHORT_LABELS[key] ?? key;
-  }
-  return SHORT_LABELS[key] ?? key;
+  const o = overlay();
+  return o?.shortLabels[key] ?? SHORT_LABELS[key] ?? key;
 };
 
 /** Resolve a plan day into its ordered list of exercise groups. */

@@ -31,7 +31,7 @@ export const dietsDe = {
     {
       icon: '😴',
       title: 'Schlaf und Schritte',
-      text: '7 bis 9 Stunden Schlaf und tägliche Schritte treiben den Fettabbau leise voran und bremsen Heißhunger. Unterschätze beides nicht.',
+      text: '7 bis 9 Stunden Schlaf und tägliche Schritte treiben den Fettabbau ganz nebenbei voran und bremsen Heißhunger. Unterschätze beides nicht.',
     },
   ],
   dinnerCarbNote:

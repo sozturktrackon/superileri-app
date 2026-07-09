@@ -1,6 +1,17 @@
 import { useState } from 'react';
 import dietsEn from '../content/diets.json';
 import { dietsTr } from '../i18n/diets-tr';
+import { dietsHi } from '../i18n/diets-hi';
+import { dietsFr } from '../i18n/diets-fr';
+import { dietsDe } from '../i18n/diets-de';
+import { dietsEs } from '../i18n/diets-es';
+import { dietsPt } from '../i18n/diets-pt';
+import { dietsTl } from '../i18n/diets-tl';
+
+const DIETS: Partial<Record<string, typeof dietsTr>> = {
+  tr: dietsTr, hi: dietsHi, fr: dietsFr, de: dietsDe,
+  es: dietsEs, pt: dietsPt, tl: dietsTl,
+};
 import { useProfile } from '../state';
 import { useT } from '../lib/i18n';
 
@@ -13,7 +24,7 @@ const NutritionScreen = () => {
   const [planId, setPlanId] = useState<'lean' | 'bulk'>(
     profile?.plan?.startsWith('bulk') ? 'bulk' : 'lean'
   );
-  const diets = lang === 'tr' ? dietsTr : dietsEn;
+  const diets = DIETS[lang] ?? (dietsEn as unknown as typeof dietsTr);
   const plan: MealPlan = diets.mealPlans[planId];
 
   return (

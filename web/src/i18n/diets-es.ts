@@ -12,12 +12,12 @@ export const dietsEs = {
     {
       icon: '🚶',
       title: 'Muévete después de comer',
-      text: 'Una caminata de 2 a 5 minutos después de comer reduce de forma notable el pico de azúcar en sangre. ¿Atado al escritorio? Haz elevaciones de talón sentado (sube y baja el talón con la punta del pie en el suelo). Funcionan incluso sentado.',
+      text: 'Una caminata de 2 a 5 minutos después de comer reduce de forma notable el pico de azúcar en sangre. ¿No puedes despegarte del escritorio? Sin levantarte de la silla, haz elevaciones de talón: con la punta del pie apoyada en el suelo, sube y baja los talones.',
     },
     {
       icon: '🥤',
       title: 'Corta el azúcar y las calorías líquidas',
-      text: 'Agua, café o té. Evita las bebidas azucaradas y el azúcar añadido. Este único cambio ya hace gran parte del trabajo.',
+      text: 'Agua, café o té. Evita las bebidas azucaradas y el azúcar añadido. Este cambio, por sí solo, marca una gran diferencia.',
     },
     {
       icon: '🥦',
@@ -36,7 +36,7 @@ export const dietsEs = {
     },
   ],
   dinnerCarbNote:
-    'Palanca opcional: reducir los carbohidratos en la cena ayuda a muchas personas a controlar el total de calorías. Es una táctica práctica, no una regla. Las calorías importan mucho más que el horario de los carbohidratos.',
+    'Truco opcional: reducir los carbohidratos en la cena ayuda a muchas personas a controlar el total de calorías. Es una táctica práctica, no una regla. Las calorías importan mucho más que el horario de los carbohidratos.',
   mealPlans: {
     lean: {
       name: 'Plantilla de comidas Lean',

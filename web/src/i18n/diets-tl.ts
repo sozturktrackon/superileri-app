@@ -12,17 +12,17 @@ export const dietsTl = {
     {
       icon: '🚶',
       title: 'Gumalaw pagkatapos kumain',
-      text: 'Ang 2–5 minutong lakad pagkatapos kumain ay kapansin-pansing nagpapababa ng blood-sugar spike. Nakaupo sa desk? Gawin ang seated soleus push-ups (itaas-baba ang sakong habang nakadikit sa sahig ang bola ng paa). Gumagana ito kahit nakaupo ka.',
+      text: 'Ang 2-5 minutong lakad pagkatapos kumain ay kapansin-pansing nagpapababa ng blood-sugar spike. Nakaupo sa desk? Gawin ang seated soleus push-ups (itaas-baba ang sakong habang nakadikit sa sahig ang harap ng talampakan). Gumagana ito kahit nakaupo ka.',
     },
     {
       icon: '🥤',
       title: 'Alisin ang asukal at liquid calories',
-      text: 'Tubig, kape, o tsaa. Iwasan ang matatamis na inumin at added sugar. Itong isang palit na ito, malaki na ang nagagawa.',
+      text: 'Tubig, kape, o tsaa. Iwasan ang matatamis na inumin at added sugar. Ang simpleng palit na ito, malaki na ang nagagawa.',
     },
     {
       icon: '🥦',
       title: 'Karamihan whole foods',
-      text: 'Maraming gulay at minimally-processed na pagkain. Kapansin-pansing bumababa ang kinakain ng mga tao nang hindi nagpipilit kapag inalis nila ang ultra-processed food.',
+      text: 'Maraming gulay at minimally-processed na pagkain. Kapag inalis ang ultra-processed food, kusang bumababa ang kinakain ng mga tao nang hindi na nagpipigil.',
     },
     {
       icon: '🔁',
@@ -32,11 +32,11 @@ export const dietsTl = {
     {
       icon: '😴',
       title: 'Tulog at steps',
-      text: 'Ang 7–9 oras na tulog at araw-araw na steps ay tahimik na nagpapabilis ng fat loss at pumapatay ng cravings. Huwag mo silang maliitin.',
+      text: 'Ang 7-9 oras na tulog at araw-araw na steps, underrated pero pinapabilis nito ang fat loss at pinapatay ang cravings. Huwag mo itong maliitin.',
     },
   ],
   dinnerCarbNote:
-    'Optional na diskarte: ang pagbabawas ng carbs sa hapunan ay nakakatulong sa maraming tao na kontrolin ang kabuuang kinakain. Kapaki-pakinabang na taktika ito, hindi patakaran. Mas mahalaga nang malayo ang calories kaysa sa carb timing.',
+    'Optional na diskarte: nakakatulong sa maraming tao ang pagbabawas ng carbs sa hapunan para makontrol ang kabuuang kinakain. Tip lang ito, hindi rule. Mas mahalaga pa rin ang calories kaysa sa carb timing, malayo ang lamang.',
   mealPlans: {
     lean: {
       name: 'Lean meal template',

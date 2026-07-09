@@ -8,6 +8,8 @@ import './lib/amplify'; // configures Amplify on import
 import './styles.css';
 import { installCrashCapture } from './lib/crashLog';
 import { detectLang, I18nProvider } from './lib/i18n';
+import { hiAuth } from './i18n/hi';
+import { tlAuth } from './i18n/tl';
 import App from './App';
 
 // Record any uncaught error / rejection on-device (Progress → Crash reports).
@@ -15,6 +17,7 @@ installCrashCapture();
 
 // Login/signup screen (Amplify Authenticator) speaks the user's language too.
 I18n.putVocabularies(translations);
+I18n.putVocabularies({ hi: hiAuth, tl: tlAuth });
 I18n.setLanguage(detectLang());
 
 // Installed PWAs on Android/iOS often RESUME from memory instead of

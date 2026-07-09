@@ -6,6 +6,12 @@ import {
   type ReactNode,
 } from 'react';
 import { tr } from '../i18n/tr';
+import { hi } from '../i18n/hi';
+import { fr } from '../i18n/fr';
+import { de } from '../i18n/de';
+import { es } from '../i18n/es';
+import { pt } from '../i18n/pt';
+import { tl } from '../i18n/tl';
 
 /**
  * Tiny English-keyed i18n: t('English text') looks the string up in the
@@ -36,7 +42,7 @@ export const LANG_NAMES: Record<Lang, string> = {
 };
 
 const LS_KEY = 'superileri.lang';
-const DICTS: Partial<Record<Lang, Record<string, string>>> = { tr };
+const DICTS: Partial<Record<Lang, Record<string, string>>> = { tr, hi, fr, de, es, pt, tl };
 
 export const detectLang = (): Lang => {
   try {
