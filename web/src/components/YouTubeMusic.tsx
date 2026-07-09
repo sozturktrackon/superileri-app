@@ -78,9 +78,12 @@ const YouTubeMusic = ({
   };
 
   // Mount / swap the player whenever we should be playing a (new) playlist.
+  // While casting, NO local player exists at all — the TV owns the audio.
+  // (Creating one and pausing it was racy: pause is a no-op on a player that
+  // hasn't finished booting, so phone + TV would both play, out of sync.)
   useEffect(() => {
     clearTimers();
-    if (!playing || !current || !hostRef.current) {
+    if (!playing || !current || broadcast || !hostRef.current) {
       ytCall(playerRef.current, 'destroy');
       playerRef.current = null;
       return;
@@ -147,15 +150,7 @@ const YouTubeMusic = ({
       clearTimers();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playing, current?.ytId]);
-
-  // Casting to a TV: pause our own audio so it doesn't double up with the
-  // TV's own player (which plays the same playlist through its speakers).
-  useEffect(() => {
-    if (!playerRef.current) return;
-    if (broadcast) ytCall(playerRef.current, 'pauseVideo');
-    else if (playing) ytCall(playerRef.current, 'playVideo');
-  }, [broadcast, playing]);
+  }, [playing, current?.ytId, broadcast]);
 
   // Duck under voice cues (dispatched from sound.ts). Overlapping ducks
   // extend each other: the volume only restores once the LATEST duck window

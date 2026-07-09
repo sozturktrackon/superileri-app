@@ -37,7 +37,10 @@ const TvDisplay = () => {
   const [stale, setStale] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [soundOn, setSoundOn] = useState(false);
-  const [musicOn, setMusicOn] = useState(true); // TV-local music toggle
+  // TV-local music override: null = follow the phone; true/false = the viewer
+  // explicitly started/stopped music from the TV (works even if the phone
+  // never turned music on).
+  const [musicOn, setMusicOn] = useState<boolean | null>(null);
   const [volume, setVolume] = useState(100);
   const volumeRef = useRef(100);
   const musicHost = useRef<HTMLDivElement>(null);
@@ -130,13 +133,14 @@ const TvDisplay = () => {
     };
   }, [soundOn]);
 
+  // The phone publishes the selected playlist (musicYtId) even when it isn't
+  // playing, so the TV can start it on its own.
+  const wantMusic = musicOn ?? !!session?.musicPlaying;
+
   // Mount / swap / stop the TV's own music player to match the phone's state
-  // (and the TV-local music toggle). Only after the sound unlock above.
+  // (and the TV-local override). Only after the sound unlock above.
   useEffect(() => {
-    const want =
-      soundOn && musicOn && session?.musicPlaying
-        ? session?.musicYtId ?? null
-        : null;
+    const want = soundOn && wantMusic ? session?.musicYtId ?? null : null;
     if (want === currentYtId.current) return;
     currentYtId.current = want;
     ytCall(playerRef.current, 'destroy');
@@ -168,7 +172,7 @@ const TvDisplay = () => {
       });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [soundOn, musicOn, session?.musicYtId, session?.musicPlaying, session?.musicKind]);
+  }, [soundOn, wantMusic, session?.musicYtId, session?.musicKind]);
 
   // Volume control + countdown ducking: keep the music at the chosen volume,
   // dropping it low during the last seconds so the phone's voice cues carry.
@@ -191,10 +195,11 @@ const TvDisplay = () => {
         <>
           <button
             className="btn ghost"
-            onClick={() => setMusicOn((m) => !m)}
-            aria-label="Toggle music"
+            autoFocus
+            onClick={() => setMusicOn(!wantMusic)}
+            aria-label="Start or stop music"
           >
-            {musicOn ? '🔊 Music on' : '🔇 Music off'}
+            {wantMusic ? '⏸ Stop music' : '▶ Start music'}
           </button>
           <button
             className="btn ghost"
@@ -306,7 +311,7 @@ const TvDisplay = () => {
         <div className="tv-info">
           <div className="tv-count">{left ?? '-'}</div>
           <div className="tv-exercise">{session.exerciseName}</div>
-          {session.musicPlaying && session.musicLabel && (
+          {wantMusic && session.musicLabel && (
             <div className="tv-music">♪ {session.musicLabel}</div>
           )}
         </div>
