@@ -889,3 +889,8 @@ button {
   right: auto;
   left: 6px;
 }
+/* Media-style transport controls stay LTR even in RTL locales (universal
+   convention; the glyphs point in absolute directions). */
+[dir='rtl'] .timer-controls {
+  direction: ltr;
+}
