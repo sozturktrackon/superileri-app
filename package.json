@@ -5,8 +5,7 @@
   "license": "ISC",
   "scripts": {
     "sandbox": "ampx sandbox --profile sandbox",
-    "sandbox:once": "ampx sandbox --profile sandbox --once",
-    "delete": "ampx sandbox delete --profile sandbox"
+    "sandbox:once": "ampx sandbox --profile sandbox --once"
   },
   "devDependencies": {
     "@aws-amplify/backend": "^1.23.0",
