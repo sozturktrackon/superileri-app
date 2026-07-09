@@ -16,7 +16,7 @@ const CalendarScreen = () => {
   const navigate = useNavigate();
   const [planId, setPlanId] = useState<'lean' | 'bulk'>(profile?.plan ?? 'lean');
   const plan = getPlan(planId)!;
-  const today = normalizeDay(profile?.currentDay ?? 1);
+  const today = normalizeDay(profile?.currentDay ?? 1, planId);
   const [saving, setSaving] = useState(false);
   const [logs, setLogs] = useState<WorkoutLog[]>([]);
   const [selected, setSelected] = useState<number | null>(null);

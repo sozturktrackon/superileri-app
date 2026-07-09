@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProfile } from '../state';
-import { getDay, getPlan, intervals, normalizeDay, PLAN_LENGTH } from '../lib/content';
+import { getDay, getPlan, intervals, normalizeDay, planLength } from '../lib/content';
 import { advanceDay, listWorkouts } from '../lib/api';
 import { completedDaySet, computeStreaks } from '../lib/streak';
 
@@ -10,12 +10,12 @@ const Today = () => {
 
   const planId = profile?.plan ?? 'lean';
   const rawDay = profile?.currentDay ?? 1;
-  const dayNumber = normalizeDay(rawDay);
+  const dayNumber = normalizeDay(rawDay, planId);
   const plan = getPlan(planId);
   const day = useMemo(() => getDay(planId, dayNumber), [planId, dayNumber]);
   const [streak, setStreak] = useState(0);
 
-  const cycle = Math.floor((rawDay - 1) / PLAN_LENGTH) + 1;
+  const cycle = Math.floor((rawDay - 1) / planLength(planId)) + 1;
 
   useEffect(() => {
     listWorkouts()

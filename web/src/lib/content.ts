@@ -76,11 +76,14 @@ export const getDay = (planId: string, dayNumber: number) => {
   };
 };
 
-// Cycle length comes from the calendar data itself (4 clean weeks = 28 days;
-// the original program's days 29-30 were trimmed because they collided with
-// the restart — Chest on day 29 AND again on day 1).
-export const PLAN_LENGTH = plans[0]?.days.length ?? 28;
+// Cycle length is PER PLAN and comes from the calendar data itself:
+// Lean is 4 clean weeks (28 days, Sunday rests); Bulk is 6 rolling 5-day
+// blocks (30 days: Chest, Back, Shoulders, Legs, Rest).
+export const planLength = (planId: string): number =>
+  getPlan(planId)?.days.length ?? 28;
 
-/** Wrap day numbers so week 5 starts the cycle again. */
-export const normalizeDay = (day: number): number =>
-  ((((day - 1) % PLAN_LENGTH) + PLAN_LENGTH) % PLAN_LENGTH) + 1;
+/** Wrap day numbers so the next cycle starts where this plan's pattern says. */
+export const normalizeDay = (day: number, planId: string): number => {
+  const len = planLength(planId);
+  return ((((day - 1) % len) + len) % len) + 1;
+};

@@ -1,4 +1,4 @@
-import { getDay, normalizeDay, PLAN_LENGTH } from './content';
+import { getDay, normalizeDay, planLength } from './content';
 import type { WorkoutLog } from './api';
 
 /**
@@ -14,13 +14,13 @@ import type { WorkoutLog } from './api';
  * logs become cycle-aware.
  */
 
-/** Program days (1..PLAN_LENGTH) where every required circuit has a log. */
+/** Program days (1..plan length) where every required circuit has a log. */
 export const completedDaySet = (
   planId: string,
   logs: WorkoutLog[]
 ): Set<number> => {
   const done = new Set<number>();
-  for (let day = 1; day <= PLAN_LENGTH; day++) {
+  for (let day = 1; day <= planLength(planId); day++) {
     const resolved = getDay(planId, day);
     if (!resolved || resolved.rest) continue;
     const required = resolved.groups
@@ -45,7 +45,7 @@ export const computeStreaks = (
   let best = 0;
   let run = 0;
   for (let pos = 1; pos <= currentDayRaw; pos++) {
-    const n = normalizeDay(pos);
+    const n = normalizeDay(pos, planId);
     const d = getDay(planId, n);
     if (!d || d.rest) continue;
     if (completed.has(n)) {

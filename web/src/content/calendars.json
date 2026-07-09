@@ -1,5 +1,5 @@
 {
-  "_comment": "Source: Motivated Calendar.pdf, trimmed to a clean 4-week (28-day) cycle: the original 'Month 1' had 2 extra days (29-30) that collided with the restart (Chest on day 29 AND day 1). Week 5 now begins the cycle again. 'workouts' lists exercise-group keys (see exercises.json) in order. REST days have rest:true; their 'workouts' entry is the OPTIONAL active-recovery suggestion. All intervals: 30s on / 30s off.",
+  "_comment": "Source: Motivated Calendar.pdf, recovery-corrected. LEAN: 28-day cycle (4 weeks x 6 on + Sunday rest); day 1/3 secondaries swapped so Lower-Body HIIT sits 3 days from Leg Strength. BULK: 30-day cycle = 6 clean rolling 5-day blocks (Chest, Back, Shoulders, Legs, Rest); the original day-30 Chest+Back double day is replaced by the rest day the pattern demands. 'workouts' lists exercise-group keys (see exercises.json) in order; REST days' 'workouts' entry is the OPTIONAL active-recovery suggestion. All intervals: 30s on / 30s off.",
   "intervals": {
     "prepSeconds": 30,
     "onSeconds": 30,
@@ -18,7 +18,7 @@
           "rest": false,
           "workouts": [
             "Chest",
-            "CH"
+            "LBH"
           ]
         },
         {
@@ -34,7 +34,7 @@
           "rest": false,
           "workouts": [
             "Shoulders",
-            "LBH"
+            "CH"
           ]
         },
         {
@@ -199,7 +199,7 @@
           "rest": false,
           "workouts": [
             "Chest",
-            "LBH"
+            "CH"
           ]
         },
         {
@@ -207,7 +207,7 @@
           "rest": false,
           "workouts": [
             "Back",
-            "CH"
+            "LBH"
           ]
         },
         {
@@ -457,6 +457,21 @@
           "workouts": [
             "Shoulders",
             "Royce"
+          ]
+        },
+        {
+          "day": 29,
+          "rest": false,
+          "workouts": [
+            "Legs",
+            "UPH"
+          ]
+        },
+        {
+          "day": 30,
+          "rest": true,
+          "workouts": [
+            "GAME"
           ]
         }
       ]

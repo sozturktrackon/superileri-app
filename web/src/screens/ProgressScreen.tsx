@@ -167,7 +167,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
   };
 
   const plan = getPlan(profile?.plan ?? 'lean');
-  const day = normalizeDay(profile?.currentDay ?? 1);
+  const day = normalizeDay(profile?.currentDay ?? 1, profile?.plan ?? 'lean');
   const latestBf = shots.find((s) => typeof s.aiBodyFatPct === 'number')?.aiBodyFatPct;
   const firstBf = [...shots]
     .reverse()
