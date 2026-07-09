@@ -17,7 +17,7 @@ export const dietsVi = {
     {
       icon: '🥤',
       title: 'Cắt đường và calo từ đồ uống',
-      text: 'Chỉ cần nước lọc, cà phê hoặc trà. Tránh đồ uống có đường và đường thêm vào; riêng thay đổi này đã giải quyết được phần lớn vấn đề.',
+      text: 'Chỉ cần nước lọc, cà phê hoặc trà. Tránh nước ngọt và các loại đường cho thêm; riêng thay đổi này đã giải quyết được phần lớn vấn đề.',
     },
     {
       icon: '🥦',
@@ -51,7 +51,7 @@ export const dietsVi = {
     },
     bulk: {
       name: 'Thực đơn mẫu Bulk',
-      summary: '5 bữa + đồ ăn nhẹ · các nhóm chất ở mức vừa đến cao · mỗi ngày có 1 bữa thịt bò nạc hoặc cá hồi.',
+      summary: '5 bữa + đồ ăn nhẹ · cả ba nhóm chất ở mức vừa đến nhiều · mỗi ngày 1 bữa có thịt bò nạc hoặc cá hồi.',
       meals: [
         { name: 'Bữa sáng', items: '1 phần đạm + 1 phần tinh bột + 1 phần trái cây (ví dụ: 3 quả trứng · nửa cốc yến mạch · 1 quả táo)' },
         { name: 'Bữa trưa (×3)', items: 'Mỗi bữa: 1 phần đạm + 1 phần tinh bột + 1 phần rau' },

@@ -32,21 +32,26 @@ export type Lang =
   | 'en' | 'tr' | 'hi' | 'fr' | 'de' | 'es' | 'pt' | 'tl'
   | 'id' | 'ja' | 'vi' | 'th' | 'ru' | 'uk';
 
+// Picker order: English pinned first (the default), then native names
+// (endonyms) alphabetically - Latin script A-Z, then other scripts grouped
+// (Cyrillic, Devanagari, Thai, CJK). Users scan for their own language in
+// their own script, so endonyms + stable script blocks beat any single
+// "alphabetical" rule across writing systems.
 export const LANGS: { code: Lang; label: string }[] = [
   { code: 'en', label: 'English' },
-  { code: 'tr', label: 'Türkçe' },
-  { code: 'hi', label: 'हिन्दी' },
-  { code: 'fr', label: 'Français' },
+  { code: 'id', label: 'Bahasa Indonesia' },
   { code: 'de', label: 'Deutsch' },
   { code: 'es', label: 'Español' },
+  { code: 'fr', label: 'Français' },
   { code: 'pt', label: 'Português' },
   { code: 'tl', label: 'Tagalog' },
-  { code: 'id', label: 'Bahasa Indonesia' },
-  { code: 'ja', label: '日本語' },
   { code: 'vi', label: 'Tiếng Việt' },
-  { code: 'th', label: 'ไทย' },
+  { code: 'tr', label: 'Türkçe' },
   { code: 'ru', label: 'Русский' },
   { code: 'uk', label: 'Українська' },
+  { code: 'hi', label: 'हिन्दी' },
+  { code: 'th', label: 'ไทย' },
+  { code: 'ja', label: '日本語' },
 ];
 
 /** Human-readable language name, for the AI "respond in X" instruction. */

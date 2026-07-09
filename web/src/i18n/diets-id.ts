@@ -12,12 +12,12 @@ export const dietsId = {
     {
       icon: '🚶',
       title: 'Bergerak setelah makan',
-      text: 'Jalan kaki 2–5 menit setelah makan terbukti menurunkan lonjakan gula darah. Terjebak di meja kerja? Lakukan soleus push-up sambil duduk: ujung kaki tetap di lantai, angkat dan turunkan tumit. Ini tetap bekerja walau kamu duduk.',
+      text: 'Jalan kaki 2-5 menit setelah makan terbukti menurunkan lonjakan gula darah. Seharian terpaku di meja kerja? Coba soleus push-up sambil duduk: ujung kaki tetap di lantai, angkat lalu turunkan tumit. Tetap efektif meski dilakukan sambil duduk.',
     },
     {
       icon: '🥤',
       title: 'Stop gula & kalori cair',
-      text: 'Cukup air putih, kopi, atau teh. Hindari minuman manis dan gula tambahan. Satu perubahan ini saja sudah menyelesaikan sebagian besar pekerjaan.',
+      text: 'Cukup air putih, kopi, atau teh. Hindari minuman manis dan gula tambahan. Satu perubahan ini saja dampaknya sudah sangat besar.',
     },
     {
       icon: '🥦',
@@ -32,11 +32,11 @@ export const dietsId = {
     {
       icon: '😴',
       title: 'Tidur & langkah harian',
-      text: 'Tidur 7–9 jam dan rutin jalan kaki setiap hari diam-diam mempercepat pembakaran lemak dan meredam rasa ngidam. Jangan remehkan keduanya.',
+      text: 'Tidur 7-9 jam dan rutin jalan kaki setiap hari diam-diam mempercepat pembakaran lemak dan meredam keinginan ngemil. Jangan remehkan keduanya.',
     },
   ],
   dinnerCarbNote:
-    'Trik opsional: mengurangi karbohidrat saat makan malam membantu banyak orang mengontrol total kalorinya. Ini taktik praktis, bukan aturan. Kalori jauh lebih penting daripada jam makan karbohidrat.',
+    'Trik opsional: mengurangi karbohidrat saat makan malam membantu banyak orang mengontrol total kalorinya. Ini taktik praktis, bukan aturan. Kalori jauh lebih penting daripada kapan kamu makan karbohidrat.',
   mealPlans: {
     lean: {
       name: 'Template makan Lean',
