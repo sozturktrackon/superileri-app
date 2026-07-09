@@ -43,6 +43,8 @@ export const intervals = calendarsData.intervals as Intervals;
 
 const groupByKey = new Map(groups.map((g) => [g.key, g]));
 
+export type PlanId = 'lean' | 'bulk' | 'lean2' | 'bulk2';
+
 export const allGroups = (): Group[] => groups;
 export const allPlans = (): Plan[] => plans;
 
@@ -59,6 +61,16 @@ const SHORT_LABELS: Record<string, string> = {
   GAME: 'Full Body',
   Royce: 'Core',
   'J-Lo': 'Glutes',
+  Chest2: 'Chest',
+  Back2: 'Back',
+  Shoulders2: 'Shoulders',
+  Legs2: 'Legs',
+  UPH2: 'UPH',
+  LBH2: 'LBH',
+  CH2: 'CH',
+  GAME2: 'Full Body',
+  Royce2: 'Core',
+  JLo2: 'Glutes',
 };
 export const groupShort = (key: string): string => SHORT_LABELS[key] ?? key;
 

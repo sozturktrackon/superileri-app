@@ -61,6 +61,17 @@ const CATEGORY_GENRES: Record<string, Genre[]> = {
   CH: ['edm', 'general', 'pop'],
   Royce: ['pop', 'hype', 'general'],
   'J-Lo': ['pop', 'edm', 'general'],
+  // Level II circuits share their Level I counterpart's vibe.
+  Chest2: ['hype', 'rock', 'phonk'],
+  Back2: ['rock', 'hype', 'phonk'],
+  Shoulders2: ['phonk', 'hype', 'rock'],
+  Legs2: ['phonk', 'edm', 'hype'],
+  GAME2: ['hype', 'phonk', 'general'],
+  UPH2: ['edm', 'phonk', 'general'],
+  LBH2: ['edm', 'phonk', 'general'],
+  CH2: ['edm', 'general', 'pop'],
+  Royce2: ['pop', 'hype', 'general'],
+  JLo2: ['pop', 'edm', 'general'],
 };
 
 export const parseYouTube = (

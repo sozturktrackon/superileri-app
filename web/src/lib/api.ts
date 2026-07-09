@@ -122,7 +122,7 @@ export const clearManualMark = async (
 export const setCurrentDay = async (
   profileId: string,
   day: number,
-  plan?: 'lean' | 'bulk'
+  plan?: 'lean' | 'bulk' | 'lean2' | 'bulk2'
 ): Promise<UserProfile> => {
   return updateProfile(profileId, { currentDay: day, ...(plan ? { plan } : {}) });
 };

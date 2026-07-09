@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../state';
-import { getDay, getPlan, groupShort, normalizeDay } from '../lib/content';
+import { getDay, getPlan, groupShort, normalizeDay, type PlanId } from '../lib/content';
 import {
   clearManualMark,
   listWorkouts,
@@ -11,10 +11,17 @@ import {
   type WorkoutLog,
 } from '../lib/api';
 
+const PLAN_SUBS: Record<PlanId, string> = {
+  lean: 'Shred',
+  bulk: 'Build muscle',
+  lean2: 'Shred · level II',
+  bulk2: 'Build · level II',
+};
+
 const CalendarScreen = () => {
   const { profile, refresh } = useProfile();
   const navigate = useNavigate();
-  const [planId, setPlanId] = useState<'lean' | 'bulk'>(profile?.plan ?? 'lean');
+  const [planId, setPlanId] = useState<PlanId>(profile?.plan ?? 'lean');
   const plan = getPlan(planId)!;
   const today = normalizeDay(profile?.currentDay ?? 1, planId);
   const [saving, setSaving] = useState(false);
@@ -47,7 +54,7 @@ const CalendarScreen = () => {
     return done;
   }, [logs, plan, planId]);
 
-  const switchPlan = async (id: 'lean' | 'bulk') => {
+  const switchPlan = async (id: PlanId) => {
     setPlanId(id);
     setSelected(null);
     if (profile && profile.plan !== id) {
@@ -117,7 +124,7 @@ const CalendarScreen = () => {
       <p className="page-sub">{plan.note}</p>
 
       <div className="choice-grid" style={{ marginBottom: 16 }}>
-        {(['lean', 'bulk'] as const).map((id) => (
+        {(['lean', 'bulk', 'lean2', 'bulk2'] as const).map((id) => (
           <button
             key={id}
             className={`choice ${planId === id ? 'selected' : ''}`}
@@ -125,7 +132,7 @@ const CalendarScreen = () => {
             disabled={saving}
           >
             <h3>{getPlan(id)!.name}</h3>
-            <p>{id === 'lean' ? 'Shred' : 'Build muscle'}</p>
+            <p>{PLAN_SUBS[id]}</p>
           </button>
         ))}
       </div>

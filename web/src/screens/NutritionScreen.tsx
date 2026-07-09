@@ -6,7 +6,10 @@ type MealPlan = (typeof diets.mealPlans)['lean'];
 
 const NutritionScreen = () => {
   const { profile } = useProfile();
-  const [planId, setPlanId] = useState<'lean' | 'bulk'>(profile?.plan ?? 'lean');
+  // Level II plans eat like their Level I counterpart.
+  const [planId, setPlanId] = useState<'lean' | 'bulk'>(
+    profile?.plan?.startsWith('bulk') ? 'bulk' : 'lean'
+  );
   const plan: MealPlan = diets.mealPlans[planId];
 
   return (

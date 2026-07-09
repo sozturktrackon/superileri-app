@@ -6,12 +6,38 @@
       "name": "Chest Strength",
       "key": "Chest",
       "exercises": [
-        { "id": "traditional-push-up", "name": "Traditional Push-Up", "progressions": ["Clapping Push-Up"] },
-        { "id": "wide-push-up", "name": "Wide Push-Up", "progressions": [] },
-        { "id": "diamond-push-up", "name": "Diamond Push-Up", "progressions": [] },
-        { "id": "incline-push-up", "name": "Incline Push-Up", "progressions": [] },
-        { "id": "decline-push-up", "name": "Decline Push-Up", "progressions": [] },
-        { "id": "fly-slides", "name": "Fly Slides", "progressions": [] }
+        {
+          "id": "traditional-push-up",
+          "name": "Traditional Push-Up",
+          "progressions": [
+            "Clapping Push-Up"
+          ]
+        },
+        {
+          "id": "wide-push-up",
+          "name": "Wide Push-Up",
+          "progressions": []
+        },
+        {
+          "id": "diamond-push-up",
+          "name": "Diamond Push-Up",
+          "progressions": []
+        },
+        {
+          "id": "incline-push-up",
+          "name": "Incline Push-Up",
+          "progressions": []
+        },
+        {
+          "id": "decline-push-up",
+          "name": "Decline Push-Up",
+          "progressions": []
+        },
+        {
+          "id": "fly-slides",
+          "name": "Fly Slides",
+          "progressions": []
+        }
       ]
     },
     {
@@ -19,10 +45,26 @@
       "name": "Back Strength",
       "key": "Back",
       "exercises": [
-        { "id": "back-extensions", "name": "Back Extensions", "progressions": [] },
-        { "id": "supermans", "name": "Supermans", "progressions": [] },
-        { "id": "hindu-push-ups", "name": "Hindu Push-Ups", "progressions": [] },
-        { "id": "lat-slides", "name": "Lat Slides", "progressions": [] }
+        {
+          "id": "back-extensions",
+          "name": "Back Extensions",
+          "progressions": []
+        },
+        {
+          "id": "supermans",
+          "name": "Supermans",
+          "progressions": []
+        },
+        {
+          "id": "hindu-push-ups",
+          "name": "Hindu Push-Ups",
+          "progressions": []
+        },
+        {
+          "id": "lat-slides",
+          "name": "Lat Slides",
+          "progressions": []
+        }
       ]
     },
     {
@@ -30,11 +72,34 @@
       "name": "Shoulder Strength",
       "key": "Shoulders",
       "exercises": [
-        { "id": "pike-push-up", "name": "Pike Push-Up", "progressions": ["Chair Pike Push-Up", "Wall Push-Up"] },
-        { "id": "pulling-lat-raise", "name": "Pulling Lat Raise", "progressions": [] },
-        { "id": "tomahawk-shoulder-raise", "name": "Tomahawk Shoulder Raise", "progressions": [] },
-        { "id": "front-raise", "name": "Front Raise", "progressions": [] },
-        { "id": "y-up-to-pull-down", "name": "Y-Up to Pull Down", "progressions": [] }
+        {
+          "id": "pike-push-up",
+          "name": "Pike Push-Up",
+          "progressions": [
+            "Chair Pike Push-Up",
+            "Wall Push-Up"
+          ]
+        },
+        {
+          "id": "pulling-lat-raise",
+          "name": "Pulling Lat Raise",
+          "progressions": []
+        },
+        {
+          "id": "tomahawk-shoulder-raise",
+          "name": "Tomahawk Shoulder Raise",
+          "progressions": []
+        },
+        {
+          "id": "front-raise",
+          "name": "Front Raise",
+          "progressions": []
+        },
+        {
+          "id": "y-up-to-pull-down",
+          "name": "Y-Up to Pull Down",
+          "progressions": []
+        }
       ]
     },
     {
@@ -42,13 +107,49 @@
       "name": "Leg Strength",
       "key": "Legs",
       "exercises": [
-        { "id": "timed-squats", "name": "Timed Squats", "progressions": [] },
-        { "id": "wall-sits", "name": "Wall Sits", "progressions": ["One Leg Wall Sit"] },
-        { "id": "alternating-reverse-lunge", "name": "Alternating Reverse Lunge", "progressions": ["Jumping Split Lunges"] },
-        { "id": "isolated-lunge-pulse", "name": "Isolated Lunge Pulse", "progressions": [] },
-        { "id": "alternating-curtsy-lunge", "name": "Alternating Curtsy Lunge", "progressions": ["Leaping Curtsy Lunge"] },
-        { "id": "isolated-curtsy-lunge-pulse", "name": "Isolated Curtsy Lunge Pulse", "progressions": [] },
-        { "id": "hip-thrusts", "name": "Hip Thrusts", "progressions": ["Sliding Leg Curl w/ Hip Thrust"] }
+        {
+          "id": "timed-squats",
+          "name": "Timed Squats",
+          "progressions": []
+        },
+        {
+          "id": "wall-sits",
+          "name": "Wall Sits",
+          "progressions": [
+            "One Leg Wall Sit"
+          ]
+        },
+        {
+          "id": "alternating-reverse-lunge",
+          "name": "Alternating Reverse Lunge",
+          "progressions": [
+            "Jumping Split Lunges"
+          ]
+        },
+        {
+          "id": "isolated-lunge-pulse",
+          "name": "Isolated Lunge Pulse",
+          "progressions": []
+        },
+        {
+          "id": "alternating-curtsy-lunge",
+          "name": "Alternating Curtsy Lunge",
+          "progressions": [
+            "Leaping Curtsy Lunge"
+          ]
+        },
+        {
+          "id": "isolated-curtsy-lunge-pulse",
+          "name": "Isolated Curtsy Lunge Pulse",
+          "progressions": []
+        },
+        {
+          "id": "hip-thrusts",
+          "name": "Hip Thrusts",
+          "progressions": [
+            "Sliding Leg Curl w/ Hip Thrust"
+          ]
+        }
       ]
     },
     {
@@ -56,10 +157,28 @@
       "name": "Upper Body HIIT",
       "key": "UPH",
       "exercises": [
-        { "id": "plank-jacks", "name": "Plank Jacks", "progressions": [] },
-        { "id": "crawl-outs", "name": "Crawl Outs", "progressions": ["Crawl Outs w/ Jump"] },
-        { "id": "plank-oblique-hops", "name": "Plank Oblique Hops", "progressions": [] },
-        { "id": "plank-toe-taps", "name": "Plank Toe Taps", "progressions": [] }
+        {
+          "id": "plank-jacks",
+          "name": "Plank Jacks",
+          "progressions": []
+        },
+        {
+          "id": "crawl-outs",
+          "name": "Crawl Outs",
+          "progressions": [
+            "Crawl Outs w/ Jump"
+          ]
+        },
+        {
+          "id": "plank-oblique-hops",
+          "name": "Plank Oblique Hops",
+          "progressions": []
+        },
+        {
+          "id": "plank-toe-taps",
+          "name": "Plank Toe Taps",
+          "progressions": []
+        }
       ]
     },
     {
@@ -67,10 +186,26 @@
       "name": "Lower Body HIIT",
       "key": "LBH",
       "exercises": [
-        { "id": "alternating-side-lunges", "name": "Alternating Side Lunges", "progressions": [] },
-        { "id": "lunge-jumps", "name": "Lunge Jumps", "progressions": [] },
-        { "id": "low-in-out-squats", "name": "Low In-Out Squats", "progressions": [] },
-        { "id": "jump-squats", "name": "Jump Squats", "progressions": [] }
+        {
+          "id": "alternating-side-lunges",
+          "name": "Alternating Side Lunges",
+          "progressions": []
+        },
+        {
+          "id": "lunge-jumps",
+          "name": "Lunge Jumps",
+          "progressions": []
+        },
+        {
+          "id": "low-in-out-squats",
+          "name": "Low In-Out Squats",
+          "progressions": []
+        },
+        {
+          "id": "jump-squats",
+          "name": "Jump Squats",
+          "progressions": []
+        }
       ]
     },
     {
@@ -78,10 +213,26 @@
       "name": "Cardio HIIT",
       "key": "CH",
       "exercises": [
-        { "id": "high-knees", "name": "High Knees", "progressions": [] },
-        { "id": "jumping-jacks", "name": "Jumping Jacks", "progressions": [] },
-        { "id": "burpees", "name": "Burpees", "progressions": [] },
-        { "id": "mountain-climbers", "name": "Mountain Climbers", "progressions": [] }
+        {
+          "id": "high-knees",
+          "name": "High Knees",
+          "progressions": []
+        },
+        {
+          "id": "jumping-jacks",
+          "name": "Jumping Jacks",
+          "progressions": []
+        },
+        {
+          "id": "burpees",
+          "name": "Burpees",
+          "progressions": []
+        },
+        {
+          "id": "mountain-climbers",
+          "name": "Mountain Climbers",
+          "progressions": []
+        }
       ]
     },
     {
@@ -89,10 +240,26 @@
       "name": "Full Body Growth Circuit",
       "key": "GAME",
       "exercises": [
-        { "id": "plank-push-ups", "name": "Plank Push-Ups", "progressions": [] },
-        { "id": "isolated-chest-hold-oblique-toe-taps", "name": "Isolated Chest Hold with Oblique Toe Taps", "progressions": [] },
-        { "id": "scapular-holds-wide-push-up", "name": "Scapular Holds w/ Wide Push-Up", "progressions": [] },
-        { "id": "chair-dips", "name": "Chair Dips", "progressions": [] }
+        {
+          "id": "plank-push-ups",
+          "name": "Plank Push-Ups",
+          "progressions": []
+        },
+        {
+          "id": "isolated-chest-hold-oblique-toe-taps",
+          "name": "Isolated Chest Hold with Oblique Toe Taps",
+          "progressions": []
+        },
+        {
+          "id": "scapular-holds-wide-push-up",
+          "name": "Scapular Holds w/ Wide Push-Up",
+          "progressions": []
+        },
+        {
+          "id": "chair-dips",
+          "name": "Chair Dips",
+          "progressions": []
+        }
       ]
     },
     {
@@ -100,10 +267,29 @@
       "name": "Core & Abs Circuit",
       "key": "Royce",
       "exercises": [
-        { "id": "squat-to-oblique-cross", "name": "Squat to Oblique Cross", "progressions": [] },
-        { "id": "v-sit", "name": "V-Sit", "progressions": ["V-Sit with Leg Drops", "V-Sit with Scissors"] },
-        { "id": "single-side-bicycle-crunch-isolations", "name": "Single Side Bicycle Crunch Isolations", "progressions": [] },
-        { "id": "plank-slides", "name": "Plank Slides", "progressions": [] }
+        {
+          "id": "squat-to-oblique-cross",
+          "name": "Squat to Oblique Cross",
+          "progressions": []
+        },
+        {
+          "id": "v-sit",
+          "name": "V-Sit",
+          "progressions": [
+            "V-Sit with Leg Drops",
+            "V-Sit with Scissors"
+          ]
+        },
+        {
+          "id": "single-side-bicycle-crunch-isolations",
+          "name": "Single Side Bicycle Crunch Isolations",
+          "progressions": []
+        },
+        {
+          "id": "plank-slides",
+          "name": "Plank Slides",
+          "progressions": []
+        }
       ]
     },
     {
@@ -112,11 +298,312 @@
       "key": "J-Lo",
       "_note": "Original list was lost with the old site and is not on the demo channel; reconstructed as a standard equipment-free glute circuit (Sumo Squats sourced from the program's demo channel).",
       "exercises": [
-        { "id": "glute-bridge", "name": "Glute Bridge", "progressions": ["Marching Glute Bridge"] },
-        { "id": "donkey-kicks", "name": "Donkey Kicks", "progressions": ["Donkey Kick Pulses"] },
-        { "id": "single-leg-glute-bridge", "name": "Single-Leg Glute Bridge", "progressions": [] },
-        { "id": "fire-hydrants", "name": "Fire Hydrants", "progressions": [] },
-        { "id": "sumo-squats", "name": "Sumo Squats", "progressions": ["Sumo Squat Pulse"] }
+        {
+          "id": "glute-bridge",
+          "name": "Glute Bridge",
+          "progressions": [
+            "Marching Glute Bridge"
+          ]
+        },
+        {
+          "id": "donkey-kicks",
+          "name": "Donkey Kicks",
+          "progressions": [
+            "Donkey Kick Pulses"
+          ]
+        },
+        {
+          "id": "single-leg-glute-bridge",
+          "name": "Single-Leg Glute Bridge",
+          "progressions": []
+        },
+        {
+          "id": "fire-hydrants",
+          "name": "Fire Hydrants",
+          "progressions": []
+        },
+        {
+          "id": "sumo-squats",
+          "name": "Sumo Squats",
+          "progressions": [
+            "Sumo Squat Pulse"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chest2",
+      "name": "Chest Strength II",
+      "key": "Chest2",
+      "exercises": [
+        {
+          "id": "tempo-push-up",
+          "name": "Tempo Push-Up (3s down)",
+          "progressions": []
+        },
+        {
+          "id": "archer-push-up",
+          "name": "Archer Push-Up",
+          "progressions": []
+        },
+        {
+          "id": "pseudo-planche-push-up",
+          "name": "Pseudo-Planche Lean Push-Up",
+          "progressions": []
+        },
+        {
+          "id": "push-up-shoulder-tap",
+          "name": "Push-Up to Shoulder Tap",
+          "progressions": []
+        }
+      ]
+    },
+    {
+      "id": "back2",
+      "name": "Back Strength II",
+      "key": "Back2",
+      "exercises": [
+        {
+          "id": "ytw-swimmers",
+          "name": "Y-T-W Swimmers",
+          "progressions": []
+        },
+        {
+          "id": "superman-pull-down",
+          "name": "Superman Pull-Down + Hold",
+          "progressions": []
+        },
+        {
+          "id": "dive-bombers",
+          "name": "Dive Bombers",
+          "progressions": []
+        },
+        {
+          "id": "self-resisted-towel-row",
+          "name": "Self-Resisted Towel Row",
+          "progressions": []
+        }
+      ]
+    },
+    {
+      "id": "shoulders2",
+      "name": "Shoulder Strength II",
+      "key": "Shoulders2",
+      "exercises": [
+        {
+          "id": "elevated-pike-push-up",
+          "name": "Elevated Pike Push-Up",
+          "progressions": []
+        },
+        {
+          "id": "plank-up-down",
+          "name": "Plank Up-Down",
+          "progressions": []
+        },
+        {
+          "id": "lateral-raise-iso-hold",
+          "name": "Lateral Raise Iso Hold",
+          "progressions": []
+        },
+        {
+          "id": "wall-angels",
+          "name": "Wall Angels",
+          "progressions": []
+        }
+      ]
+    },
+    {
+      "id": "legs2",
+      "name": "Leg Strength II",
+      "key": "Legs2",
+      "exercises": [
+        {
+          "id": "tempo-squat",
+          "name": "Tempo Squat (3s down)",
+          "progressions": []
+        },
+        {
+          "id": "bulgarian-split-squat",
+          "name": "Bulgarian Split Squat",
+          "progressions": []
+        },
+        {
+          "id": "single-leg-rdl",
+          "name": "Single-Leg Romanian Deadlift",
+          "progressions": []
+        },
+        {
+          "id": "sliding-hamstring-curl",
+          "name": "Sliding Hamstring Curl",
+          "progressions": []
+        },
+        {
+          "id": "squat-calf-raise",
+          "name": "Squat to Calf Raise",
+          "progressions": []
+        }
+      ]
+    },
+    {
+      "id": "uph2",
+      "name": "Upper Body HIIT II",
+      "key": "UPH2",
+      "exercises": [
+        {
+          "id": "bear-crawl",
+          "name": "Bear Crawl",
+          "progressions": []
+        },
+        {
+          "id": "plank-jack-shoulder-tap",
+          "name": "Plank Jack + Shoulder Tap",
+          "progressions": []
+        },
+        {
+          "id": "cross-body-climbers",
+          "name": "Cross-Body Mountain Climbers",
+          "progressions": []
+        },
+        {
+          "id": "shadow-boxing",
+          "name": "Shadow Boxing",
+          "progressions": []
+        }
+      ]
+    },
+    {
+      "id": "lbh2",
+      "name": "Lower Body HIIT II",
+      "key": "LBH2",
+      "exercises": [
+        {
+          "id": "speed-skaters",
+          "name": "Speed Skaters",
+          "progressions": []
+        },
+        {
+          "id": "squat-calf-pop",
+          "name": "Squat to Calf-Raise Pop",
+          "progressions": []
+        },
+        {
+          "id": "quick-feet-pulses",
+          "name": "Quick-Feet Squat Pulses",
+          "progressions": []
+        },
+        {
+          "id": "reverse-lunge-knee-drive",
+          "name": "Reverse Lunge + Knee Drive",
+          "progressions": []
+        }
+      ]
+    },
+    {
+      "id": "ch2",
+      "name": "Cardio HIIT II",
+      "key": "CH2",
+      "exercises": [
+        {
+          "id": "invisible-jump-rope",
+          "name": "Invisible Jump Rope",
+          "progressions": []
+        },
+        {
+          "id": "seal-jacks",
+          "name": "Seal Jacks",
+          "progressions": []
+        },
+        {
+          "id": "burpees",
+          "name": "Burpees",
+          "progressions": []
+        },
+        {
+          "id": "high-knee-sprints",
+          "name": "High-Knee Sprint Bursts",
+          "progressions": []
+        }
+      ]
+    },
+    {
+      "id": "game2",
+      "name": "Full Body Circuit II",
+      "key": "GAME2",
+      "exercises": [
+        {
+          "id": "plank-push-up-tap",
+          "name": "Plank Push-Up + Tap",
+          "progressions": []
+        },
+        {
+          "id": "crab-reach",
+          "name": "Crab Reach",
+          "progressions": []
+        },
+        {
+          "id": "elevated-chair-dips",
+          "name": "Chair Dips, Feet Elevated",
+          "progressions": []
+        },
+        {
+          "id": "sprawls",
+          "name": "Sprawls",
+          "progressions": []
+        }
+      ]
+    },
+    {
+      "id": "royce2",
+      "name": "Core & Abs Circuit II",
+      "key": "Royce2",
+      "exercises": [
+        {
+          "id": "hollow-body-hold",
+          "name": "Hollow Body Hold",
+          "progressions": []
+        },
+        {
+          "id": "side-plank-hip-dips",
+          "name": "Side Plank Hip Dips",
+          "progressions": []
+        },
+        {
+          "id": "body-saw-slides",
+          "name": "Body-Saw Slides",
+          "progressions": []
+        },
+        {
+          "id": "squat-cross-pulse",
+          "name": "Squat Cross + Pulse",
+          "progressions": []
+        }
+      ]
+    },
+    {
+      "id": "jlo2",
+      "name": "Glutes & Booty Circuit II",
+      "key": "JLo2",
+      "exercises": [
+        {
+          "id": "single-leg-hip-thrust",
+          "name": "Single-Leg Hip Thrust (chair)",
+          "progressions": []
+        },
+        {
+          "id": "cossack-squat",
+          "name": "Cossack Squat",
+          "progressions": []
+        },
+        {
+          "id": "fire-hydrant-kick",
+          "name": "Fire Hydrant + Kick-Out",
+          "progressions": []
+        },
+        {
+          "id": "tempo-sumo-calf-raise",
+          "name": "Tempo Sumo Squat + Calf Raise",
+          "progressions": []
+        }
       ]
     }
   ]

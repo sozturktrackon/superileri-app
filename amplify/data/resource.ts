@@ -14,9 +14,9 @@ const schema = a.schema({
   // One row per user: their plan choice and where they are in it.
   UserProfile: a
     .model({
-      plan: a.enum(['lean', 'bulk']),
+      plan: a.enum(['lean', 'bulk', 'lean2', 'bulk2']), // II = graduate programs
       startDate: a.date(),
-      currentDay: a.integer().default(1), // 1..30 within the Month-1 cycle
+      currentDay: a.integer().default(1), // raw ever-increasing; wraps per plan length
       displayName: a.string(),
       sex: a.enum(['male', 'female', 'other']),
       birthYear: a.integer(),
