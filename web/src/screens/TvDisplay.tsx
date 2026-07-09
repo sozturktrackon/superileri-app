@@ -19,6 +19,26 @@ const phaseTitle: Record<string, string> = {
 };
 
 /**
+ * Seconds left, preferring the phone's published wall-clock phase end (zero
+ * latency skew; both devices are NTP-synced). If the TV's clock disagrees
+ * with the phone's last reported secondsLeft by more than 3s, the TV clock is
+ * off — fall back to ticking from the receipt time instead.
+ */
+const computeLeft = (
+  endsAt: number | null,
+  sync: { left: number; at: number } | null
+): number | null => {
+  const fromSync = sync
+    ? Math.max(0, sync.left - Math.floor((performance.now() - sync.at) / 1000))
+    : null;
+  if (endsAt) {
+    const fromClock = Math.max(0, Math.ceil((endsAt - Date.now()) / 1000));
+    if (fromSync == null || Math.abs(fromClock - fromSync) <= 3) return fromClock;
+  }
+  return fromSync;
+};
+
+/**
  * Public, no-login "big screen" display. Receives the paired phone's live
  * workout state over an AppSync SUBSCRIPTION (real-time push; falls back to
  * polling only if the socket can't connect), renders a synced countdown + the
@@ -47,9 +67,12 @@ const TvDisplay = () => {
   const playerRef = useRef<YTPlayer | null>(null);
   const currentYtId = useRef<string | null>(null);
   const lastEventAt = useRef(0);
-  // Local smooth countdown: updates arrive at network cadence, so we tick
-  // locally and treat every received update as a correction.
+  // Local smooth countdown. Preferred source: the phone's published
+  // phase-end WALL-CLOCK time — the TV counts down against its own clock, so
+  // network latency doesn't skew the number at all. Fallback (older phone
+  // builds / a badly wrong TV clock): tick from the last received secondsLeft.
   const syncRef = useRef<{ left: number; at: number } | null>(null);
+  const endsAtRef = useRef<number | null>(null);
   const [displayLeft, setDisplayLeft] = useState<number | null>(null);
 
   const apply = useCallback((s: LiveSession | null) => {
@@ -58,9 +81,10 @@ const TvDisplay = () => {
     setErr(null);
     setStale(false);
     setSession(s);
+    endsAtRef.current = s.phaseEndsAt ?? null;
     if (s.secondsLeft != null) {
       syncRef.current = { left: s.secondsLeft, at: performance.now() };
-      setDisplayLeft(s.secondsLeft);
+      setDisplayLeft(computeLeft(s.phaseEndsAt ?? null, { left: s.secondsLeft, at: performance.now() }));
     }
   }, []);
 
@@ -112,11 +136,9 @@ const TvDisplay = () => {
   useEffect(() => {
     if (session?.status !== 'running') return;
     const id = window.setInterval(() => {
-      const sync = syncRef.current;
-      if (!sync) return;
-      const elapsed = Math.floor((performance.now() - sync.at) / 1000);
-      setDisplayLeft(Math.max(0, sync.left - elapsed));
-    }, 250);
+      const left = computeLeft(endsAtRef.current, syncRef.current);
+      if (left != null) setDisplayLeft(left);
+    }, 150);
     return () => window.clearInterval(id);
   }, [session?.status]);
 

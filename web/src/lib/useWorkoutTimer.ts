@@ -18,6 +18,9 @@ export type TimerState = {
   index: number; // index into phases
   phase: Phase | undefined;
   secondsLeft: number;
+  // Wall-clock epoch ms when the current phase ends (null unless running).
+  // Broadcast to the TV so it can count down against its own clock.
+  endsAt: number | null;
 };
 
 /**
@@ -42,7 +45,8 @@ export const useWorkoutTimer = (
   const [secondsLeft, setSecondsLeft] = useState(initSeconds);
   const [status, setStatus] = useState<TimerStatus>('idle');
 
-  const endAtRef = useRef<number>(0); // wall-clock ms when current phase ends
+  const endAtRef = useRef<number>(0); // performance.now() ms when phase ends
+  const endsAtEpochRef = useRef<number>(0); // same moment on the wall clock
   const remainingRef = useRef<number>(initSeconds * 1000);
   const rafRef = useRef<number | null>(null);
   const lastBeepSecRef = useRef<number>(-1);
@@ -117,6 +121,7 @@ export const useWorkoutTimer = (
       announcePhaseStart(p);
       if (autoStart) {
         endAtRef.current = performance.now() + remainingRef.current;
+        endsAtEpochRef.current = Date.now() + remainingRef.current;
         setStatus('running');
       }
     },
@@ -162,6 +167,7 @@ export const useWorkoutTimer = (
     if (!p) return;
     remainingRef.current = secondsLeft * 1000;
     endAtRef.current = performance.now() + remainingRef.current;
+    endsAtEpochRef.current = Date.now() + remainingRef.current;
     announcePhaseStart(p);
     setStatus('running');
   }, [phases, index, secondsLeft, announcePhaseStart]);
@@ -174,6 +180,7 @@ export const useWorkoutTimer = (
 
   const resume = useCallback(() => {
     endAtRef.current = performance.now() + remainingRef.current;
+    endsAtEpochRef.current = Date.now() + remainingRef.current;
     setStatus('running');
   }, []);
 
@@ -208,6 +215,7 @@ export const useWorkoutTimer = (
     index,
     phase: phases[index],
     secondsLeft,
+    endsAt: status === 'running' ? endsAtEpochRef.current : null,
   };
 
   return { state, start, pause, resume, toggle, skip, prev, reset };

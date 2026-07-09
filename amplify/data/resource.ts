@@ -123,6 +123,10 @@ const schema = a.schema({
       exerciseId: a.string(),
       groupName: a.string(),
       secondsLeft: a.integer(),
+      // Wall-clock epoch ms when the current phase ends. The TV counts down
+      // from its OWN clock against this, so network latency doesn't skew the
+      // display (secondsLeft alone always trails by the publish+push delay).
+      phaseEndsAt: a.float(),
       totalSeconds: a.integer(),
       round: a.integer(),
       totalRounds: a.integer(),

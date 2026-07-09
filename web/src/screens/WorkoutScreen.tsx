@@ -193,6 +193,7 @@ const WorkoutScreen = () => {
       videoStart: vid?.start ?? null,
       groupName: group.name,
       secondsLeft: state.secondsLeft,
+      phaseEndsAt: state.endsAt,
       totalSeconds: state.phase?.seconds,
       round: state.phase?.round,
       totalRounds: state.phase?.totalRounds,
