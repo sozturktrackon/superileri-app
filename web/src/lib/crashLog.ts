@@ -1,10 +1,10 @@
 /**
  * On-device crash recorder. There's no backend telemetry in this app, so when
- * something breaks mid-workout the only evidence lives on the phone — capture
+ * something breaks mid-workout the only evidence lives on the phone - capture
  * it. Stores the last few errors in localStorage; surfaced in Progress →
  * Crash reports with a copy button.
  *
- * Note: an OS-level tab kill (out of memory) fires no events — if the app
+ * Note: an OS-level tab kill (out of memory) fires no events - if the app
  * "crashed" but nothing is recorded here, memory pressure is the likely cause.
  */
 const KEY = 'superileri.crashLog';

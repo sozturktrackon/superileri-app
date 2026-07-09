@@ -48,7 +48,7 @@ export const publishLiveSession = async (
   }
 };
 
-/** Guest-readable fetch by code — used by the TV page (no login). Uses the
+/** Guest-readable fetch by code - used by the TV page (no login). Uses the
  *  identity-pool (guest) auth mode, since the TV has no user-pool session. */
 export const fetchLiveSession = async (
   code: string
@@ -63,7 +63,7 @@ export const fetchLiveSession = async (
 /**
  * Real-time updates for the TV: AppSync subscriptions (guest auth) push every
  * change the phone publishes, no polling. `onError` fires if the socket can't
- * be established — the caller should fall back to polling then. Returns an
+ * be established - the caller should fall back to polling then. Returns an
  * unsubscribe function.
  */
 export const subscribeLiveSession = (

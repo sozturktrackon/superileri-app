@@ -1,30 +1,24 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../state';
-import { getDay, getPlan, groupShort, normalizeDay, type PlanId } from '../lib/content';
+import { allPlans, getDay, getPlan, groupShort, normalizeDay, type PlanId } from '../lib/content';
 import {
   clearManualMark,
   listWorkouts,
   markDayComplete,
   setCurrentDay,
-  updateProfile,
   type WorkoutLog,
 } from '../lib/api';
-
-const PLAN_SUBS: Record<PlanId, string> = {
-  lean: 'Shred',
-  bulk: 'Build muscle',
-  lean2: 'Shred · level II',
-  bulk2: 'Build · level II',
-};
 
 const CalendarScreen = () => {
   const { profile, refresh } = useProfile();
   const navigate = useNavigate();
+  // planId here is only what's being VIEWED. The active program is changed
+  // deliberately from the Progress tab, never by browsing calendars.
   const [planId, setPlanId] = useState<PlanId>(profile?.plan ?? 'lean');
   const plan = getPlan(planId)!;
+  const isActivePlan = planId === profile?.plan;
   const today = normalizeDay(profile?.currentDay ?? 1, planId);
-  const [saving, setSaving] = useState(false);
   const [logs, setLogs] = useState<WorkoutLog[]>([]);
   const [selected, setSelected] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
@@ -53,17 +47,6 @@ const CalendarScreen = () => {
     }
     return done;
   }, [logs, plan, planId]);
-
-  const switchPlan = async (id: PlanId) => {
-    setPlanId(id);
-    setSelected(null);
-    if (profile && profile.plan !== id) {
-      setSaving(true);
-      await updateProfile(profile.id, { plan: id });
-      await refresh();
-      setSaving(false);
-    }
-  };
 
   const requiredKeys = (day: number) =>
     (getDay(planId, day)?.groups ?? [])
@@ -101,11 +84,7 @@ const CalendarScreen = () => {
     if (!profile) return;
     setBusy(true);
     try {
-      await setCurrentDay(
-        profile.id,
-        day,
-        planId !== profile.plan ? planId : undefined
-      );
+      await setCurrentDay(profile.id, day);
       await refresh();
       navigate('/');
     } finally {
@@ -123,19 +102,31 @@ const CalendarScreen = () => {
       <h1 className="page-title">Calendar</h1>
       <p className="page-sub">{plan.note}</p>
 
-      <div className="choice-grid" style={{ marginBottom: 16 }}>
-        {(['lean', 'bulk', 'lean2', 'bulk2'] as const).map((id) => (
-          <button
-            key={id}
-            className={`choice ${planId === id ? 'selected' : ''}`}
-            onClick={() => switchPlan(id)}
-            disabled={saving}
-          >
-            <h3>{getPlan(id)!.name}</h3>
-            <p>{PLAN_SUBS[id]}</p>
-          </button>
-        ))}
+      <div className="field" style={{ marginBottom: 12 }}>
+        <select
+          value={planId}
+          onChange={(e) => {
+            setPlanId(e.target.value as PlanId);
+            setSelected(null);
+          }}
+          style={{ width: '100%', padding: '10px 12px', borderRadius: 10 }}
+        >
+          {allPlans().map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.name}
+              {p.id === profile?.plan ? ' · your program' : ''}
+            </option>
+          ))}
+        </select>
       </div>
+
+      {!isActivePlan && (
+        <div className="banner" style={{ marginBottom: 12 }}>
+          Just browsing. Your program is{' '}
+          <strong>{getPlan(profile?.plan ?? 'lean')?.name}</strong>. You can
+          switch programs from the Progress tab.
+        </div>
+      )}
 
       <div className="card-row" style={{ marginBottom: 12 }}>
         <span className="pill rest">✓ {completedCount} done</span>
@@ -192,7 +183,12 @@ const CalendarScreen = () => {
           </div>
 
           <div className="stack" style={{ marginTop: 12 }}>
-            {!selDay.rest && selResolved.groups.some((g) => g.exercises.length > 0) && (
+            {!isActivePlan && (
+              <p className="muted" style={{ fontSize: 13, margin: 0 }}>
+                To train this plan, make it your program in the Progress tab.
+              </p>
+            )}
+            {isActivePlan && !selDay.rest && selResolved.groups.some((g) => g.exercises.length > 0) && (
               <button
                 className="btn primary block"
                 onClick={() =>
@@ -206,7 +202,7 @@ const CalendarScreen = () => {
                 ▶ Start workout
               </button>
             )}
-            {!selDay.rest &&
+            {isActivePlan && !selDay.rest &&
               (hasManualMark(selDay.day) ? (
                 <button
                   className="btn ghost block"
@@ -224,13 +220,15 @@ const CalendarScreen = () => {
                   {completedDays.has(selDay.day) ? '✓ Already complete' : '✓ Mark day done'}
                 </button>
               ))}
-            <button
-              className="btn ghost block"
-              disabled={busy}
-              onClick={() => doSetToday(selDay.day)}
-            >
-              📍 Set as today
-            </button>
+            {isActivePlan && (
+              <button
+                className="btn ghost block"
+                disabled={busy}
+                onClick={() => doSetToday(selDay.day)}
+              >
+                📍 Set as today
+              </button>
+            )}
           </div>
         </div>
       )}

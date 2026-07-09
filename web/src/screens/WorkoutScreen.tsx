@@ -176,7 +176,7 @@ const WorkoutScreen = () => {
   }, [state.index, state.secondsLeft, state.status]);
 
   // While "Send to TV" is active, push the live state to the paired TV (it
-  // polls this record) — phase, exercise, countdown, and what music is
+  // polls this record) - phase, exercise, countdown, and what music is
   // playing (the TV mounts its own player for that; see YouTubeMusic).
   useEffect(() => {
     if (!broadcasting || !group || !tvCode) return;

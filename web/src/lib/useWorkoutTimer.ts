@@ -79,7 +79,7 @@ export const useWorkoutTimer = (
   // Fire a single countdown cue (voice, falling back to a tone if unloaded).
   const fireCue = (threshold: number) => {
     // Hold the music down through the REST of the countdown and into the next
-    // phase's announcement, not just this one word — per-word ducks leave the
+    // phase's announcement, not just this one word - per-word ducks leave the
     // music popping back to full volume between "three", "two", and "one".
     duckMusic(threshold * 1000 + 1500);
     if (threshold === 4) {
@@ -93,8 +93,8 @@ export const useWorkoutTimer = (
 
   // Spoken (or beeped) countdown for the last seconds of a phase. Uses
   // "at-or-below threshold, not yet fired" catch-up logic (not an exact ===
-  // check) so a single skipped rAF frame — e.g. from main-thread work while
-  // the YouTube player loads — can never silently drop a cue.
+  // check) so a single skipped rAF frame - e.g. from main-thread work while
+  // the YouTube player loads - can never silently drop a cue.
   const countdownCue = (secs: number, leadIntoWork: boolean) => {
     const thresholds = leadIntoWork ? [4, 3, 2, 1] : [3, 2, 1];
     for (const th of thresholds) {

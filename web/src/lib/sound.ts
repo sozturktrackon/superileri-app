@@ -18,7 +18,7 @@ const getCtx = (): AudioContext | null => {
   if (typeof window === 'undefined') return null;
   if (!ctx) {
     // iOS: by default WebAudio routes through the channel muted by the
-    // ring/silent side switch — with the switch on silent, every cue is
+    // ring/silent side switch - with the switch on silent, every cue is
     // inaudible. Declaring the session as 'playback' (iOS 17+) routes us like
     // a media app, which ignores the switch (same as YouTube or Spotify).
     const nav = navigator as Navigator & { audioSession?: { type: string } };
@@ -39,7 +39,7 @@ const getCtx = (): AudioContext | null => {
 };
 
 /** iOS suspends (or marks 'interrupted') the context on screen lock, Siri,
- *  calls, and app switches — and it does NOT always come back by itself. Kick
+ *  calls, and app switches - and it does NOT always come back by itself. Kick
  *  it before every cue and whenever the app returns to view. (A bare
  *  `state === 'suspended'` check misses Safari's 'interrupted' state.) */
 const ensureRunning = (c: AudioContext): void => {

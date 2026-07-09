@@ -22,7 +22,7 @@ const phaseTitle: Record<string, string> = {
  * Seconds left, preferring the phone's published wall-clock phase end (zero
  * latency skew; both devices are NTP-synced). If the TV's clock disagrees
  * with the phone's last reported secondsLeft by more than 3s, the TV clock is
- * off — fall back to ticking from the receipt time instead.
+ * off - fall back to ticking from the receipt time instead.
  */
 const computeLeft = (
   endsAt: number | null,
@@ -46,7 +46,7 @@ const computeLeft = (
  *
  * The bottom control bar (remote-focusable buttons) covers what a TV can
  * control locally: its own sound on/off and volume. The workout itself is
- * driven from the phone — the TV is read-only by design (guests can't write).
+ * driven from the phone - the TV is read-only by design (guests can't write).
  */
 const TvDisplay = () => {
   const params = useParams();
@@ -71,7 +71,7 @@ const TvDisplay = () => {
   const currentYtId = useRef<string | null>(null);
   const lastEventAt = useRef(0);
   // Local smooth countdown. Preferred source: the phone's published
-  // phase-end WALL-CLOCK time — the TV counts down against its own clock, so
+  // phase-end WALL-CLOCK time - the TV counts down against its own clock, so
   // network latency doesn't skew the number at all. Fallback (older phone
   // builds / a badly wrong TV clock): tick from the last received secondsLeft.
   const syncRef = useRef<{ left: number; at: number } | null>(null);
@@ -160,7 +160,7 @@ const TvDisplay = () => {
   }, [session?.status]);
 
   // One user gesture (OK on the remote / a click / any key) unlocks sound for
-  // the whole session — without it the browser refuses un-muted playback.
+  // the whole session - without it the browser refuses un-muted playback.
   useEffect(() => {
     if (soundOn) return;
     const unlock = () => setSoundOn(true);

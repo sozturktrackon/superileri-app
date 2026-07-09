@@ -10,7 +10,7 @@ import type { WorkoutLog } from './api';
  *   - today not being done (yet) doesn't break it
  *
  * Completions are stored per NORMALIZED program day, so a day completed in an
- * earlier cycle also reads as completed in later ones — good enough until
+ * earlier cycle also reads as completed in later ones - good enough until
  * logs become cycle-aware.
  */
 

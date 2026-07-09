@@ -14,6 +14,7 @@ import CalendarScreen from './screens/CalendarScreen';
 import CheckInScreen from './screens/CheckInScreen';
 import ProgressScreen from './screens/ProgressScreen';
 import NutritionScreen from './screens/NutritionScreen';
+import AboutScreen from './screens/AboutScreen';
 import TvDisplay from './screens/TvDisplay';
 import ErrorBoundary from './components/ErrorBoundary';
 
@@ -41,6 +42,7 @@ const Shell = ({ signOut }: { signOut?: () => void }) => {
           <Route path="/nutrition" element={<NutritionScreen />} />
           <Route path="/checkin" element={<CheckInScreen />} />
           <Route path="/progress" element={<ProgressScreen signOut={signOut} />} />
+          <Route path="/about" element={<AboutScreen />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
@@ -73,7 +75,7 @@ const AuthenticatedApp = () => (
   </Authenticator>
 );
 
-// Single top-level Router: /tv/:code is public (no login — it's just a
+// Single top-level Router: /tv/:code is public (no login - it's just a
 // display), everything else lives behind the Authenticator.
 const App = () => (
   <ErrorBoundary>

@@ -188,7 +188,7 @@ export const removeExVideo = (
 };
 
 /** Autoplay, muted, looping, minimal-chrome embed that fills the box. Uses
- *  youtube.com (not the "-nocookie" domain) — nocookie mode is specifically
+ *  youtube.com (not the "-nocookie" domain) - nocookie mode is specifically
  *  designed to NOT use the viewer's YouTube session, which is the opposite of
  *  what we want; the regular domain can use it wherever the browser allows
  *  third-party cookies (varies by platform). */

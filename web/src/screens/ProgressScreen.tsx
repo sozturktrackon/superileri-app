@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   ANGLES,
+  analyzeCheckIn,
   checkInPhotos,
   checkInThumbnail,
   deleteCheckIn,
@@ -8,11 +9,13 @@ import {
   listWorkouts,
   mergeCheckIns,
   photoUrl,
+  updateProfile,
   type Angle,
   type CheckIn,
 } from '../lib/api';
+import { Link } from 'react-router-dom';
 import { useProfile } from '../state';
-import { getPlan, normalizeDay } from '../lib/content';
+import { allPlans, getPlan, normalizeDay, type PlanId } from '../lib/content';
 import MusicSettings from '../components/MusicSettings';
 import ExerciseVideoSettings from '../components/ExerciseVideoSettings';
 import PartnerSettings from '../components/PartnerSettings';
@@ -67,7 +70,9 @@ const CrashReports = () => {
 };
 
 const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
-  const { profile, displayName } = useProfile();
+  const { profile, displayName, refresh } = useProfile();
+  const [switching, setSwitching] = useState(false);
+  const [analyzing, setAnalyzing] = useState(false);
   const [shots, setShots] = useState<Shot[]>([]);
   const [workoutCount, setWorkoutCount] = useState(0);
   const [streaks, setStreaks] = useState({ current: 0, best: 0 });
@@ -81,6 +86,10 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
   const [angleFor, setAngleFor] = useState<Record<string, Angle>>({});
   const [merging, setMerging] = useState(false);
   const [mergeError, setMergeError] = useState<string | null>(null);
+
+  const latestAnalyzed = shots.find(
+    (s) => s.analyzed && (s.aiSummary || s.aiComparison)
+  );
 
   const loadShots = async () => {
     const [cis, logs] = await Promise.all([listCheckIns(), listWorkouts()]);
@@ -222,17 +231,63 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
         </div>
       )}
 
-      {shots[0]?.aiComparison && (
+      {latestAnalyzed && (
         <div className="card">
-          <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 4 }}>
-            📈 AI progress (latest vs first)
+          <div className="card-row" style={{ marginBottom: 4 }}>
+            <div style={{ fontWeight: 700, fontSize: 14 }}>🧠 Latest AI analysis</div>
+            <span className="muted" style={{ fontSize: 12 }}>{latestAnalyzed.date}</span>
           </div>
-          <p style={{ lineHeight: 1.5, margin: 0 }}>{shots[0].aiComparison}</p>
+          {latestAnalyzed.aiSummary && (
+            <p style={{ lineHeight: 1.5, margin: '4px 0 0' }}>{latestAnalyzed.aiSummary}</p>
+          )}
+          {latestAnalyzed.aiComparison && (
+            <>
+              <div style={{ fontWeight: 700, fontSize: 13, margin: '10px 0 2px' }}>
+                📈 Progress vs first check-in
+              </div>
+              <p style={{ lineHeight: 1.5, margin: 0 }}>{latestAnalyzed.aiComparison}</p>
+            </>
+          )}
+        </div>
+      )}
+
+      {shots[0] && !shots[0].analyzed && (
+        <div className="card">
+          <div className="card-row">
+            <span className="muted" style={{ fontSize: 13 }}>
+              Your newest check-in ({shots[0].date}) hasn't been analyzed yet.
+            </span>
+            <button
+              className="btn primary"
+              style={{ padding: '8px 12px', fontSize: 13 }}
+              disabled={analyzing}
+              onClick={async () => {
+                setAnalyzing(true);
+                try {
+                  await analyzeCheckIn(shots[0]);
+                  await loadShots();
+                } catch (e) {
+                  window.alert(e instanceof Error ? e.message : 'Analysis failed');
+                } finally {
+                  setAnalyzing(false);
+                }
+              }}
+            >
+              {analyzing ? 'Analyzing…' : '🧠 Analyze'}
+            </button>
+          </div>
         </div>
       )}
 
       <div className="card-row" style={{ margin: '18px 0 10px' }}>
         <h3 style={{ margin: 0 }}>📸 Photo timeline</h3>
+        <Link
+          to="/checkin"
+          className="btn primary"
+          style={{ padding: '6px 12px', fontSize: 12, textDecoration: 'none' }}
+        >
+          + New check-in
+        </Link>
         {shots.length >= 2 && !assigning && (
           <button
             className="btn ghost"
@@ -260,7 +315,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
         </div>
       ) : shots.length === 0 ? (
         <div className="card muted">
-          No check-ins yet. Add one from the Check-in tab to start your timeline.
+          No check-ins yet. Tap "+ New check-in" above to start your timeline.
         </div>
       ) : (
         <div className="gallery">
@@ -364,6 +419,52 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
       )}
 
       <h3 style={{ margin: '22px 0 10px' }}>Settings</h3>
+
+      <div className="card">
+        <div className="card-row">
+          <div>
+            <strong>Program</strong>
+            <div className="muted" style={{ fontSize: 12 }}>
+              {getPlan(profile?.plan ?? 'lean')?.name}
+            </div>
+          </div>
+          <select
+            value={profile?.plan ?? 'lean'}
+            disabled={switching}
+            onChange={async (e) => {
+              const next = e.target.value as PlanId;
+              if (!profile || next === profile.plan) return;
+              const name = getPlan(next)?.name ?? next;
+              if (
+                !window.confirm(
+                  `Switch your program to ${name}? Your Today screen and calendar will follow it. Finished cycles and history are kept.`
+                )
+              ) {
+                e.target.value = profile.plan ?? 'lean';
+                return;
+              }
+              setSwitching(true);
+              try {
+                await updateProfile(profile.id, { plan: next });
+                await refresh();
+              } finally {
+                setSwitching(false);
+              }
+            }}
+            style={{ padding: '8px 10px', borderRadius: 10 }}
+          >
+            {allPlans().map((p) => (
+              <option key={p.id} value={p.id}>{p.name}</option>
+            ))}
+          </select>
+        </div>
+        <p className="muted" style={{ fontSize: 12, margin: '8px 0 0' }}>
+          Best results come from finishing full cycles. Switch when your goal
+          changes, not mid-program. Browse any calendar first from the Calendar
+          tab.
+        </p>
+      </div>
+
       <PartnerSettings />
       <ExerciseVideoSettings />
       <MusicSettings />

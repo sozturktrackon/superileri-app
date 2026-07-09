@@ -189,7 +189,7 @@ export const playlistForCategory = (
   return cfg.playlists.find((p) => p.id === cfg.activeId) ?? cfg.playlists[0] ?? null;
 };
 
-/** The real youtube.com page for this playlist/video — used both as the "Open
+/** The real youtube.com page for this playlist/video - used both as the "Open
  *  in YouTube" fallback (runs in the user's own logged-in tab/app) and to
  *  drive the embedded IFrame Player API. */
 export const playlistWatchUrl = (pl: Playlist): string =>

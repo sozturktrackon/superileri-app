@@ -52,7 +52,7 @@ export const loadYouTubeApi = (): Promise<NonNullable<Window['YT']>> => {
 /**
  * Call a player method, tolerating not-ready and destroyed players. Between
  * `new YT.Player(...)` and its onReady event the playback methods DON'T EXIST
- * on the object, and after destroy() they throw — an uncaught throw inside a
+ * on the object, and after destroy() they throw - an uncaught throw inside a
  * React effect unmounts the whole app (blank screen). Every player call must
  * go through here.
  */

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   analyzeCheckIn,
   createCheckIn,
@@ -11,6 +12,7 @@ import AnglePhotoCapture from '../components/AnglePhotoCapture';
 
 const Onboarding = () => {
   const { displayName, refresh } = useProfile();
+  const navigate = useNavigate();
   const [step, setStep] = useState<1 | 2>(1);
   const [plan, setPlan] = useState<'lean' | 'bulk'>('lean');
   const [name, setName] = useState(displayName);
@@ -48,6 +50,9 @@ const Onboarding = () => {
       // Fire-and-forget AI analysis; don't block onboarding if Bedrock is slow.
       analyzeCheckIn(checkIn).catch(() => {});
       await refresh();
+      // Land brand-new users on the philosophy page once; it stays reachable
+      // from Progress afterwards.
+      navigate('/about', { replace: true });
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Something went wrong.');
       setBusy(false);

@@ -4,8 +4,8 @@ const items = [
   { to: '/', icon: '🏋️', label: 'Today', end: true },
   { to: '/calendar', icon: '📅', label: 'Calendar', end: false },
   { to: '/nutrition', icon: '🥗', label: 'Eat', end: false },
-  { to: '/checkin', icon: '📸', label: 'Check-in', end: false },
   { to: '/progress', icon: '📈', label: 'Progress', end: false },
+  { to: '/about', icon: 'ℹ️', label: 'About', end: false },
 ];
 
 const BottomNav = () => (

@@ -3,7 +3,7 @@ import { logCrash } from '../lib/crashLog';
 
 /**
  * Last line of defense: without this, ANY uncaught error in a render or
- * effect makes React 18 unmount the whole tree — a blank screen with no way
+ * effect makes React 18 unmount the whole tree - a blank screen with no way
  * back. Show a recovery card instead. Reloading re-enters the same hash
  * route, and the workout screen restores its saved progress.
  */
@@ -30,7 +30,7 @@ class ErrorBoundary extends Component<
         <div style={{ fontSize: 56 }}>😵</div>
         <h2>Something went wrong</h2>
         <p className="muted" style={{ maxWidth: 420 }}>
-          The app hit an unexpected error. Your progress is saved — tap below
+          The app hit an unexpected error. Your progress is saved. Tap below
           to pick up where you left off.
         </p>
         <p

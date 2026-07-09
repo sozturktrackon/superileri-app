@@ -224,7 +224,7 @@ export const analyzeCheckIn = async (checkIn: CheckIn): Promise<CheckIn> => {
     ? priors.reduce((a, b) => (a.date <= b.date ? a : b)) // earliest = first check-in
     : null;
 
-  // Custom mutation a.json() arguments must be sent as JSON strings — unlike
+  // Custom mutation a.json() arguments must be sent as JSON strings - unlike
   // model fields, the client does not auto-serialize these.
   const { data, errors } = await client.mutations.analyzeCheckIn({
     photos: JSON.stringify(checkInPhotos(checkIn)),

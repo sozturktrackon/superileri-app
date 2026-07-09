@@ -21,12 +21,12 @@ export type MusicState = {
  * In-workout music controller. Uses the real YouTube IFrame Player API (not a
  * bare iframe) so we can: control volume (duck it under voice cues, see
  * sound.ts), and detect a blocked/sign-in-walled embed and fall back to
- * "Open in YouTube" automatically — which opens the REAL youtube.com in the
+ * "Open in YouTube" automatically - which opens the REAL youtube.com in the
  * user's own logged-in tab/app (that's the only way to use their own YouTube
  * session; a cross-site embed can't borrow it due to browser privacy rules).
  *
  * When `broadcast` is true (casting to a TV), this player is paused so audio
- * doesn't double up — the TV mounts its own player and plays the sound.
+ * doesn't double up - the TV mounts its own player and plays the sound.
  */
 const YouTubeMusic = ({
   active,
@@ -97,7 +97,7 @@ const YouTubeMusic = ({
   };
 
   // Mount / swap the player whenever we should be playing a (new) playlist.
-  // While casting, NO local player exists at all — the TV owns the audio.
+  // While casting, NO local player exists at all - the TV owns the audio.
   // (Creating one and pausing it was racy: pause is a no-op on a player that
   // hasn't finished booting, so phone + TV would both play, out of sync.)
   useEffect(() => {
@@ -178,7 +178,7 @@ const YouTubeMusic = ({
 
   // Duck under voice cues (dispatched from sound.ts). Overlapping ducks
   // extend each other: the volume only restores once the LATEST duck window
-  // has passed — otherwise an earlier cue's restore timer would pop the music
+  // has passed - otherwise an earlier cue's restore timer would pop the music
   // back to full volume mid-countdown, swallowing "two" and "one".
   const duckUntilRef = useRef(0);
   useEffect(() => {
@@ -241,7 +241,7 @@ const YouTubeMusic = ({
             style={{ border: 'none' }}
             onClick={() => openInYouTube(current)}
           >
-            ▶ Can't embed — open in YouTube
+            ▶ Can't embed. Open in YouTube
           </button>
         )}
       </div>
