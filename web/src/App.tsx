@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Authenticator } from '@aws-amplify/ui-react';
 import {
   Navigate,
@@ -17,9 +18,23 @@ import NutritionScreen from './screens/NutritionScreen';
 import AboutScreen from './screens/AboutScreen';
 import TvDisplay from './screens/TvDisplay';
 import ErrorBoundary from './components/ErrorBoundary';
+import { LANGS, useT, type Lang } from './lib/i18n';
+import { I18n } from 'aws-amplify/utils';
 
 const Shell = ({ signOut }: { signOut?: () => void }) => {
   const { profile, loading } = useProfile();
+  const { lang, setLang } = useT();
+
+  // The profile's saved language wins over the device guess, so the app
+  // follows the user across devices.
+  useEffect(() => {
+    const pl = profile?.language as Lang | null | undefined;
+    if (pl && pl !== lang && LANGS.some((l) => l.code === pl)) {
+      setLang(pl);
+      I18n.setLanguage(pl);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile?.language]);
 
   if (loading) {
     return (
@@ -51,8 +66,36 @@ const Shell = ({ signOut }: { signOut?: () => void }) => {
   );
 };
 
-const AuthenticatedApp = () => (
+// Language picker rendered INSIDE the Authenticator, so it only appears on
+// the sign-in / create-account screens (signed-in users change language from
+// Progress settings instead).
+const AuthLanguageHeader = () => {
+  const { lang, setLang } = useT();
+  return (
+    <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px 4px' }}>
+      <select
+        value={lang}
+        aria-label="Language"
+        onChange={(e) => {
+          const l = e.target.value as Lang;
+          setLang(l);
+          I18n.setLanguage(l);
+        }}
+        style={{ padding: '6px 10px', borderRadius: 10, fontSize: 13 }}
+      >
+        {LANGS.map((l) => (
+          <option key={l.code} value={l.code}>{l.label}</option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+const AuthenticatedApp = () => {
+  return (
+  <>
   <Authenticator
+    components={{ Header: AuthLanguageHeader }}
     signUpAttributes={['preferred_username']}
     formFields={{
       signUp: {
@@ -73,7 +116,9 @@ const AuthenticatedApp = () => (
       </ProfileProvider>
     )}
   </Authenticator>
-);
+  </>
+  );
+};
 
 // Single top-level Router: /tv/:code is public (no login - it's just a
 // display), everything else lives behind the Authenticator.

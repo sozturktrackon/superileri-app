@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../state';
 import { allPlans, getDay, getPlan, groupShort, normalizeDay, type PlanId } from '../lib/content';
+import { useT } from '../lib/i18n';
 import {
   clearManualMark,
   listWorkouts,
@@ -12,6 +13,7 @@ import {
 
 const CalendarScreen = () => {
   const { profile, refresh } = useProfile();
+  const { t } = useT();
   const navigate = useNavigate();
   // planId here is only what's being VIEWED. The active program is changed
   // deliberately from the Progress tab, never by browsing calendars.
@@ -99,7 +101,7 @@ const CalendarScreen = () => {
 
   return (
     <div>
-      <h1 className="page-title">Calendar</h1>
+      <h1 className="page-title">{t('Calendar')}</h1>
       <p className="page-sub">{plan.note}</p>
 
       <div className="field" style={{ marginBottom: 12 }}>
@@ -114,7 +116,7 @@ const CalendarScreen = () => {
           {allPlans().map((p) => (
             <option key={p.id} value={p.id}>
               {p.name}
-              {p.id === profile?.plan ? ' · your program' : ''}
+              {p.id === profile?.plan ? ` · ${t('your program')}` : ''}
             </option>
           ))}
         </select>
@@ -122,15 +124,15 @@ const CalendarScreen = () => {
 
       {!isActivePlan && (
         <div className="banner" style={{ marginBottom: 12 }}>
-          Just browsing. Your program is{' '}
-          <strong>{getPlan(profile?.plan ?? 'lean')?.name}</strong>. You can
-          switch programs from the Progress tab.
+          {t('Just browsing. Your program is')}{' '}
+          <strong>{getPlan(profile?.plan ?? 'lean')?.name}</strong>.{' '}
+          {t('You can switch programs from the Progress tab.')}
         </div>
       )}
 
       <div className="card-row" style={{ marginBottom: 12 }}>
-        <span className="pill rest">✓ {completedCount} done</span>
-        <span className="pill">{trainingDays} training days</span>
+        <span className="pill rest">{t('✓ {n} done', { n: completedCount })}</span>
+        <span className="pill">{t('{n} training days', { n: trainingDays })}</span>
       </div>
 
       <div className="cal-grid">
@@ -147,7 +149,7 @@ const CalendarScreen = () => {
             >
               <span className="d">{isDone ? '✓' : d.day}</span>
               <span>
-                {d.rest ? 'Rest' : d.workouts.map((w) => <div key={w}>{groupShort(w)}</div>)}
+                {d.rest ? t('Rest') : d.workouts.map((w) => <div key={w}>{groupShort(w)}</div>)}
               </span>
             </button>
           );
@@ -158,19 +160,19 @@ const CalendarScreen = () => {
         <div className="card" style={{ marginTop: 14 }}>
           <div className="card-row">
             <div>
-              <strong>Day {selDay.day}</strong>
+              <strong>{t('Day {n}', { n: selDay.day })}</strong>
               {today === selDay.day && planId === profile?.plan && (
                 <span className="pill accent" style={{ marginLeft: 8, fontSize: 10 }}>
-                  today
+                  {t('today')}
                 </span>
               )}
               {completedDays.has(selDay.day) && (
                 <span className="pill rest" style={{ marginLeft: 6, fontSize: 10 }}>
-                  ✓ done
+                  {t('✓ done')}
                 </span>
               )}
               <div className="muted" style={{ fontSize: 13, marginTop: 2 }}>
-                {selDay.rest ? 'Rest day' : selResolved.groups.map((g) => g.name).join(' + ')}
+                {selDay.rest ? t('Rest day') : selResolved.groups.map((g) => g.name).join(' + ')}
               </div>
             </div>
             <button
@@ -185,7 +187,7 @@ const CalendarScreen = () => {
           <div className="stack" style={{ marginTop: 12 }}>
             {!isActivePlan && (
               <p className="muted" style={{ fontSize: 13, margin: 0 }}>
-                To train this plan, make it your program in the Progress tab.
+                {t('To train this plan, make it your program in the Progress tab.')}
               </p>
             )}
             {isActivePlan && !selDay.rest && selResolved.groups.some((g) => g.exercises.length > 0) && (
@@ -199,7 +201,7 @@ const CalendarScreen = () => {
                   )
                 }
               >
-                ▶ Start workout
+                {t('▶ Start workout')}
               </button>
             )}
             {isActivePlan && !selDay.rest &&
@@ -209,7 +211,7 @@ const CalendarScreen = () => {
                   disabled={busy}
                   onClick={() => doUndo(selDay.day)}
                 >
-                  ↩ Undo manual mark
+                  {t('↩ Undo manual mark')}
                 </button>
               ) : (
                 <button
@@ -217,7 +219,7 @@ const CalendarScreen = () => {
                   disabled={busy || completedDays.has(selDay.day)}
                   onClick={() => doMarkDone(selDay.day)}
                 >
-                  {completedDays.has(selDay.day) ? '✓ Already complete' : '✓ Mark day done'}
+                  {completedDays.has(selDay.day) ? t('✓ Already complete') : t('✓ Mark day done')}
                 </button>
               ))}
             {isActivePlan && (
@@ -226,7 +228,7 @@ const CalendarScreen = () => {
                 disabled={busy}
                 onClick={() => doSetToday(selDay.day)}
               >
-                📍 Set as today
+                {t('📍 Set as today')}
               </button>
             )}
           </div>
@@ -234,9 +236,7 @@ const CalendarScreen = () => {
       )}
 
       <p className="muted" style={{ fontSize: 12, marginTop: 14 }}>
-        Tap any day to start it, tick it done by hand (e.g. trained with a
-        friend), or set it as today. Days also check off automatically when you
-        finish their circuits. The 4-week cycle repeats.
+        {t('Tap any day to start it, tick it done by hand (e.g. trained with a friend), or set it as today. Days also check off automatically when you finish their circuits. The cycle repeats.')}
       </p>
     </div>
   );

@@ -15,6 +15,7 @@ const schema = a.schema({
   UserProfile: a
     .model({
       plan: a.enum(['lean', 'bulk', 'lean2', 'bulk2']), // II = graduate programs
+      language: a.string(), // BCP-47-ish code: en, tr, hi, ru, fr, de, es, pt
       startDate: a.date(),
       currentDay: a.integer().default(1), // raw ever-increasing; wraps per plan length
       displayName: a.string(),
@@ -75,6 +76,7 @@ const schema = a.schema({
     .arguments({
       photos: a.json().required(), // AnglePhoto[]
       baselinePhotos: a.json(), // AnglePhoto[] | undefined
+      language: a.string(), // respond in this language (default English)
     })
     .returns(a.ref('CheckInAnalysis'))
     .authorization((allow) => [allow.authenticated()])

@@ -6,6 +6,7 @@ import {
   setExVideo,
   type ExVid,
 } from '../lib/exerciseVideos';
+import { useT } from '../lib/i18n';
 
 /**
  * Paste a YouTube link per exercise. Saved in-browser (no redeploy). During a
@@ -13,6 +14,7 @@ import {
  * timer reaches (or preps/rests for) that exercise.
  */
 const ExerciseVideoSettings = () => {
+  const { t } = useT();
   const [map, setMap] = useState<Record<string, ExVid>>(loadExVideos);
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const groups = allGroups().filter((g) => g.exercises.length > 0);
@@ -24,10 +26,9 @@ const ExerciseVideoSettings = () => {
 
   return (
     <div className="card">
-      <h3 style={{ marginBottom: 4 }}>🎬 Demo videos</h3>
+      <h3 style={{ marginBottom: 4 }}>{t('🎬 Demo videos')}</h3>
       <p className="muted" style={{ fontSize: 13, marginTop: 0 }}>
-        Paste a YouTube link for any exercise. It autoplays in the box during
-        that move. {setCount} set so far.
+        {t('Paste a YouTube link for any exercise. It autoplays in the box during that move. {count} set so far.', { count: setCount })}
       </p>
 
       {groups.map((g) => (
@@ -44,11 +45,11 @@ const ExerciseVideoSettings = () => {
                 <div key={ex.id} className="field" style={{ marginBottom: 4 }}>
                   <label style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span>{ex.name}</span>
-                    {current && <span className="pill rest" style={{ fontSize: 10 }}>● set</span>}
+                    {current && <span className="pill rest" style={{ fontSize: 10 }}>{t('● set')}</span>}
                   </label>
                   <input
                     value={draft}
-                    placeholder="Paste YouTube link…"
+                    placeholder={t('Paste YouTube link…')}
                     style={!valid ? { borderColor: 'var(--accent-2)' } : undefined}
                     onChange={(e) =>
                       setDrafts((d) => ({ ...d, [ex.id]: e.target.value }))

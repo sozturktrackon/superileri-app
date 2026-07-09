@@ -4,9 +4,11 @@ import { useProfile } from '../state';
 import { getDay, getPlan, intervals, normalizeDay, planLength } from '../lib/content';
 import { advanceDay, listWorkouts } from '../lib/api';
 import { completedDaySet, computeStreaks } from '../lib/streak';
+import { useT } from '../lib/i18n';
 
 const Today = () => {
   const { profile, displayName, refresh } = useProfile();
+  const { t } = useT();
 
   const planId = profile?.plan ?? 'lean';
   const rawDay = profile?.currentDay ?? 1;
@@ -38,9 +40,9 @@ const Today = () => {
 
   const greeting = (() => {
     const h = new Date().getHours();
-    if (h < 12) return 'Good morning';
-    if (h < 18) return 'Good afternoon';
-    return 'Good evening';
+    if (h < 12) return t('Good morning');
+    if (h < 18) return t('Good afternoon');
+    return t('Good evening');
   })();
 
   return (
@@ -50,12 +52,12 @@ const Today = () => {
         <div style={{ display: 'flex', gap: 6 }}>
           {streak > 0 && (
             <span className="pill" style={{ background: 'rgba(255,122,24,0.18)' }}>
-              🔥 {streak}-day streak
+              {t('🔥 {n}-day streak', { n: streak })}
             </span>
           )}
           <span className="pill">
-            Day {dayNumber}
-            {cycle > 1 ? ` · Cycle ${cycle}` : ''}
+            {t('Day {n}', { n: dayNumber })}
+            {cycle > 1 ? ` · ${t('Cycle {c}', { c: cycle })}` : ''}
           </span>
         </div>
       </div>
@@ -64,21 +66,21 @@ const Today = () => {
       </h1>
       <p className="page-sub">
         {day.rest
-          ? "It's a rest day. Recovery is where growth happens."
-          : `Today's session · ${intervals.rounds} rounds of 30s on / 30s off`}
+          ? t("It's a rest day. Recovery is where growth happens.")
+          : t("Today's session · {n} rounds of 30s on / 30s off", { n: intervals.rounds })}
       </p>
 
       {day.rest ? (
         <div className="card" style={{ textAlign: 'center', padding: 28 }}>
           <div style={{ fontSize: 56 }}>🛌</div>
-          <h2 style={{ marginTop: 8 }}>Rest Day</h2>
+          <h2 style={{ marginTop: 8 }}>{t('Rest Day')}</h2>
           <p className="muted" style={{ marginTop: 6 }}>
-            Stretch, hydrate, sleep well.
+            {t('Stretch, hydrate, sleep well.')}
           </p>
           {day.groups.length > 0 && (
             <>
               <p className="muted" style={{ fontSize: 13, marginTop: 14 }}>
-                Optional active recovery:
+                {t('Optional active recovery:')}
               </p>
               <Link
                 className="btn ghost block"
@@ -92,7 +94,7 @@ const Today = () => {
             </>
           )}
           <button className="btn primary block" style={{ marginTop: 16 }} onClick={next}>
-            Mark rest complete · Next day →
+            {t('Mark rest complete · Next day →')}
           </button>
         </div>
       ) : (
@@ -103,12 +105,12 @@ const Today = () => {
                 <div className="card-row">
                   <div>
                     <div className="pill" style={{ marginBottom: 8 }}>
-                      Part {i + 1} of {day.groups.length}
+                      {t('Part {i} of {n}', { i: i + 1, n: day.groups.length })}
                     </div>
                     <h2 style={{ fontSize: 22 }}>{g.name}</h2>
                     <p className="muted" style={{ fontSize: 13, marginTop: 4 }}>
-                      {g.exercises.length} exercises ·{' '}
-                      {g._missing ? 'content coming soon' : `${intervals.rounds} rounds`}
+                      {t('{n} exercises', { n: g.exercises.length })} ·{' '}
+                      {g._missing ? t('content coming soon') : t('{n} rounds', { n: intervals.rounds })}
                     </p>
                   </div>
                 </div>
@@ -128,14 +130,14 @@ const Today = () => {
                   style={{ marginTop: 12 }}
                   to={`/workout/${planId}/${dayNumber}/${encodeURIComponent(g.key)}`}
                 >
-                  ▶ Start {g.name}
+                  ▶ {t('Start')} {g.name}
                 </Link>
               </div>
             ))}
           </div>
 
           <button className="btn ghost block" style={{ marginTop: 4 }} onClick={next}>
-            Finished everything · Next day →
+            {t('Finished everything · Next day →')}
           </button>
         </>
       )}

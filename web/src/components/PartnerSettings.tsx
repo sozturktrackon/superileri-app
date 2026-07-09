@@ -6,6 +6,7 @@ import {
   removePartner,
   type Partner,
 } from '../lib/api';
+import { useT } from '../lib/i18n';
 
 /**
  * Manage training partners (separate accounts you train with). Both people must
@@ -13,6 +14,7 @@ import {
  * "I allow them to mark my workouts complete," and lets you mark theirs.
  */
 const PartnerSettings = () => {
+  const { t } = useT();
   const [partners, setPartners] = useState<Partner[]>([]);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -28,15 +30,15 @@ const PartnerSettings = () => {
   const add = async () => {
     const e = email.trim().toLowerCase();
     if (!e || !e.includes('@')) {
-      setError('Enter a valid email.');
+      setError(t('Enter a valid email.'));
       return;
     }
     if (e === myEmail.toLowerCase()) {
-      setError("That's your own email.");
+      setError(t("That's your own email."));
       return;
     }
     if (partners.some((p) => p.email.toLowerCase() === e)) {
-      setError('Already added.');
+      setError(t('Already added.'));
       return;
     }
     setBusy(true);
@@ -47,25 +49,24 @@ const PartnerSettings = () => {
       setEmail('');
       setName('');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not add partner.');
+      setError(err instanceof Error ? err.message : t('Could not add partner.'));
     } finally {
       setBusy(false);
     }
   };
 
   const drop = async (p: Partner) => {
-    if (!window.confirm(`Remove ${p.name || p.email} as a partner?`)) return;
+    if (!window.confirm(t('Remove {name} as a partner?', { name: p.name || p.email }))) return;
     await removePartner(p.id);
     setPartners((prev) => prev.filter((x) => x.id !== p.id));
   };
 
   return (
     <div className="card">
-      <h3 style={{ marginBottom: 4 }}>🤝 Training partners</h3>
+      <h3 style={{ marginBottom: 4 }}>{t('🤝 Training partners')}</h3>
       <p className="muted" style={{ fontSize: 13, marginTop: 0 }}>
-        Train together on one phone, mark both calendars. Add your partner's
-        email, and have them add yours (
-        <strong>{myEmail || 'your email'}</strong>) so it works both ways.
+        {t("Train together on one phone, mark both calendars. Add your partner's email, and have them add yours (")}
+        <strong>{myEmail || t('your email')}</strong>{t(') so it works both ways.')}
       </p>
 
       <div className="stack" style={{ marginTop: 10 }}>
@@ -87,20 +88,20 @@ const PartnerSettings = () => {
           </div>
         ))}
         {partners.length === 0 && (
-          <p className="muted">No partners yet.</p>
+          <p className="muted">{t('No partners yet.')}</p>
         )}
       </div>
 
       <div className="field" style={{ marginTop: 14, marginBottom: 6 }}>
-        <label>Add a partner</label>
+        <label>{t('Add a partner')}</label>
         <input
-          placeholder="Name (optional)"
+          placeholder={t('Name (optional)')}
           value={name}
           onChange={(e) => setName(e.target.value)}
           style={{ marginBottom: 8 }}
         />
         <input
-          placeholder="partner@email.com"
+          placeholder={t('partner@email.com')}
           inputMode="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -108,7 +109,7 @@ const PartnerSettings = () => {
       </div>
       {error && <p className="error-text">{error}</p>}
       <button className="btn primary block" onClick={add} disabled={busy}>
-        {busy ? 'Adding…' : 'Add partner'}
+        {busy ? t('Adding…') : t('Add partner')}
       </button>
     </div>
   );

@@ -1,30 +1,34 @@
 import { useState } from 'react';
-import diets from '../content/diets.json';
+import dietsEn from '../content/diets.json';
+import { dietsTr } from '../i18n/diets-tr';
 import { useProfile } from '../state';
+import { useT } from '../lib/i18n';
 
-type MealPlan = (typeof diets.mealPlans)['lean'];
+type MealPlan = (typeof dietsEn.mealPlans)['lean'];
 
 const NutritionScreen = () => {
+  const { t, lang } = useT();
   const { profile } = useProfile();
   // Level II plans eat like their Level I counterpart.
   const [planId, setPlanId] = useState<'lean' | 'bulk'>(
     profile?.plan?.startsWith('bulk') ? 'bulk' : 'lean'
   );
+  const diets = lang === 'tr' ? dietsTr : dietsEn;
   const plan: MealPlan = diets.mealPlans[planId];
 
   return (
     <div>
-      <h1 className="page-title">Nutrition</h1>
-      <p className="page-sub">The diet that works is the one you stick to.</p>
+      <h1 className="page-title">{t('Nutrition')}</h1>
+      <p className="page-sub">{t('The diet that works is the one you stick to.')}</p>
 
       {/* Goal */}
       <div className="card">
-        <div style={{ fontWeight: 800, marginBottom: 6 }}>🎯 Your goal</div>
+        <div style={{ fontWeight: 800, marginBottom: 6 }}>{t('🎯 Your goal')}</div>
         <p style={{ margin: 0, lineHeight: 1.5 }}>{diets.goal}</p>
       </div>
 
       {/* Habits that work */}
-      <h3 style={{ margin: '18px 0 10px' }}>Habits that actually work</h3>
+      <h3 style={{ margin: '18px 0 10px' }}>{t('Habits that actually work')}</h3>
       <div className="stack">
         {diets.habits.map((h) => (
           <div className="card" key={h.title} style={{ margin: 0 }}>
@@ -51,7 +55,7 @@ const NutritionScreen = () => {
       {/* Optional meal template */}
       <details className="card" style={{ marginTop: 14 }}>
         <summary style={{ cursor: 'pointer', fontWeight: 800 }}>
-          🍽️ Want it spelled out? Meal template (optional)
+          {t('🍽️ Want it spelled out? Meal template (optional)')}
         </summary>
 
         <div className="choice-grid" style={{ margin: '12px 0' }}>
@@ -62,8 +66,8 @@ const NutritionScreen = () => {
               onClick={() => setPlanId(id)}
               style={{ padding: '12px' }}
             >
-              <h3>{id === 'lean' ? 'Lean' : 'Bulk'}</h3>
-              <p>{id === 'lean' ? 'Shred' : 'Build muscle'}</p>
+              <h3>{id === 'lean' ? t('Lean') : t('Bulk')}</h3>
+              <p>{id === 'lean' ? t('Shred') : t('Build muscle')}</p>
             </button>
           ))}
         </div>
@@ -83,15 +87,15 @@ const NutritionScreen = () => {
 
         <div className="stack" style={{ marginTop: 12, fontSize: 13 }}>
           <div>
-            <strong>Proteins:</strong>{' '}
+            <strong>{t('Proteins:')}</strong>{' '}
             <span className="muted" style={{ color: 'var(--text)' }}>{diets.proteins}</span>
           </div>
           <div>
-            <strong>Carbs:</strong>{' '}
+            <strong>{t('Carbs:')}</strong>{' '}
             <span className="muted" style={{ color: 'var(--text)' }}>{plan.carbs}</span>
           </div>
           <div>
-            <strong>Veggies:</strong>{' '}
+            <strong>{t('Veggies:')}</strong>{' '}
             <span className="muted" style={{ color: 'var(--text)' }}>{diets.veggies}</span>
           </div>
         </div>
@@ -99,7 +103,7 @@ const NutritionScreen = () => {
 
       {/* Grocery list */}
       <details className="card">
-        <summary style={{ cursor: 'pointer', fontWeight: 800 }}>🛒 Grocery list</summary>
+        <summary style={{ cursor: 'pointer', fontWeight: 800 }}>{t('🛒 Grocery list')}</summary>
         <div className="stack" style={{ marginTop: 12 }}>
           {diets.grocery.map((g) => (
             <div key={g.group}>
@@ -114,7 +118,7 @@ const NutritionScreen = () => {
 
       {/* Rules */}
       <details className="card">
-        <summary style={{ cursor: 'pointer', fontWeight: 800 }}>📋 Simple rules</summary>
+        <summary style={{ cursor: 'pointer', fontWeight: 800 }}>{t('📋 Simple rules')}</summary>
         <ul style={{ margin: '12px 0 0', paddingLeft: 18, lineHeight: 1.6, fontSize: 13 }}>
           {diets.rules.map((r) => (
             <li key={r}>{r}</li>
@@ -123,8 +127,9 @@ const NutritionScreen = () => {
       </details>
 
       <p className="muted" style={{ fontSize: 11, textAlign: 'center', marginTop: 8 }}>
-        General guidance for healthy adults, not medical or dietary advice. Check
-        with a professional for your situation.
+        {t(
+          'General guidance for healthy adults, not medical or dietary advice. Check with a professional for your situation.'
+        )}
       </p>
     </div>
   );

@@ -21,19 +21,21 @@ import ExerciseVideoSettings from '../components/ExerciseVideoSettings';
 import PartnerSettings from '../components/PartnerSettings';
 import { clearCrashLog, getCrashLog } from '../lib/crashLog';
 import { completedDaySet, computeStreaks } from '../lib/streak';
+import { LANGS, useT, type Lang } from '../lib/i18n';
 
 type Shot = CheckIn & { url?: string; angleCount?: number };
 
 /** Recorded app errors (see lib/crashLog). Copy button puts them on the
  *  clipboard so they can be pasted into a bug report. */
 const CrashReports = () => {
+  const { t } = useT();
   const [entries, setEntries] = useState(getCrashLog);
   const [copied, setCopied] = useState(false);
   if (entries.length === 0) return null;
   return (
     <details className="card">
       <summary style={{ cursor: 'pointer', fontWeight: 800 }}>
-        🪲 Crash reports ({entries.length})
+        {t('🪲 Crash reports ({count})', { count: entries.length })}
       </summary>
       <div className="stack" style={{ marginTop: 10 }}>
         {entries.map((e, i) => (
@@ -53,7 +55,7 @@ const CrashReports = () => {
               .catch(() => {});
           }}
         >
-          {copied ? 'Copied ✓' : 'Copy details'}
+          {copied ? t('Copied ✓') : t('Copy details')}
         </button>
         <button
           className="btn ghost"
@@ -62,7 +64,7 @@ const CrashReports = () => {
             setEntries([]);
           }}
         >
-          Clear
+          {t('Clear')}
         </button>
       </div>
     </details>
@@ -70,6 +72,7 @@ const CrashReports = () => {
 };
 
 const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
+  const { t, lang, setLang } = useT();
   const { profile, displayName, refresh } = useProfile();
   const [switching, setSwitching] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
@@ -122,13 +125,13 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
   }, []);
 
   const removeShot = async (shot: Shot) => {
-    if (!window.confirm(`Delete the check-in from ${shot.date}? This can't be undone.`)) return;
+    if (!window.confirm(t("Delete the check-in from {date}? This can't be undone.", { date: shot.date }))) return;
     setDeletingId(shot.id);
     try {
       await deleteCheckIn(shot);
       setShots((prev) => prev.filter((s) => s.id !== shot.id));
     } catch (e) {
-      window.alert('Could not delete: ' + (e instanceof Error ? e.message : 'unknown error'));
+      window.alert(t('Could not delete: {error}', { error: e instanceof Error ? e.message : t('unknown error') }));
     } finally {
       setDeletingId(null);
     }
@@ -169,7 +172,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
       setSelectedIds([]);
       await loadShots();
     } catch (e) {
-      setMergeError(e instanceof Error ? e.message : 'Merge failed.');
+      setMergeError(e instanceof Error ? e.message : t('Merge failed.'));
     } finally {
       setMerging(false);
     }
@@ -188,41 +191,41 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
 
   return (
     <div>
-      <h1 className="page-title">Progress</h1>
-      <p className="page-sub">Keep showing up, {displayName}.</p>
+      <h1 className="page-title">{t('Progress')}</h1>
+      <p className="page-sub">{t('Keep showing up, {name}.', { name: displayName })}</p>
 
       <div className="btn-grid" style={{ marginBottom: 14 }}>
         <div className="card" style={{ margin: 0, textAlign: 'center' }}>
           <div style={{ fontSize: 30, fontWeight: 900 }}>{workoutCount}</div>
-          <div className="muted" style={{ fontSize: 12 }}>circuits done</div>
+          <div className="muted" style={{ fontSize: 12 }}>{t('circuits done')}</div>
         </div>
         <div className="card" style={{ margin: 0, textAlign: 'center' }}>
           <div style={{ fontSize: 30, fontWeight: 900 }}>{day}</div>
           <div className="muted" style={{ fontSize: 12 }}>
-            {plan?.name} · day
+            {plan?.name} · {t('day')}
           </div>
         </div>
         <div className="card" style={{ margin: 0, textAlign: 'center' }}>
           <div style={{ fontSize: 30, fontWeight: 900 }}>🔥 {streaks.current}</div>
-          <div className="muted" style={{ fontSize: 12 }}>day streak</div>
+          <div className="muted" style={{ fontSize: 12 }}>{t('day streak')}</div>
         </div>
         <div className="card" style={{ margin: 0, textAlign: 'center' }}>
           <div style={{ fontSize: 30, fontWeight: 900 }}>🏆 {streaks.best}</div>
-          <div className="muted" style={{ fontSize: 12 }}>best streak</div>
+          <div className="muted" style={{ fontSize: 12 }}>{t('best streak')}</div>
         </div>
       </div>
 
       {typeof latestBf === 'number' && (
         <div className="card">
           <div className="card-row">
-            <span className="muted">Latest est. body fat</span>
+            <span className="muted">{t('Latest est. body fat')}</span>
             <span className="pill accent" style={{ fontSize: 16 }}>
               {latestBf.toFixed(1)}%
             </span>
           </div>
           {bfDelta !== null && Math.abs(bfDelta) >= 0.1 && (
             <div className="card-row" style={{ marginTop: 8 }}>
-              <span className="muted">Since first check-in</span>
+              <span className="muted">{t('Since first check-in')}</span>
               <span className={`pill ${bfDelta <= 0 ? 'rest' : ''}`}>
                 {bfDelta <= 0 ? '▼' : '▲'} {Math.abs(bfDelta).toFixed(1)}%
               </span>
@@ -234,7 +237,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
       {latestAnalyzed && (
         <div className="card">
           <div className="card-row" style={{ marginBottom: 4 }}>
-            <div style={{ fontWeight: 700, fontSize: 14 }}>🧠 Latest AI analysis</div>
+            <div style={{ fontWeight: 700, fontSize: 14 }}>{t('🧠 Latest AI analysis')}</div>
             <span className="muted" style={{ fontSize: 12 }}>{latestAnalyzed.date}</span>
           </div>
           {latestAnalyzed.aiSummary && (
@@ -243,7 +246,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
           {latestAnalyzed.aiComparison && (
             <>
               <div style={{ fontWeight: 700, fontSize: 13, margin: '10px 0 2px' }}>
-                📈 Progress vs first check-in
+                {t('📈 Progress vs first check-in')}
               </div>
               <p style={{ lineHeight: 1.5, margin: 0 }}>{latestAnalyzed.aiComparison}</p>
             </>
@@ -255,7 +258,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
         <div className="card">
           <div className="card-row">
             <span className="muted" style={{ fontSize: 13 }}>
-              Your newest check-in ({shots[0].date}) hasn't been analyzed yet.
+              {t("Your newest check-in ({date}) hasn't been analyzed yet.", { date: shots[0].date })}
             </span>
             <button
               className="btn primary"
@@ -267,26 +270,26 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
                   await analyzeCheckIn(shots[0]);
                   await loadShots();
                 } catch (e) {
-                  window.alert(e instanceof Error ? e.message : 'Analysis failed');
+                  window.alert(e instanceof Error ? e.message : t('Analysis failed'));
                 } finally {
                   setAnalyzing(false);
                 }
               }}
             >
-              {analyzing ? 'Analyzing…' : '🧠 Analyze'}
+              {analyzing ? t('Analyzing…') : t('🧠 Analyze')}
             </button>
           </div>
         </div>
       )}
 
       <div className="card-row" style={{ margin: '18px 0 10px' }}>
-        <h3 style={{ margin: 0 }}>📸 Photo timeline</h3>
+        <h3 style={{ margin: 0 }}>{t('📸 Photo timeline')}</h3>
         <Link
           to="/checkin"
           className="btn primary"
           style={{ padding: '6px 12px', fontSize: 12, textDecoration: 'none' }}
         >
-          + New check-in
+          {t('+ New check-in')}
         </Link>
         {shots.length >= 2 && !assigning && (
           <button
@@ -297,15 +300,14 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
               setSelectedIds([]);
             }}
           >
-            {mergeMode ? 'Cancel' : '🔗 Merge'}
+            {mergeMode ? t('Cancel') : t('🔗 Merge')}
           </button>
         )}
       </div>
 
       {mergeMode && !assigning && (
         <p className="muted" style={{ fontSize: 12, marginTop: -4, marginBottom: 10 }}>
-          Select 2 or more single-photo check-ins from the same session (e.g.
-          front + back + sides taken the same day) to combine into one.
+          {t('Select 2 or more single-photo check-ins from the same session (e.g. front + back + sides taken the same day) to combine into one.')}
         </p>
       )}
 
@@ -315,7 +317,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
         </div>
       ) : shots.length === 0 ? (
         <div className="card muted">
-          No check-ins yet. Tap "+ New check-in" above to start your timeline.
+          {t('No check-ins yet. Tap "+ New check-in" above to start your timeline.')}
         </div>
       ) : (
         <div className="gallery">
@@ -334,7 +336,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
                 {typeof s.aiBodyFatPct === 'number'
                   ? ` · ${s.aiBodyFatPct.toFixed(0)}%`
                   : ''}
-                {(s.angleCount ?? 1) > 1 ? ` · ${s.angleCount} angles` : ''}
+                {(s.angleCount ?? 1) > 1 ? ` · ${t('{count} angles', { count: s.angleCount ?? 0 })}` : ''}
               </span>
               {mergeMode ? (
                 <div
@@ -350,7 +352,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
                     removeShot(s);
                   }}
                   disabled={deletingId === s.id}
-                  aria-label={`Delete check-in from ${s.date}`}
+                  aria-label={t('Delete check-in from {date}', { date: s.date })}
                 >
                   {deletingId === s.id ? '…' : '🗑'}
                 </button>
@@ -362,13 +364,13 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
 
       {mergeMode && !assigning && selectedIds.length >= 2 && (
         <button className="btn primary block" style={{ marginTop: 12 }} onClick={startAssigning}>
-          Merge {selectedIds.length} check-ins →
+          {t('Merge {count} check-ins →', { count: selectedIds.length })}
         </button>
       )}
 
       {assigning && (
         <div className="card" style={{ marginTop: 14 }}>
-          <h3 style={{ marginBottom: 8 }}>Assign an angle to each photo</h3>
+          <h3 style={{ marginBottom: 8 }}>{t('Assign an angle to each photo')}</h3>
           <div className="stack">
             {selectedIds.map((id) => {
               const shot = shots.find((s) => s.id === id)!;
@@ -398,7 +400,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
                   >
                     {ANGLES.map((a) => (
                       <option key={a.id} value={a.id}>
-                        {a.label}
+                        {t(a.label)}
                       </option>
                     ))}
                   </select>
@@ -409,21 +411,21 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
           {mergeError && <p className="error-text">{mergeError}</p>}
           <div className="btn-grid" style={{ marginTop: 14 }}>
             <button className="btn ghost" onClick={() => setAssigning(false)} disabled={merging}>
-              ← Back
+              {t('← Back')}
             </button>
             <button className="btn primary" onClick={confirmMerge} disabled={merging}>
-              {merging ? 'Merging…' : 'Confirm merge'}
+              {merging ? t('Merging…') : t('Confirm merge')}
             </button>
           </div>
         </div>
       )}
 
-      <h3 style={{ margin: '22px 0 10px' }}>Settings</h3>
+      <h3 style={{ margin: '22px 0 10px' }}>{t('Settings')}</h3>
 
       <div className="card">
         <div className="card-row">
           <div>
-            <strong>Program</strong>
+            <strong>{t('Program')}</strong>
             <div className="muted" style={{ fontSize: 12 }}>
               {getPlan(profile?.plan ?? 'lean')?.name}
             </div>
@@ -437,7 +439,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
               const name = getPlan(next)?.name ?? next;
               if (
                 !window.confirm(
-                  `Switch your program to ${name}? Your Today screen and calendar will follow it. Finished cycles and history are kept.`
+                  t('Switch your program to {name}? Your Today screen and calendar will follow it. Finished cycles and history are kept.', { name })
                 )
               ) {
                 e.target.value = profile.plan ?? 'lean';
@@ -459,10 +461,26 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
           </select>
         </div>
         <p className="muted" style={{ fontSize: 12, margin: '8px 0 0' }}>
-          Best results come from finishing full cycles. Switch when your goal
-          changes, not mid-program. Browse any calendar first from the Calendar
-          tab.
+          {t('Best results come from finishing full cycles. Switch when your goal changes, not mid-program. Browse any calendar first from the Calendar tab.')}
         </p>
+        <div className="card-row" style={{ marginTop: 10 }}>
+          <div>
+            <strong>{t('Language')}</strong>
+          </div>
+          <select
+            value={lang}
+            onChange={async (e) => {
+              const next = e.target.value as Lang;
+              setLang(next);
+              if (profile) updateProfile(profile.id, { language: next }).catch(() => {});
+            }}
+            style={{ padding: '8px 10px', borderRadius: 10 }}
+          >
+            {LANGS.map((l) => (
+              <option key={l.code} value={l.code}>{l.label}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <PartnerSettings />
@@ -472,11 +490,11 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
       <div className="card">
         <div className="card-row">
           <div>
-            <strong>Account</strong>
+            <strong>{t('Account')}</strong>
             <div className="muted" style={{ fontSize: 12 }}>{displayName}</div>
           </div>
           <button className="btn ghost" onClick={signOut}>
-            Sign out
+            {t('Sign out')}
           </button>
         </div>
       </div>
@@ -484,7 +502,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
       <CrashReports />
 
       <p className="muted" style={{ fontSize: 11, textAlign: 'center', marginTop: 8 }}>
-        Superileri Fit · your data is private to your account. · v{__APP_VERSION__}
+        {t('Superileri Fit · your data is private to your account.')} · v{__APP_VERSION__}
       </p>
     </div>
   );

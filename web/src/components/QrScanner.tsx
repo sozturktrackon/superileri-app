@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import jsQR from 'jsqr';
+import { useT } from '../lib/i18n';
 
 /**
  * Full-screen camera QR scanner (phone). Reads the code shown on the TV and
@@ -13,6 +14,7 @@ const QrScanner = ({
   onDetected: (code: string) => void;
   onClose: () => void;
 }) => {
+  const { t } = useT();
   const videoRef = useRef<HTMLVideoElement>(null);
   const rafRef = useRef<number>(0);
   const streamRef = useRef<MediaStream | null>(null);
@@ -59,7 +61,7 @@ const QrScanner = ({
       })
       .catch(() => {
         setError(
-          'Could not open the camera. Allow camera access, or type the code instead.'
+          t('Could not open the camera. Allow camera access, or type the code instead.')
         );
       });
 
@@ -75,10 +77,10 @@ const QrScanner = ({
       <video ref={videoRef} className="scanner-video" muted playsInline />
       <div className="scanner-frame" />
       <div className="scanner-hint">
-        {error ?? 'Point at the QR code on your TV'}
+        {error ?? t('Point at the QR code on your TV')}
       </div>
       <button className="btn primary scanner-close" onClick={onClose}>
-        Cancel
+        {t('Cancel')}
       </button>
     </div>
   );

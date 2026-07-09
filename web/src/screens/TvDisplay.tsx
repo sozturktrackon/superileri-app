@@ -10,6 +10,7 @@ import {
 } from '../lib/liveSession';
 import { exEmbedUrl, loadExVideos } from '../lib/exerciseVideos';
 import { loadYouTubeApi, ytCall, type YTPlayer } from '../lib/ytPlayer';
+import { useT } from '../lib/i18n';
 
 const phaseTitle: Record<string, string> = {
   prep: 'Get Ready',
@@ -49,6 +50,7 @@ const computeLeft = (
  * driven from the phone - the TV is read-only by design (guests can't write).
  */
 const TvDisplay = () => {
+  const { t } = useT();
   const params = useParams();
   // `/tv` self-generates a stable code for this display; `/tv/:code` honors a
   // code passed in the URL. The TV shows this as a QR for the phone to scan.
@@ -231,7 +233,7 @@ const TvDisplay = () => {
     <div className="tv-controls">
       {!soundOn ? (
         <button className="btn primary" autoFocus onClick={() => setSoundOn(true)}>
-          🔊 Press OK for sound
+          🔊 {t('Press OK for sound')}
         </button>
       ) : (
         <>
@@ -241,7 +243,7 @@ const TvDisplay = () => {
             onClick={() => setMusicOn(!wantMusic)}
             aria-label="Start or stop music"
           >
-            {wantMusic ? '⏸ Stop music' : '▶ Start music'}
+            {wantMusic ? t('⏸ Stop music') : t('▶ Start music')}
           </button>
           <button
             className="btn ghost"
@@ -267,9 +269,9 @@ const TvDisplay = () => {
     return (
       <div className="tv-screen tv-waiting">
         <div style={{ fontSize: 64, marginBottom: 16 }}>⚠️</div>
-        <h1>Couldn't connect</h1>
+        <h1>{t("Couldn't connect")}</h1>
         <p className="muted" style={{ maxWidth: 600 }}>{err}</p>
-        <p className="muted">Code: {code}</p>
+        <p className="muted">{t('Code:')} {code}</p>
       </div>
     );
   }
@@ -280,8 +282,8 @@ const TvDisplay = () => {
         <h1 style={{ marginBottom: 4 }}>📺 Superileri Fit</h1>
         <p className="muted" style={{ marginBottom: 22 }}>
           {stale
-            ? 'Phone disconnected. Start a workout and tap 📺 to reconnect.'
-            : 'Open a workout on your phone, tap 📺 Send to TV, and scan this code.'}
+            ? t('Phone disconnected. Start a workout and tap 📺 to reconnect.')
+            : t('Open a workout on your phone, tap 📺 Send to TV, and scan this code.')}
         </p>
         <div className="tv-qr">
           <QRCodeSVG value={code} size={240} level="M" includeMargin />
@@ -289,11 +291,11 @@ const TvDisplay = () => {
         <div className="tv-code">{code}</div>
         {soundOn ? (
           <p className="muted" style={{ marginTop: 10 }}>
-            🔊 Sound ready · No camera? Enter this code in the app · {TV_ENTRY_URL}
+            {t('🔊 Sound ready · No camera? Enter this code in the app')} · {TV_ENTRY_URL}
           </p>
         ) : (
           <button className="btn primary tv-sound-btn" autoFocus onClick={() => setSoundOn(true)}>
-            Press OK to enable sound 🔊
+            {t('Press OK to enable sound 🔊')}
           </button>
         )}
       </div>
@@ -314,7 +316,7 @@ const TvDisplay = () => {
     return (
       <div className="tv-screen done">
         <div style={{ fontSize: 96 }}>🎉</div>
-        <h1>Workout complete</h1>
+        <h1>{t('Workout complete')}</h1>
       </div>
     );
   }
@@ -329,10 +331,10 @@ const TvDisplay = () => {
   return (
     <div className={`tv-screen ${type}`}>
       <div className="tv-top">
-        <div className="tv-phase-label">{phaseTitle[type] ?? type}</div>
+        <div className="tv-phase-label">{t(phaseTitle[type] ?? type)}</div>
         {session.round && (
           <div className="tv-round">
-            Round {session.round}/{session.totalRounds} · {session.groupName}
+            {t('Round {r}/{n}', { r: session.round, n: session.totalRounds ?? 0 })} · {session.groupName}
           </div>
         )}
       </div>

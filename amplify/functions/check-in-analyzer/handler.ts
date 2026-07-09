@@ -82,6 +82,10 @@ export const handler: Schema['analyzeCheckIn']['functionHandler'] = async (
   event
 ) => {
   const photos = (event.arguments.photos ?? []) as AnglePhoto[];
+  // All JSON string values (summary, comparison, notes) come back in this
+  // language; the JSON keys stay English so parsing is unaffected.
+  const language = (event.arguments.language as string | undefined) || 'English';
+  const langLine = `\nIMPORTANT: Write ALL human-readable text values (summary, estimatedWeightNote, comparison) in ${language}. Keep the JSON keys exactly as specified in English.`;
   if (!Array.isArray(photos) || photos.length === 0) {
     throw new Error('At least one photo is required');
   }
@@ -100,10 +104,10 @@ export const handler: Schema['analyzeCheckIn']['functionHandler'] = async (
   if (hasBaseline) {
     content.push(...(await buildLabeledImages(baselinePhotos!, 'BASELINE')));
     content.push(...(await buildLabeledImages(photos, 'LATEST')));
-    content.push({ type: 'text', text: COMPARE_PROMPT });
+    content.push({ type: 'text', text: COMPARE_PROMPT + langLine });
   } else {
     content.push(...(await buildLabeledImages(photos, 'PHOTO')));
-    content.push({ type: 'text', text: SOLO_PROMPT });
+    content.push({ type: 'text', text: SOLO_PROMPT + langLine });
   }
 
   const res = await bedrock.send(

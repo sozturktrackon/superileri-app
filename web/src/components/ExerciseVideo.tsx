@@ -6,6 +6,7 @@ import {
   loadExVideos,
   type ExVid,
 } from '../lib/exerciseVideos';
+import { useT } from '../lib/i18n';
 
 type VideoWithAirplay = HTMLVideoElement & {
   webkitShowPlaybackTargetPicker?: () => void;
@@ -30,6 +31,7 @@ const ExerciseVideo = ({
   exerciseId?: string;
   exerciseName?: string;
 }) => {
+  const { t } = useT();
   const ref = useRef<HTMLVideoElement>(null);
   const [url, setUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -103,7 +105,7 @@ const ExerciseVideo = ({
 
   return (
     <div className="timer-video">
-      {loading && <div className="placeholder">Loading…</div>}
+      {loading && <div className="placeholder">{t('Loading…')}</div>}
 
       {/* Curated YouTube clip wins: autoplays MUTED (music plays separately) +
           looping, and overrides any AI clip. A bare iframe can't tell us if
@@ -123,7 +125,7 @@ const ExerciseVideo = ({
             <button
               className="tctrl sm"
               onClick={() => window.open(exWatchUrl(curated), '_blank', 'noopener')}
-              aria-label="Open in YouTube"
+              aria-label={t('Open in YouTube')}
             >
               ▶
             </button>
@@ -135,11 +137,11 @@ const ExerciseVideo = ({
         <>
           <video ref={ref} src={url} autoPlay muted loop playsInline />
           <div className="video-actions">
-            <button className="tctrl sm" onClick={openForm} aria-label="Watch real form on YouTube">
+            <button className="tctrl sm" onClick={openForm} aria-label={t('Watch real form on YouTube')}>
               ▶
             </button>
             {canCast && (
-              <button className="tctrl sm" onClick={cast} aria-label="Cast video to TV">
+              <button className="tctrl sm" onClick={cast} aria-label={t('Cast video to TV')}>
                 📺
               </button>
             )}
@@ -151,10 +153,10 @@ const ExerciseVideo = ({
         <div className="placeholder">
           <div style={{ fontSize: 40, marginBottom: 6 }}>🏋️</div>
           <button className="btn primary" onClick={openForm}>
-            ▶ Watch real form
+            {t('▶ Watch real form')}
           </button>
           <div style={{ fontSize: 11, opacity: 0.7, marginTop: 8 }}>
-            Opens a YouTube demo · add a clip in Progress → Demo videos
+            {t('Opens a YouTube demo · add a clip in Progress → Demo videos')}
           </div>
         </div>
       )}

@@ -17,6 +17,7 @@ import { loadExVideos } from '../lib/exerciseVideos';
 import ExerciseVideo from '../components/ExerciseVideo';
 import YouTubeMusic, { type MusicState } from '../components/YouTubeMusic';
 import QrScanner from '../components/QrScanner';
+import { useT } from '../lib/i18n';
 
 const phaseTitle: Record<string, string> = {
   prep: 'Get Ready',
@@ -64,6 +65,7 @@ const loadProgress = (
 };
 
 const WorkoutScreen = () => {
+  const { t } = useT();
   const { planId, day, groupKey } = useParams();
   const navigate = useNavigate();
   const group = groupKey ? getGroupByKey(groupKey) : undefined;
@@ -335,10 +337,10 @@ const WorkoutScreen = () => {
           ✕
         </button>
         <div style={{ textAlign: 'center' }}>
-          <div className="timer-phase-label">{phaseTitle[type]}</div>
+          <div className="timer-phase-label">{t(phaseTitle[type])}</div>
           {phase?.round && type !== 'done' && (
             <div className="timer-round">
-              Round {phase.round}/{phase.totalRounds} · {group.name}
+              {t('Round {r}/{n}', { r: phase.round, n: phase.totalRounds ?? 0 })} · {group.name}
             </div>
           )}
         </div>
@@ -378,7 +380,7 @@ const WorkoutScreen = () => {
           }}
         >
           <div className="card-row">
-            <strong>📺 {broadcasting ? 'Sending to TV' : 'Send to TV'}</strong>
+            <strong>📺 {broadcasting ? t('Sending to TV') : t('Send to TV')}</strong>
             <button
               className="btn ghost"
               style={{ padding: '4px 8px' }}
@@ -391,33 +393,32 @@ const WorkoutScreen = () => {
           {broadcasting && tvCode ? (
             <>
               <p className="muted" style={{ fontSize: 13, margin: '8px 0' }}>
-                Connected to TV <strong>{tvCode}</strong>. Your workout is live
-                on the big screen.
+                {t('Connected to TV')} <strong>{tvCode}</strong>.{' '}
+                {t('Your workout is live on the big screen.')}
               </p>
               <div className="btn-grid">
                 <button className="btn ghost" onClick={forgetTv}>
-                  Change TV
+                  {t('Change TV')}
                 </button>
                 <button className="btn primary" onClick={stopBroadcast}>
-                  Stop casting
+                  {t('Stop casting')}
                 </button>
               </div>
             </>
           ) : (
             <>
               <p className="muted" style={{ fontSize: 13, margin: '8px 0' }}>
-                On your TV open <strong>app.superileri.com/tv</strong>, then scan
-                the QR it shows:
+                {t('On your TV open')} <strong>app.superileri.com/tv</strong>{t(', then scan the QR it shows:')}
               </p>
               <button
                 className="btn primary"
                 style={{ width: '100%' }}
                 onClick={() => setScanning(true)}
               >
-                📷 Scan TV code
+                {t('📷 Scan TV code')}
               </button>
               <p className="muted" style={{ fontSize: 12, margin: '12px 0 6px' }}>
-                Or enter the 6-digit code from the TV:
+                {t('Or enter the 6-digit code from the TV:')}
               </p>
               <div className="btn-grid">
                 <input
@@ -443,7 +444,7 @@ const WorkoutScreen = () => {
                   disabled={!/^\d{6}$/.test(codeDraft)}
                   onClick={() => connectToTv(codeDraft)}
                 >
-                  Connect
+                  {t('Connect')}
                 </button>
               </div>
             </>
@@ -466,12 +467,12 @@ const WorkoutScreen = () => {
           <>
             <div style={{ fontSize: 80 }}>{counted ? '🎉' : '👏'}</div>
             <h2 style={{ fontSize: 34 }}>
-              {counted ? 'Circuit complete!' : 'Nice effort!'}
+              {counted ? t('Circuit complete!') : t('Nice effort!')}
             </h2>
             <p className="timer-next">
               {counted
-                ? `${group.name} · ${intervals.rounds} rounds · ${fmtClock(total)}`
-                : 'Skipped ahead. Finish the full circuit to check this day off.'}
+                ? `${group.name} · ${t('{n} rounds', { n: intervals.rounds })} · ${fmtClock(total)}`
+                : t('Skipped ahead. Finish the full circuit to check this day off.')}
             </p>
             <div
               style={{ display: 'flex', gap: 10, marginTop: 22, flexWrap: 'wrap', justifyContent: 'center' }}
@@ -486,10 +487,10 @@ const WorkoutScreen = () => {
                   activeSecRef.current = 0;
                 }}
               >
-                ↻ Repeat
+                ↻ {t('Repeat')}
               </button>
               <button className="btn primary" onClick={() => navigate('/')}>
-                Done →
+                {t('Done')} →
               </button>
             </div>
 
@@ -504,7 +505,7 @@ const WorkoutScreen = () => {
                 }}
               >
                 <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 10 }}>
-                  🤝 Also mark complete for:
+                  {t('🤝 Also mark complete for:')}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {partners.map((p) => {
@@ -563,13 +564,13 @@ const WorkoutScreen = () => {
               <div className="timer-exercise">{exercise?.name}</div>
             ) : (
               <div className="timer-next">
-                {type === 'prep' ? 'Starting with' : 'Next up'} ·{' '}
+                {type === 'prep' ? t('Starting with') : t('Next up')} ·{' '}
                 <strong>{exercise?.name}</strong>
               </div>
             )}
             {hasProgressions && (
               <div className="timer-progressions">
-                Level up: {exercise!.progressions.join(', ')}
+                {t('Level up:')} {exercise!.progressions.join(', ')}
               </div>
             )}
             <ExerciseVideo exerciseId={exercise?.id} exerciseName={exercise?.name} />

@@ -1,6 +1,7 @@
 import { fetchUserAttributes, getCurrentUser } from 'aws-amplify/auth';
 import { getUrl, remove, uploadData } from 'aws-amplify/storage';
 import { client } from './amplify';
+import { getLang, LANG_NAMES } from './i18n';
 import type { Schema } from './amplify';
 
 export type UserProfile = Schema['UserProfile']['type'];
@@ -27,6 +28,7 @@ export const getMyProfile = async (): Promise<UserProfile | null> => {
 
 export const createProfile = async (input: {
   plan: 'lean' | 'bulk';
+  language?: string;
   displayName?: string;
   sex?: 'male' | 'female' | 'other';
   birthYear?: number;
@@ -229,6 +231,7 @@ export const analyzeCheckIn = async (checkIn: CheckIn): Promise<CheckIn> => {
   const { data, errors } = await client.mutations.analyzeCheckIn({
     photos: JSON.stringify(checkInPhotos(checkIn)),
     baselinePhotos: baseline ? JSON.stringify(checkInPhotos(baseline)) : undefined,
+    language: LANG_NAMES[getLang()],
   });
   if (errors?.length) throw new Error(errors.map((e) => e.message).join('; '));
 

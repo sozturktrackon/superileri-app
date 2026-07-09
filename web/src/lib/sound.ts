@@ -10,6 +10,7 @@
  * ytPlayer.ts, fired from say()/beep*() below).
  */
 import { duckMusic } from './ytPlayer';
+import { getLang } from './i18n';
 
 let ctx: AudioContext | null = null;
 let master: GainNode | null = null;
@@ -94,15 +95,25 @@ export const unlockAudio = async (): Promise<void> => {
 const VOICE_NAMES = ['ready', 'three', 'two', 'one', 'rest', 'go'] as const;
 const clips: Record<string, AudioBuffer> = {};
 
-/** Fetch + decode the voice clips. Safe to call repeatedly; no-op if loaded. */
+/** Fetch + decode the voice clips for the ACTIVE language (English clips live
+ *  at /audio/*.mp3, other languages at /audio/<lang>/*.mp3; missing languages
+ *  fall back to English). Safe to call repeatedly; reloads on language change. */
+let loadedLang: string | null = null;
 export const loadVoice = async (): Promise<void> => {
   const c = getCtx();
   if (!c) return;
+  const lang = getLang();
+  if (loadedLang !== lang) {
+    for (const k of Object.keys(clips)) delete clips[k];
+    loadedLang = lang;
+  }
+  const base = lang === 'en' ? '/audio' : `/audio/${lang}`;
   await Promise.all(
     VOICE_NAMES.map(async (n) => {
       if (clips[n]) return;
       try {
-        const res = await fetch(`/audio/${n}.mp3`);
+        let res = await fetch(`${base}/${n}.mp3`);
+        if (!res.ok && base !== '/audio') res = await fetch(`/audio/${n}.mp3`);
         if (!res.ok) return;
         clips[n] = await c.decodeAudioData(await res.arrayBuffer());
       } catch {

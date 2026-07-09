@@ -1,5 +1,7 @@
 import exercisesData from '../content/exercises.json';
 import calendarsData from '../content/calendars.json';
+import { getLang } from './i18n';
+import { trContent } from '../i18n/content-tr';
 
 export type Exercise = {
   id: string;
@@ -45,14 +47,39 @@ const groupByKey = new Map(groups.map((g) => [g.key, g]));
 
 export type PlanId = 'lean' | 'bulk' | 'lean2' | 'bulk2';
 
-export const allGroups = (): Group[] => groups;
-export const allPlans = (): Plan[] => plans;
+// ---- Content localization: names are swapped per active language at the
+// accessor level, so every screen gets localized content for free. English is
+// canonical; anything missing in an overlay falls back to it.
+const locGroup = (g: Group): Group => {
+  if (getLang() !== 'tr') return g;
+  return {
+    ...g,
+    name: trContent.groups[g.key] ?? g.name,
+    exercises: g.exercises.map((e) => ({
+      ...e,
+      name: trContent.exercises[e.id] ?? e.name,
+    })),
+  };
+};
 
-export const getPlan = (id: string): Plan | undefined =>
-  plans.find((p) => p.id === id);
+const locPlan = (p: Plan): Plan => {
+  if (getLang() !== 'tr') return p;
+  const o = trContent.plans[p.id];
+  return o ? { ...p, name: o.name, note: o.note } : p;
+};
 
-export const getGroupByKey = (key: string): Group | undefined =>
-  groupByKey.get(key);
+export const allGroups = (): Group[] => groups.map(locGroup);
+export const allPlans = (): Plan[] => plans.map(locPlan);
+
+export const getPlan = (id: string): Plan | undefined => {
+  const p = plans.find((x) => x.id === id);
+  return p ? locPlan(p) : undefined;
+};
+
+export const getGroupByKey = (key: string): Group | undefined => {
+  const g = groupByKey.get(key);
+  return g ? locGroup(g) : undefined;
+};
 
 /** Short tile labels for the calendar grid. The internal keys GAME / Royce /
  *  J-Lo are legacy identifiers kept only for stored-data compatibility (they
@@ -72,7 +99,12 @@ const SHORT_LABELS: Record<string, string> = {
   Royce2: 'Core',
   JLo2: 'Glutes',
 };
-export const groupShort = (key: string): string => SHORT_LABELS[key] ?? key;
+export const groupShort = (key: string): string => {
+  if (getLang() === 'tr') {
+    return trContent.shortLabels[key] ?? SHORT_LABELS[key] ?? key;
+  }
+  return SHORT_LABELS[key] ?? key;
+};
 
 /** Resolve a plan day into its ordered list of exercise groups. */
 export const getDay = (planId: string, dayNumber: number) => {

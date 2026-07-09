@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { ANGLES, type Angle } from '../lib/api';
+import { useT } from '../lib/i18n';
 
 /**
  * 4-slot capture grid (front / back / left / right). Front is required; the
@@ -13,6 +14,7 @@ const AnglePhotoCapture = ({
   files: Partial<Record<Angle, File>>;
   onChange: (angle: Angle, file: File | undefined) => void;
 }) => {
+  const { t } = useT();
   const inputs = useRef<Partial<Record<Angle, HTMLInputElement | null>>>({});
 
   const pick = (angle: Angle, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,12 +34,12 @@ const AnglePhotoCapture = ({
             onClick={() => inputs.current[id]?.click()}
           >
             {preview ? (
-              <img src={preview} alt={label} />
+              <img src={preview} alt={t(label)} />
             ) : (
               <span className="angle-plus">📷</span>
             )}
             <span className="angle-label">
-              {label}
+              {t(label)}
               {id === 'front' && !file && ' *'}
             </span>
             <input

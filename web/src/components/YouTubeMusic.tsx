@@ -9,6 +9,7 @@ import {
   type Playlist,
 } from '../lib/music';
 import { loadYouTubeApi, ytCall, type YTPlayer } from '../lib/ytPlayer';
+import { useT } from '../lib/i18n';
 
 export type MusicState = {
   playing: boolean;
@@ -41,6 +42,7 @@ const YouTubeMusic = ({
   broadcast?: boolean;
   onStateChange?: (s: MusicState) => void;
 }) => {
+  const { t } = useT();
   const [cfg, setCfg] = useState<MusicConfig>(loadMusic);
   const [open, setOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -215,14 +217,14 @@ const YouTubeMusic = ({
         <button
           className="tctrl"
           onClick={() => setPlaying((p) => !p)}
-          aria-label="Toggle music"
+          aria-label={t('Toggle music')}
         >
           {playing ? '🔊' : '🎵'}
         </button>
         <button
           className="tctrl"
           onClick={() => setOpen((o) => !o)}
-          aria-label="Music settings"
+          aria-label={t('Music settings')}
         >
           ⚙️
         </button>
@@ -232,7 +234,7 @@ const YouTubeMusic = ({
             style={{ background: 'rgba(0,0,0,0.3)', color: '#fff' }}
           >
             ♪ {current.label}
-            {broadcast ? ' (on TV)' : ''}
+            {broadcast ? ' ' + t('(on TV)') : ''}
           </span>
         )}
         {playing && current && failed && !broadcast && (
@@ -241,7 +243,7 @@ const YouTubeMusic = ({
             style={{ border: 'none' }}
             onClick={() => openInYouTube(current)}
           >
-            ▶ Can't embed. Open in YouTube
+            {t("▶ Can't embed. Open in YouTube")}
           </button>
         )}
       </div>
@@ -252,7 +254,7 @@ const YouTubeMusic = ({
           style={{ marginTop: 8, color: 'var(--text)' }}
           onClick={(e) => e.stopPropagation()}
         >
-          <h3 style={{ fontSize: 15, marginBottom: 8 }}>Pick a playlist</h3>
+          <h3 style={{ fontSize: 15, marginBottom: 8 }}>{t('Pick a playlist')}</h3>
           <div className="stack">
             {cfg.playlists.map((p) => (
               <label key={p.id} className="card-row" style={{ margin: 0 }}>
@@ -267,15 +269,15 @@ const YouTubeMusic = ({
             ))}
           </div>
           <div className="field" style={{ marginTop: 12, marginBottom: 6 }}>
-            <label>Add a playlist</label>
+            <label>{t('Add a playlist')}</label>
             <input
-              placeholder="Name (e.g. Beast Mode)"
+              placeholder={t('Name (e.g. Beast Mode)')}
               value={newLabel}
               onChange={(e) => setNewLabel(e.target.value)}
               style={{ marginBottom: 8 }}
             />
             <input
-              placeholder="Paste YouTube link"
+              placeholder={t('Paste YouTube link')}
               value={newLink}
               onChange={(e) => setNewLink(e.target.value)}
             />
@@ -289,12 +291,12 @@ const YouTubeMusic = ({
               setNewLink('');
             }}
           >
-            Add
+            {t('Add')}
           </button>
           <p className="muted" style={{ fontSize: 12, marginTop: 8 }}>
-            Tip: assign playlists to specific workout types in Progress → Music.
-            If a playlist won't embed, tap "open in YouTube" to play it in your
-            own YouTube app/tab instead.
+            {t(
+              'Tip: assign playlists to specific workout types in Progress → Music. If a playlist won\'t embed, tap "open in YouTube" to play it in your own YouTube app/tab instead.'
+            )}
           </p>
         </div>
       )}

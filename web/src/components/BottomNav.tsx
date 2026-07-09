@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { useT } from '../lib/i18n';
 
 const items = [
   { to: '/', icon: '🏋️', label: 'Today', end: true },
@@ -8,7 +9,9 @@ const items = [
   { to: '/about', icon: 'ℹ️', label: 'About', end: false },
 ];
 
-const BottomNav = () => (
+const BottomNav = () => {
+  const { t } = useT();
+  return (
   <nav className="bottom-nav">
     {items.map((it) => (
       <NavLink
@@ -18,10 +21,11 @@ const BottomNav = () => (
         className={({ isActive }) => (isActive ? 'active' : '')}
       >
         <span className="nav-ic">{it.icon}</span>
-        {it.label}
+        {t(it.label)}
       </NavLink>
     ))}
   </nav>
-);
+  );
+};
 
 export default BottomNav;
