@@ -94,37 +94,33 @@ const DEFAULT_VIDEOS: Record<string, string> = {
   'donkey-kicks': 'https://youtu.be/KgghFOMKnkE',
   'fire-hydrants': 'https://youtu.be/7LnuhLi-78I',
   'sumo-squats': 'https://youtu.be/DAD6BkE5hKs',
-  // ---- Level II circuits (curated Shorts / short demos, oEmbed-verified) ----
+  // ---- Level II circuits: AI-vetted (Gemini watched each one; start= marks
+  // where the demo begins). 8 rejected clips removed pending vetted
+  // replacements; those exercises use the search fallback meanwhile. ----
   // Chest Strength II
-  'tempo-push-up': 'https://www.youtube.com/shorts/It9gzXTgc2o',
-  'archer-push-up': 'https://www.youtube.com/shorts/HXiwGFWx1mU',
+  'archer-push-up': 'https://www.youtube.com/shorts/HXiwGFWx1mU?start=26',
   'pseudo-planche-push-up': 'https://www.youtube.com/shorts/AvRdl1cnXo8',
   'push-up-shoulder-tap': 'https://www.youtube.com/shorts/EEztH7RG4V4',
   // Back Strength II
-  'ytw-swimmers': 'https://www.youtube.com/shorts/F9EXy6psIzU',
   'superman-pull-down': 'https://www.youtube.com/shorts/DpdF_-aUSoo',
-  'dive-bombers': 'https://www.youtube.com/shorts/BX8xNNRV1eE',
   'self-resisted-towel-row': 'https://www.youtube.com/watch?v=Ee3zIs2Rb9c',
   // Shoulder Strength II
   'elevated-pike-push-up': 'https://www.youtube.com/shorts/3d-xLoUAP0o',
   'plank-up-down': 'https://www.youtube.com/shorts/SZ8ZQiQcAt4',
-  'lateral-raise-iso-hold': 'https://www.youtube.com/shorts/0czE9AXnWCg',
-  'wall-angels': 'https://www.youtube.com/shorts/X8aFCLvh5lM',
+  'wall-angels': 'https://www.youtube.com/shorts/X8aFCLvh5lM?start=41',
   // Leg Strength II
-  'tempo-squat': 'https://www.youtube.com/shorts/9imncDx8eQg',
-  'bulgarian-split-squat': 'https://www.youtube.com/shorts/9p5e2BSvoLs',
+  'tempo-squat': 'https://www.youtube.com/shorts/9imncDx8eQg?start=4',
   'single-leg-rdl': 'https://www.youtube.com/watch?v=JQZqPsmeesc',
-  'sliding-hamstring-curl': 'https://www.youtube.com/shorts/hzcQDCm3sQ0',
-  'squat-calf-raise': 'https://www.youtube.com/shorts/-rU8QHnx9Tw',
+  'sliding-hamstring-curl': 'https://www.youtube.com/shorts/hzcQDCm3sQ0?start=46',
+  'squat-calf-raise': 'https://www.youtube.com/shorts/-rU8QHnx9Tw?start=9',
   // Upper Body HIIT II
-  'bear-crawl': 'https://www.youtube.com/shorts/-9L3rTrYo4Q',
+  'bear-crawl': 'https://www.youtube.com/shorts/-9L3rTrYo4Q?start=16',
   'plank-jack-shoulder-tap': 'https://www.youtube.com/shorts/07i-UiTpTm0',
   'cross-body-climbers': 'https://www.youtube.com/shorts/vA576wwzUAg',
   'shadow-boxing': 'https://www.youtube.com/shorts/oB_xHVeXhxA',
   // Lower Body HIIT II
-  'speed-skaters': 'https://www.youtube.com/watch?v=9_jLW6VkU8A',
-  'squat-calf-pop': 'https://www.youtube.com/shorts/31JMTItqvo8',
-  'quick-feet-pulses': 'https://www.youtube.com/watch?v=mP2zippJ4SQ',
+  'speed-skaters': 'https://www.youtube.com/watch?v=9_jLW6VkU8A?start=8',
+  'squat-calf-pop': 'https://www.youtube.com/shorts/31JMTItqvo8?start=12',
   'reverse-lunge-knee-drive': 'https://www.youtube.com/shorts/8_LD0WinwwU',
   // Cardio HIIT II ('burpees' reuses the Level I entry above)
   'invisible-jump-rope': 'https://www.youtube.com/watch?v=B3Z28sZg9y0',
@@ -133,16 +129,22 @@ const DEFAULT_VIDEOS: Record<string, string> = {
   // Core & Abs Circuit II
   'hollow-body-hold': 'https://www.youtube.com/shorts/MY6_stJuy7M',
   'side-plank-hip-dips': 'https://www.youtube.com/shorts/4yylMqlnjwU',
-  'body-saw-slides': 'https://www.youtube.com/shorts/bqayZLi8heE',
-  'squat-cross-pulse': 'https://www.youtube.com/shorts/hw5ahMi0anA',
   // Full Body Circuit II
   'plank-push-up-tap': 'https://www.youtube.com/shorts/EEztH7RG4V4',
   'crab-reach': 'https://www.youtube.com/shorts/DY6b2D9oRvc',
   'elevated-chair-dips': 'https://www.youtube.com/watch?v=hx8RX9x3dUE',
   'sprawls': 'https://www.youtube.com/shorts/mqZNxmlnZOw',
+  // AI-vetted replacements (round 2)
+  'tempo-push-up': 'https://www.youtube.com/shorts/BpHgB1SRsB0?start=39',
+  'dive-bombers': 'https://www.youtube.com/shorts/bQ9XsG8KeOA',
+  'bulgarian-split-squat': 'https://www.youtube.com/shorts/dLPUEhOe7EI',
+  'quick-feet-pulses': 'https://www.youtube.com/shorts/tCqUg0ifkPU?start=14',
+  'body-saw-slides': 'https://www.youtube.com/shorts/LpsR57exwHs?start=7',
+  'squat-cross-pulse': 'https://www.youtube.com/shorts/ydlp5X3sRm8',
+  'ytw-swimmers': 'https://www.youtube.com/watch?v=ZpZEQ2JCXyc?start=5',
+  'cossack-squat': 'https://www.youtube.com/shorts/xzURWYdI_Cs',
   // Glutes & Booty Circuit II
   'single-leg-hip-thrust': 'https://www.youtube.com/watch?v=GoqoWSAiOsA',
-  'cossack-squat': 'https://www.youtube.com/shorts/pJzSDpcehuQ',
   'fire-hydrant-kick': 'https://www.youtube.com/shorts/FrvA1bjz-PU',
   'tempo-sumo-calf-raise': 'https://www.youtube.com/watch?v=GD5IaDVlGhA',
 };
