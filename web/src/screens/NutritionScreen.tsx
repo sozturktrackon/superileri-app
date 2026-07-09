@@ -7,10 +7,18 @@ import { dietsDe } from '../i18n/diets-de';
 import { dietsEs } from '../i18n/diets-es';
 import { dietsPt } from '../i18n/diets-pt';
 import { dietsTl } from '../i18n/diets-tl';
+import { dietsId } from '../i18n/diets-id';
+import { dietsJa } from '../i18n/diets-ja';
+import { dietsVi } from '../i18n/diets-vi';
+import { dietsTh } from '../i18n/diets-th';
+import { dietsRu } from '../i18n/diets-ru';
+import { dietsUk } from '../i18n/diets-uk';
 
 const DIETS: Partial<Record<string, typeof dietsTr>> = {
   tr: dietsTr, hi: dietsHi, fr: dietsFr, de: dietsDe,
-  es: dietsEs, pt: dietsPt, tl: dietsTl,
+  es: dietsEs, pt: dietsPt, tl: dietsTl, id: dietsId,
+  ja: dietsJa, vi: dietsVi, th: dietsTh, ru: dietsRu,
+  uk: dietsUk,
 };
 import { useProfile } from '../state';
 import { useT } from '../lib/i18n';

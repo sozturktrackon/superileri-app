@@ -8,11 +8,19 @@ import { deContent } from '../i18n/content-de';
 import { esContent } from '../i18n/content-es';
 import { ptContent } from '../i18n/content-pt';
 import { tlContent } from '../i18n/content-tl';
+import { idContent } from '../i18n/content-id';
+import { jaContent } from '../i18n/content-ja';
+import { viContent } from '../i18n/content-vi';
+import { thContent } from '../i18n/content-th';
+import { ruContent } from '../i18n/content-ru';
+import { ukContent } from '../i18n/content-uk';
 
 type ContentOverlay = typeof trContent;
 const OVERLAYS: Partial<Record<string, ContentOverlay>> = {
   tr: trContent, hi: hiContent, fr: frContent, de: deContent,
-  es: esContent, pt: ptContent, tl: tlContent,
+  es: esContent, pt: ptContent, tl: tlContent, id: idContent,
+  ja: jaContent, vi: viContent, th: thContent, ru: ruContent,
+  uk: ukContent,
 };
 const overlay = (): ContentOverlay | undefined => OVERLAYS[getLang()];
 

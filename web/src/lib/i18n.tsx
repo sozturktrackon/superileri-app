@@ -12,6 +12,12 @@ import { de } from '../i18n/de';
 import { es } from '../i18n/es';
 import { pt } from '../i18n/pt';
 import { tl } from '../i18n/tl';
+import { id } from '../i18n/id';
+import { ja } from '../i18n/ja';
+import { vi } from '../i18n/vi';
+import { th } from '../i18n/th';
+import { ru } from '../i18n/ru';
+import { uk } from '../i18n/uk';
 
 /**
  * Tiny English-keyed i18n: t('English text') looks the string up in the
@@ -55,7 +61,9 @@ export const LANG_NAMES: Record<Lang, string> = {
 export const amplifyLangCode = (l: Lang): string => (l === 'uk' ? 'ua' : l);
 
 const LS_KEY = 'superileri.lang';
-const DICTS: Partial<Record<Lang, Record<string, string>>> = { tr, hi, fr, de, es, pt, tl };
+const DICTS: Partial<Record<Lang, Record<string, string>>> = {
+  tr, hi, fr, de, es, pt, tl, id, ja, vi, th, ru, uk,
+};
 
 export const detectLang = (): Lang => {
   try {
