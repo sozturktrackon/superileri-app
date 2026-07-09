@@ -16,23 +16,23 @@ import { tr } from '../i18n/tr';
  * Language resolution: explicit choice (localStorage, synced to the user's
  * profile) -> browser language -> English.
  */
-export type Lang = 'en' | 'tr' | 'hi' | 'ru' | 'fr' | 'de' | 'es' | 'pt';
+export type Lang = 'en' | 'tr' | 'hi' | 'fr' | 'de' | 'es' | 'pt' | 'tl';
 
 export const LANGS: { code: Lang; label: string }[] = [
   { code: 'en', label: 'English' },
   { code: 'tr', label: 'Türkçe' },
   { code: 'hi', label: 'हिन्दी' },
-  { code: 'ru', label: 'Русский' },
   { code: 'fr', label: 'Français' },
   { code: 'de', label: 'Deutsch' },
   { code: 'es', label: 'Español' },
   { code: 'pt', label: 'Português' },
+  { code: 'tl', label: 'Tagalog' },
 ];
 
 /** Human-readable language name, for the AI "respond in X" instruction. */
 export const LANG_NAMES: Record<Lang, string> = {
-  en: 'English', tr: 'Turkish', hi: 'Hindi', ru: 'Russian',
-  fr: 'French', de: 'German', es: 'Spanish', pt: 'Portuguese',
+  en: 'English', tr: 'Turkish', hi: 'Hindi', fr: 'French',
+  de: 'German', es: 'Spanish', pt: 'Portuguese', tl: 'Filipino (Tagalog)',
 };
 
 const LS_KEY = 'superileri.lang';
@@ -45,8 +45,9 @@ export const detectLang = (): Lang => {
   } catch {
     /* ignore */
   }
-  const nav = (navigator.language || 'en').slice(0, 2).toLowerCase();
-  return (LANGS.some((l) => l.code === nav) ? nav : 'en') as Lang;
+  // Product decision: no browser-language guessing. English until the user
+  // explicitly picks a language (login screen, or Progress settings).
+  return 'en';
 };
 
 export const persistLang = (l: Lang): void => {
