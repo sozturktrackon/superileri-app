@@ -78,17 +78,17 @@ const DEFAULT_VIDEOS: Record<string, string> = {
   'jumping-jacks': 'https://youtu.be/uLVt6u15L98',
   'burpees': 'https://youtube.com/shorts/gYiE_2BtSTg',
   'mountain-climbers': 'https://youtu.be/kLh-uczlPLg',
-  // Grow Like Game
+  // Full Body Growth Circuit
   'plank-push-ups': 'https://youtube.com/shorts/mHzGyMLN144',
   'isolated-chest-hold-oblique-toe-taps': 'https://youtu.be/ke6DoSMW6tg',
   'scapular-holds-wide-push-up': 'https://youtu.be/1na_MR8s_MM',
   'chair-dips': 'https://youtu.be/wYUXyGQQ3Rk',
-  // Abs Like Royce
+  // Core & Abs Circuit
   'squat-to-oblique-cross': 'https://youtu.be/eQnFX1FYvXk',
   'v-sit': 'https://youtu.be/ILyGW-V0gGw',
   'single-side-bicycle-crunch-isolations': 'https://youtu.be/OhW2ez1OsFs',
   'plank-slides': 'https://youtu.be/cv-CTjDskBc',
-  // Booty Like J-Lo (reconstructed; Sumo Squats from the program's demo channel)
+  // Glutes & Booty Circuit (reconstructed)
   'glute-bridge': 'https://youtu.be/wPM8icPu6H8',
   'single-leg-glute-bridge': 'https://youtu.be/sVfp4LN9niA',
   'donkey-kicks': 'https://youtu.be/KgghFOMKnkE',

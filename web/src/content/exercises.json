@@ -86,7 +86,7 @@
     },
     {
       "id": "game",
-      "name": "Grow Like Game Circuit",
+      "name": "Full Body Growth Circuit",
       "key": "GAME",
       "exercises": [
         { "id": "plank-push-ups", "name": "Plank Push-Ups", "progressions": [] },
@@ -97,7 +97,7 @@
     },
     {
       "id": "royce",
-      "name": "Abs Like Prince Royce Circuit",
+      "name": "Core & Abs Circuit",
       "key": "Royce",
       "exercises": [
         { "id": "squat-to-oblique-cross", "name": "Squat to Oblique Cross", "progressions": [] },
@@ -108,7 +108,7 @@
     },
     {
       "id": "jlo",
-      "name": "Booty Like J-Lo Circuit",
+      "name": "Glutes & Booty Circuit",
       "key": "J-Lo",
       "_note": "Original list was lost with the old site and is not on the demo channel; reconstructed as a standard equipment-free glute circuit (Sumo Squats sourced from the program's demo channel).",
       "exercises": [
