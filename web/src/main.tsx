@@ -7,7 +7,7 @@ import '@aws-amplify/ui-react/styles.css';
 import './lib/amplify'; // configures Amplify on import
 import './styles.css';
 import { installCrashCapture } from './lib/crashLog';
-import { detectLang, I18nProvider } from './lib/i18n';
+import { amplifyLangCode, detectLang, I18nProvider } from './lib/i18n';
 import { hiAuth } from './i18n/hi';
 import { tlAuth } from './i18n/tl';
 import App from './App';
@@ -18,7 +18,7 @@ installCrashCapture();
 // Login/signup screen (Amplify Authenticator) speaks the user's language too.
 I18n.putVocabularies(translations);
 I18n.putVocabularies({ hi: hiAuth, tl: tlAuth });
-I18n.setLanguage(detectLang());
+I18n.setLanguage(amplifyLangCode(detectLang()));
 
 // Installed PWAs on Android/iOS often RESUME from memory instead of
 // relaunching, so the service worker's on-launch update check can be days

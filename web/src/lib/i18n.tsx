@@ -22,7 +22,9 @@ import { tl } from '../i18n/tl';
  * Language resolution: explicit choice (localStorage, synced to the user's
  * profile) -> browser language -> English.
  */
-export type Lang = 'en' | 'tr' | 'hi' | 'fr' | 'de' | 'es' | 'pt' | 'tl';
+export type Lang =
+  | 'en' | 'tr' | 'hi' | 'fr' | 'de' | 'es' | 'pt' | 'tl'
+  | 'id' | 'ja' | 'vi' | 'th' | 'ru' | 'uk';
 
 export const LANGS: { code: Lang; label: string }[] = [
   { code: 'en', label: 'English' },
@@ -33,13 +35,24 @@ export const LANGS: { code: Lang; label: string }[] = [
   { code: 'es', label: 'Español' },
   { code: 'pt', label: 'Português' },
   { code: 'tl', label: 'Tagalog' },
+  { code: 'id', label: 'Bahasa Indonesia' },
+  { code: 'ja', label: '日本語' },
+  { code: 'vi', label: 'Tiếng Việt' },
+  { code: 'th', label: 'ไทย' },
+  { code: 'ru', label: 'Русский' },
+  { code: 'uk', label: 'Українська' },
 ];
 
 /** Human-readable language name, for the AI "respond in X" instruction. */
 export const LANG_NAMES: Record<Lang, string> = {
   en: 'English', tr: 'Turkish', hi: 'Hindi', fr: 'French',
   de: 'German', es: 'Spanish', pt: 'Portuguese', tl: 'Filipino (Tagalog)',
+  id: 'Indonesian', ja: 'Japanese', vi: 'Vietnamese', th: 'Thai',
+  ru: 'Russian', uk: 'Ukrainian',
 };
+
+/** Amplify's Authenticator translations use 'ua' for Ukrainian. */
+export const amplifyLangCode = (l: Lang): string => (l === 'uk' ? 'ua' : l);
 
 const LS_KEY = 'superileri.lang';
 const DICTS: Partial<Record<Lang, Record<string, string>>> = { tr, hi, fr, de, es, pt, tl };

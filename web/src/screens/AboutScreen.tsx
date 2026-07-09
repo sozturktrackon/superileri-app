@@ -35,7 +35,7 @@ const AboutScreen = () => {
     <div className="card">
       <div style={{ fontWeight: 800, marginBottom: 6 }}>{t('🛌 Rest days count')}</div>
       <p style={{ margin: 0, lineHeight: 1.55, fontSize: 14 }}>
-        {t("Rest days are part of the program, not a gap in it. Muscle is built in recovery. They never break your streak. The streak only cares about training days you actually skipped.")}
+        {t("Rest days are part of the program, not a gap in it. Muscle is built in recovery. They never break your streak: it only breaks when you skip an actual training day.")}
       </p>
     </div>
 

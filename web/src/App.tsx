@@ -18,7 +18,7 @@ import NutritionScreen from './screens/NutritionScreen';
 import AboutScreen from './screens/AboutScreen';
 import TvDisplay from './screens/TvDisplay';
 import ErrorBoundary from './components/ErrorBoundary';
-import { LANGS, useT, type Lang } from './lib/i18n';
+import { amplifyLangCode, LANGS, useT, type Lang } from './lib/i18n';
 import { I18n } from 'aws-amplify/utils';
 
 const Shell = ({ signOut }: { signOut?: () => void }) => {
@@ -31,7 +31,7 @@ const Shell = ({ signOut }: { signOut?: () => void }) => {
     const pl = profile?.language as Lang | null | undefined;
     if (pl && pl !== lang && LANGS.some((l) => l.code === pl)) {
       setLang(pl);
-      I18n.setLanguage(pl);
+      I18n.setLanguage(amplifyLangCode(pl));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile?.language]);
@@ -79,7 +79,7 @@ const AuthLanguageHeader = () => {
         onChange={(e) => {
           const l = e.target.value as Lang;
           setLang(l);
-          I18n.setLanguage(l);
+          I18n.setLanguage(amplifyLangCode(l));
         }}
         style={{ padding: '6px 10px', borderRadius: 10, fontSize: 13 }}
       >
