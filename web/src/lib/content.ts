@@ -52,6 +52,16 @@ export const getPlan = (id: string): Plan | undefined =>
 export const getGroupByKey = (key: string): Group | undefined =>
   groupByKey.get(key);
 
+/** Short tile labels for the calendar grid. The internal keys GAME / Royce /
+ *  J-Lo are legacy identifiers kept only for stored-data compatibility (they
+ *  live in saved workout logs) and must never be shown to the user. */
+const SHORT_LABELS: Record<string, string> = {
+  GAME: 'Full Body',
+  Royce: 'Core',
+  'J-Lo': 'Glutes',
+};
+export const groupShort = (key: string): string => SHORT_LABELS[key] ?? key;
+
 /** Resolve a plan day into its ordered list of exercise groups. */
 export const getDay = (planId: string, dayNumber: number) => {
   const plan = getPlan(planId);
@@ -66,8 +76,11 @@ export const getDay = (planId: string, dayNumber: number) => {
   };
 };
 
-export const PLAN_LENGTH = 30; // Month-1 cycle length
+// Cycle length comes from the calendar data itself (4 clean weeks = 28 days;
+// the original program's days 29-30 were trimmed because they collided with
+// the restart — Chest on day 29 AND again on day 1).
+export const PLAN_LENGTH = plans[0]?.days.length ?? 28;
 
-/** Wrap day numbers so the program loops after 30 days. */
+/** Wrap day numbers so week 5 starts the cycle again. */
 export const normalizeDay = (day: number): number =>
   ((((day - 1) % PLAN_LENGTH) + PLAN_LENGTH) % PLAN_LENGTH) + 1;

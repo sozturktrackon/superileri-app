@@ -1,8 +1,9 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProfile } from '../state';
-import { getDay, getPlan, intervals, normalizeDay } from '../lib/content';
-import { advanceDay } from '../lib/api';
+import { getDay, getPlan, intervals, normalizeDay, PLAN_LENGTH } from '../lib/content';
+import { advanceDay, listWorkouts } from '../lib/api';
+import { completedDaySet, computeStreaks } from '../lib/streak';
 
 const Today = () => {
   const { profile, displayName, refresh } = useProfile();
@@ -12,8 +13,19 @@ const Today = () => {
   const dayNumber = normalizeDay(rawDay);
   const plan = getPlan(planId);
   const day = useMemo(() => getDay(planId, dayNumber), [planId, dayNumber]);
+  const [streak, setStreak] = useState(0);
 
-  const cycle = Math.floor((rawDay - 1) / 30) + 1;
+  const cycle = Math.floor((rawDay - 1) / PLAN_LENGTH) + 1;
+
+  useEffect(() => {
+    listWorkouts()
+      .then((logs) =>
+        setStreak(
+          computeStreaks(planId, rawDay, completedDaySet(planId, logs)).current
+        )
+      )
+      .catch(() => {});
+  }, [planId, rawDay]);
 
   const next = async () => {
     if (profile) {
@@ -35,10 +47,17 @@ const Today = () => {
     <div>
       <div className="card-row" style={{ marginBottom: 4 }}>
         <span className="pill accent">{plan.name}</span>
-        <span className="pill">
-          Day {dayNumber}
-          {cycle > 1 ? ` · Cycle ${cycle}` : ''}
-        </span>
+        <div style={{ display: 'flex', gap: 6 }}>
+          {streak > 0 && (
+            <span className="pill" style={{ background: 'rgba(255,122,24,0.18)' }}>
+              🔥 {streak}-day streak
+            </span>
+          )}
+          <span className="pill">
+            Day {dayNumber}
+            {cycle > 1 ? ` · Cycle ${cycle}` : ''}
+          </span>
+        </div>
       </div>
       <h1 className="page-title">
         {greeting}, {displayName}.

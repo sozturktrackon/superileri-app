@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../state';
-import { getDay, getPlan, normalizeDay } from '../lib/content';
+import { getDay, getPlan, groupShort, normalizeDay } from '../lib/content';
 import {
   clearManualMark,
   listWorkouts,
@@ -149,7 +149,7 @@ const CalendarScreen = () => {
             >
               <span className="d">{isDone ? '✓' : d.day}</span>
               <span>
-                {d.rest ? 'Rest' : d.workouts.map((w) => <div key={w}>{w}</div>)}
+                {d.rest ? 'Rest' : d.workouts.map((w) => <div key={w}>{groupShort(w)}</div>)}
               </span>
             </button>
           );
@@ -231,7 +231,7 @@ const CalendarScreen = () => {
       <p className="muted" style={{ fontSize: 12, marginTop: 14 }}>
         Tap any day to start it, tick it done by hand (e.g. trained with a
         friend), or set it as today. Days also check off automatically when you
-        finish their circuits. The 30-day cycle repeats.
+        finish their circuits. The 4-week cycle repeats.
       </p>
     </div>
   );

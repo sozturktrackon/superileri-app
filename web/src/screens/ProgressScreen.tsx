@@ -17,6 +17,7 @@ import MusicSettings from '../components/MusicSettings';
 import ExerciseVideoSettings from '../components/ExerciseVideoSettings';
 import PartnerSettings from '../components/PartnerSettings';
 import { clearCrashLog, getCrashLog } from '../lib/crashLog';
+import { completedDaySet, computeStreaks } from '../lib/streak';
 
 type Shot = CheckIn & { url?: string; angleCount?: number };
 
@@ -69,6 +70,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
   const { profile, displayName } = useProfile();
   const [shots, setShots] = useState<Shot[]>([]);
   const [workoutCount, setWorkoutCount] = useState(0);
+  const [streaks, setStreaks] = useState({ current: 0, best: 0 });
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -83,6 +85,15 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
   const loadShots = async () => {
     const [cis, logs] = await Promise.all([listCheckIns(), listWorkouts()]);
     setWorkoutCount(logs.filter((l) => l.completed).length);
+    if (profile) {
+      setStreaks(
+        computeStreaks(
+          profile.plan ?? 'lean',
+          profile.currentDay ?? 1,
+          completedDaySet(profile.plan ?? 'lean', logs)
+        )
+      );
+    }
     const withUrls = await Promise.all(
       cis.map(async (c) => {
         const thumb = checkInThumbnail(c);
@@ -181,6 +192,14 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
           <div className="muted" style={{ fontSize: 12 }}>
             {plan?.name} · day
           </div>
+        </div>
+        <div className="card" style={{ margin: 0, textAlign: 'center' }}>
+          <div style={{ fontSize: 30, fontWeight: 900 }}>🔥 {streaks.current}</div>
+          <div className="muted" style={{ fontSize: 12 }}>day streak</div>
+        </div>
+        <div className="card" style={{ margin: 0, textAlign: 'center' }}>
+          <div style={{ fontSize: 30, fontWeight: 900 }}>🏆 {streaks.best}</div>
+          <div className="muted" style={{ fontSize: 12 }}>best streak</div>
         </div>
       </div>
 
