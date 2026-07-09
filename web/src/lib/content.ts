@@ -14,13 +14,15 @@ import { viContent } from '../i18n/content-vi';
 import { thContent } from '../i18n/content-th';
 import { ruContent } from '../i18n/content-ru';
 import { ukContent } from '../i18n/content-uk';
+import { arContent } from '../i18n/content-ar';
+import { heContent } from '../i18n/content-he';
 
 type ContentOverlay = typeof trContent;
 const OVERLAYS: Partial<Record<string, ContentOverlay>> = {
   tr: trContent, hi: hiContent, fr: frContent, de: deContent,
   es: esContent, pt: ptContent, tl: tlContent, id: idContent,
   ja: jaContent, vi: viContent, th: thContent, ru: ruContent,
-  uk: ukContent,
+  uk: ukContent, ar: arContent, he: heContent,
 };
 const overlay = (): ContentOverlay | undefined => OVERLAYS[getLang()];
 

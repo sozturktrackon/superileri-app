@@ -13,12 +13,14 @@ import { dietsVi } from '../i18n/diets-vi';
 import { dietsTh } from '../i18n/diets-th';
 import { dietsRu } from '../i18n/diets-ru';
 import { dietsUk } from '../i18n/diets-uk';
+import { dietsAr } from '../i18n/diets-ar';
+import { dietsHe } from '../i18n/diets-he';
 
 const DIETS: Partial<Record<string, typeof dietsTr>> = {
   tr: dietsTr, hi: dietsHi, fr: dietsFr, de: dietsDe,
   es: dietsEs, pt: dietsPt, tl: dietsTl, id: dietsId,
   ja: dietsJa, vi: dietsVi, th: dietsTh, ru: dietsRu,
-  uk: dietsUk,
+  uk: dietsUk, ar: dietsAr, he: dietsHe,
 };
 import { useProfile } from '../state';
 import { useT } from '../lib/i18n';

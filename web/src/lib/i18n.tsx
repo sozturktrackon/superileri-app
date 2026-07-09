@@ -18,6 +18,8 @@ import { vi } from '../i18n/vi';
 import { th } from '../i18n/th';
 import { ru } from '../i18n/ru';
 import { uk } from '../i18n/uk';
+import { ar } from '../i18n/ar';
+import { he } from '../i18n/he';
 
 /**
  * Tiny English-keyed i18n: t('English text') looks the string up in the
@@ -30,7 +32,7 @@ import { uk } from '../i18n/uk';
  */
 export type Lang =
   | 'en' | 'tr' | 'hi' | 'fr' | 'de' | 'es' | 'pt' | 'tl'
-  | 'id' | 'ja' | 'vi' | 'th' | 'ru' | 'uk';
+  | 'id' | 'ja' | 'vi' | 'th' | 'ru' | 'uk' | 'ar' | 'he';
 
 // Picker order: English pinned first (the default), then native names
 // (endonyms) alphabetically - Latin script A-Z, then other scripts grouped
@@ -52,6 +54,8 @@ export const LANGS: { code: Lang; label: string }[] = [
   { code: 'hi', label: 'हिन्दी' },
   { code: 'th', label: 'ไทย' },
   { code: 'ja', label: '日本語' },
+  { code: 'ar', label: 'العربية' },
+  { code: 'he', label: 'עברית' },
 ];
 
 /** Human-readable language name, for the AI "respond in X" instruction. */
@@ -59,7 +63,17 @@ export const LANG_NAMES: Record<Lang, string> = {
   en: 'English', tr: 'Turkish', hi: 'Hindi', fr: 'French',
   de: 'German', es: 'Spanish', pt: 'Portuguese', tl: 'Filipino (Tagalog)',
   id: 'Indonesian', ja: 'Japanese', vi: 'Vietnamese', th: 'Thai',
-  ru: 'Russian', uk: 'Ukrainian',
+  ru: 'Russian', uk: 'Ukrainian', ar: 'Arabic', he: 'Hebrew',
+};
+
+/** Right-to-left languages: flips the whole document's direction. */
+export const isRTL = (l: Lang): boolean => l === 'ar' || l === 'he';
+
+const applyDir = (l: Lang): void => {
+  if (typeof document !== 'undefined') {
+    document.documentElement.dir = isRTL(l) ? 'rtl' : 'ltr';
+    document.documentElement.lang = l;
+  }
 };
 
 /** Amplify's Authenticator translations use 'ua' for Ukrainian. */
@@ -67,7 +81,7 @@ export const amplifyLangCode = (l: Lang): string => (l === 'uk' ? 'ua' : l);
 
 const LS_KEY = 'superileri.lang';
 const DICTS: Partial<Record<Lang, Record<string, string>>> = {
-  tr, hi, fr, de, es, pt, tl, id, ja, vi, th, ru, uk,
+  tr, hi, fr, de, es, pt, tl, id, ja, vi, th, ru, uk, ar, he,
 };
 
 export const detectLang = (): Lang => {
@@ -95,6 +109,7 @@ const interpolate = (s: string, vars?: Record<string, string | number>): string 
 
 /** Non-hook translate for code outside React (sound cues, etc.). */
 let currentLang: Lang = detectLang();
+applyDir(currentLang);
 export const getLang = (): Lang => currentLang;
 export const tGlobal = (
   key: string,
@@ -122,6 +137,7 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
   const setLang = useCallback((l: Lang) => {
     currentLang = l;
     persistLang(l);
+    applyDir(l);
     setLangState(l);
   }, []);
 

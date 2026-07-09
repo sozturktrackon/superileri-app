@@ -865,3 +865,27 @@ button {
   color: var(--accent-2);
   font-size: 13px;
 }
+
+/* ---- RTL (Arabic, Hebrew): the document flips via dir="rtl" on <html>.
+   Flexbox and centered layouts mirror automatically; only physical offsets
+   and explicit text-align need these overrides. ---- */
+[dir='rtl'] .choice {
+  text-align: right;
+}
+[dir='rtl'] .angle-slot.filled .angle-label {
+  left: auto;
+  right: 8px;
+}
+[dir='rtl'] .tv-controls {
+  right: auto;
+  left: 8vw;
+}
+[dir='rtl'] .video-actions {
+  right: auto;
+  left: 10px;
+}
+[dir='rtl'] .photo-del,
+[dir='rtl'] .merge-check {
+  right: auto;
+  left: 6px;
+}
