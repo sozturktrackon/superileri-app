@@ -1,17 +1,17 @@
 /** Turkish mirror of content/diets.json (same shape; NutritionScreen picks by
  *  active language). Food terms localized to what Turkish kitchens use. */
 export const dietsTr = {
-  goal: 'Formül basit: küçük bir kalori açığı ve yeterli protein — bunu sürdürebileceğin herhangi bir beslenme tarzıyla uygula. Haftada vücut ağırlığının %0,5–1 kadarını vermeyi hedefle; yavaş kilo kaybı kası korur.',
+  goal: 'Formül basit: küçük bir kalori açığı ve yeterli protein — bunu sürdürebileceğin herhangi bir beslenme tarzıyla uygula. Haftada vücut ağırlığının %0,5–1\'ini vermeyi hedefle; yavaş kilo kaybı kası korur.',
   habits: [
     {
       icon: '🍗',
       title: 'Her öğünde önce protein',
-      text: 'Günde kilogram başına ~1,6–2,2 g protein hedefle. Önce proteini ve sebzeleri, sonra karbonhidratı ye; daha uzun tok kalırsın ve enerjin dengeli olur.',
+      text: 'Günde, vücut ağırlığının her kilosu için ~1,6–2,2 g protein hedefle. Önce proteini ve sebzeleri, sonra karbonhidratı ye; daha uzun süre tok kalırsın ve enerjin dengeli olur.',
     },
     {
       icon: '🚶',
       title: 'Yemekten sonra biraz yürü',
-      text: 'Yemekten sonra 2–5 dakikalık yürüyüş kan şekeri yükselmesini belirgin azaltır. Masa başında mısın? Oturarak soleus şınavı yap (ayak ucu yerde topuk kaldırma). Otururken bile işe yarar.',
+      text: 'Yemekten sonra 2–5 dakikalık yürüyüş, kan şekerindeki yükselmeyi belirgin şekilde azaltır. Masa başındaysan oturduğun yerden soleus şınavı yap: ayak ucun yerde, topuğunu kaldırıp indir. Otururken bile işe yarar.',
     },
     {
       icon: '🥤',
@@ -26,7 +26,7 @@ export const dietsTr = {
     {
       icon: '🔁',
       title: 'Sürdürebileceğin düzeni seç',
-      text: 'Ketojenik, aralıklı oruç veya düzenli öğünler; yukarıdakiler sağlandığı sürece hepsi çalışır. En iyi diyet, gerçekten sürdürebildiğindir. Devamlılık, mükemmellikten önemlidir.',
+      text: 'Ketojenik, aralıklı oruç veya klasik öğünler; yukarıdaki ilkelere uyduğun sürece hepsi işe yarar. En iyi diyet, gerçekten sürdürebildiğin diyettir. Devamlılık mükemmellikten daha önemlidir.',
     },
     {
       icon: '😴',
@@ -35,7 +35,7 @@ export const dietsTr = {
     },
   ],
   dinnerCarbNote:
-    'İsteğe bağlı taktik: akşam yemeğinde karbonhidratı azaltmak birçok kişiye toplam alımı kontrol etmede yardımcı olur. Kural değil, pratik bir araç. Kalori, karbonhidrat zamanlamasından çok daha önemli.',
+    'İsteğe bağlı bir taktik: akşam yemeğinde karbonhidratı azaltmak, toplam kalori alımını kontrol etmeyi kolaylaştırır. Kural değil, pratik bir araç. Kalori, karbonhidrat zamanlamasından çok daha önemli.',
   mealPlans: {
     lean: {
       name: 'Lean yemek şablonu',

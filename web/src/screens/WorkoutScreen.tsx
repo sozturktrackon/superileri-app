@@ -19,6 +19,31 @@ import YouTubeMusic, { type MusicState } from '../components/YouTubeMusic';
 import QrScanner from '../components/QrScanner';
 import { useT } from '../lib/i18n';
 
+/** Backend (Lambda) messages arrive in English; map the known shapes to
+ *  translatable keys client-side so they follow the user's language. */
+const localizePartnerMsg = (
+  msg: string,
+  t: (k: string, v?: Record<string, string | number>) => string
+): string => {
+  if (!msg) return msg;
+  const exact = [
+    'Could not determine your account.',
+    "That's your own account.",
+    'Partner account is missing an id.',
+  ];
+  if (exact.includes(msg)) return t(msg);
+  let m = /^No Superileri account found for (.+)\.$/.exec(msg);
+  if (m) return t('No Superileri account found for {email}.', { email: m[1] });
+  m = /^Marked complete for (.+)\.$/.exec(msg);
+  if (m) return t('Marked complete for {email}.', { email: m[1] });
+  m = /^(.+) hasn't added you as a partner yet.+add (.+) in Progress/.exec(msg);
+  if (m) {
+    return t("{partner} hasn't added you as a partner yet. Ask them to add {you} in Progress → Partners.",
+      { partner: m[1], you: m[2] });
+  }
+  return msg;
+};
+
 const phaseTitle: Record<string, string> = {
   prep: 'Get Ready',
   on: 'Work',
@@ -275,9 +300,9 @@ const WorkoutScreen = () => {
   if (!group) {
     return (
       <div className="app-main">
-        <h1 className="page-title">Workout not found</h1>
+        <h1 className="page-title">{t('Workout not found')}</h1>
         <button className="btn primary block" onClick={() => navigate('/')}>
-          Back to Today
+          {t('Back to Today')}
         </button>
       </div>
     );
@@ -332,7 +357,7 @@ const WorkoutScreen = () => {
         <button
           className="timer-close"
           onClick={() => navigate('/')}
-          aria-label="Close"
+          aria-label={t('Close')}
         >
           ✕
         </button>
@@ -348,7 +373,7 @@ const WorkoutScreen = () => {
           <button
             className="timer-close"
             onClick={openTvPanel}
-            aria-label="Send to TV"
+            aria-label={t('Send to TV')}
             style={broadcasting ? { background: 'var(--accent)' } : undefined}
           >
             📺
@@ -356,7 +381,7 @@ const WorkoutScreen = () => {
           <button
             className="timer-close"
             onClick={toggleFullscreen}
-            aria-label="Fullscreen / TV mode"
+            aria-label={t('Fullscreen / TV mode')}
           >
             ⛶
           </button>
@@ -541,7 +566,7 @@ const WorkoutScreen = () => {
                           <div
                             style={{ fontSize: 11, opacity: 0.85, marginTop: 4 }}
                           >
-                            {partnerState[p.id]?.msg}
+                            {localizePartnerMsg(partnerState[p.id]?.msg ?? '', t)}
                           </div>
                         )}
                       </div>
@@ -584,13 +609,13 @@ const WorkoutScreen = () => {
             <div style={{ width: `${progress}%` }} />
           </div>
           <div className="timer-controls">
-            <button className="tctrl" onClick={prev} aria-label="Previous">
+            <button className="tctrl" onClick={prev} aria-label={t('Previous')}>
               ⏮
             </button>
-            <button className="tctrl big" onClick={onPrimary} aria-label="Play/Pause">
+            <button className="tctrl big" onClick={onPrimary} aria-label={t('Play/Pause')}>
               {state.status === 'running' ? '⏸' : '▶'}
             </button>
-            <button className="tctrl" onClick={skip} aria-label="Skip">
+            <button className="tctrl" onClick={skip} aria-label={t('Skip')}>
               ⏭
             </button>
           </div>

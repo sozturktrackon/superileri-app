@@ -53,6 +53,21 @@ export const trContent = {
     bulk2: { name: 'Bulk II', note: 'Seviye II hareketler, daha kısa seanslar. 2 tam döngüden sonra buraya geç.' },
   } as Record<string, { name: string; note: string }>,
 
+  progressions: {
+    'Chair Pike Push-Up': 'Sandalyede Pike Şınav',
+    'Clapping Push-Up': 'Alkışlı Şınav',
+    'Crawl Outs w/ Jump': 'Zıplamalı Crawl Out',
+    'Donkey Kick Pulses': 'Eşek Tekmesi Pulse',
+    'Jumping Split Lunges': 'Zıplamalı Split Lunge',
+    'Leaping Curtsy Lunge': 'Sıçramalı Curtsy Lunge',
+    'Marching Glute Bridge': 'Adımlamalı Kalça Köprüsü',
+    'One Leg Wall Sit': 'Tek Bacak Duvar Oturuşu',
+    'Sliding Leg Curl w/ Hip Thrust': 'Kayarak Leg Curl + Hip Thrust',
+    'V-Sit with Leg Drops': 'V Mekik + Bacak İndirme',
+    'V-Sit with Scissors': 'V Mekik + Makas',
+    'Wall Push-Up': 'Duvar Şınavı',
+  } as Record<string, string>,
+
   exercises: {
     'traditional-push-up': 'Klasik Şınav',
     'wide-push-up': 'Geniş Şınav',

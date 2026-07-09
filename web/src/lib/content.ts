@@ -58,6 +58,9 @@ const locGroup = (g: Group): Group => {
     exercises: g.exercises.map((e) => ({
       ...e,
       name: trContent.exercises[e.id] ?? e.name,
+      progressions: (e.progressions ?? []).map(
+        (pr) => trContent.progressions[pr] ?? pr
+      ),
     })),
   };
 };

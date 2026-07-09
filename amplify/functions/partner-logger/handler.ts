@@ -58,7 +58,7 @@ export const handler: Schema['logForPartner']['functionHandler'] = async (
   );
   if (!consent.Items?.length) {
     return fail(
-      `${partnerEmail} hasn't added you as a partner yet — ask them to add ${callerEmail} in Progress → Partners.`
+      `${partnerEmail} hasn't added you as a partner yet. Ask them to add ${callerEmail} in Progress -> Partners.`
     );
   }
 

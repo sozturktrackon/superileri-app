@@ -92,6 +92,7 @@ const AuthLanguageHeader = () => {
 };
 
 const AuthenticatedApp = () => {
+  const { t } = useT();
   return (
   <>
   <Authenticator
@@ -100,8 +101,8 @@ const AuthenticatedApp = () => {
     formFields={{
       signUp: {
         preferred_username: {
-          label: 'Your name',
-          placeholder: 'What should we call you?',
+          label: t('Your name'),
+          placeholder: t('What should we call you?'),
           order: 1,
         },
         email: { order: 2 },

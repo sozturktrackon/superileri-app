@@ -241,14 +241,14 @@ const TvDisplay = () => {
             className="btn ghost"
             autoFocus
             onClick={() => setMusicOn(!wantMusic)}
-            aria-label="Start or stop music"
+            aria-label={t('Start or stop music')}
           >
             {wantMusic ? t('⏸ Stop music') : t('▶ Start music')}
           </button>
           <button
             className="btn ghost"
             onClick={() => setVolume((v) => Math.max(0, v - 10))}
-            aria-label="Volume down"
+            aria-label={t('Volume down')}
           >
             −
           </button>
@@ -256,7 +256,7 @@ const TvDisplay = () => {
           <button
             className="btn ghost"
             onClick={() => setVolume((v) => Math.min(100, v + 10))}
-            aria-label="Volume up"
+            aria-label={t('Volume up')}
           >
             +
           </button>
