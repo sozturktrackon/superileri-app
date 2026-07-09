@@ -26,7 +26,7 @@ export const fr: Record<string, string> = {
   '+ New check-in': '+ Nouveau bilan',
   'Cancel': 'Annuler',
   '🔗 Merge': '🔗 Fusionner',
-  'Select 2 or more single-photo check-ins from the same session (e.g. front + back + sides taken the same day) to combine into one.': 'Sélectionne au moins 2 bilans d'une seule photo pris le même jour (par ex. face + dos + profils) pour les fusionner en un seul bilan.',
+  'Select 2 or more single-photo check-ins from the same session (e.g. front + back + sides taken the same day) to combine into one.': 'Sélectionne au moins 2 bilans d\'une seule photo pris le même jour (par ex. face + dos + profils) pour les fusionner en un seul bilan.',
   'No check-ins yet. Tap "+ New check-in" above to start your timeline.': 'Aucun bilan pour le moment. Appuie sur « + Nouveau bilan » ci-dessus pour commencer ton suivi.',
   '{count} angles': '{count} angles',
   'Delete check-in from {date}': 'Supprimer le bilan du {date}',
