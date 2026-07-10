@@ -44,7 +44,7 @@ const NutritionScreen = () => {
 
       {/* Goal */}
       <div className="card">
-        <div style={{ fontWeight: 800, marginBottom: 6 }}>{t('🎯 Your goal')}</div>
+        <div style={{ fontWeight: 800, marginBottom: 6 }}>{t('Your goal')}</div>
         <p style={{ margin: 0, lineHeight: 1.5 }}>{diets.goal}</p>
       </div>
 
@@ -54,7 +54,6 @@ const NutritionScreen = () => {
         {diets.habits.map((h) => (
           <div className="card" key={h.title} style={{ margin: 0 }}>
             <div style={{ display: 'flex', gap: 10 }}>
-              <div style={{ fontSize: 24, lineHeight: 1 }}>{h.icon}</div>
               <div>
                 <div style={{ fontWeight: 700 }}>{h.title}</div>
                 <p
@@ -76,7 +75,7 @@ const NutritionScreen = () => {
       {/* Optional meal template */}
       <details className="card" style={{ marginTop: 14 }}>
         <summary style={{ cursor: 'pointer', fontWeight: 800 }}>
-          {t('🍽️ Want it spelled out? Meal template (optional)')}
+          {t('Want it spelled out? Meal template (optional)')}
         </summary>
 
         <div className="choice-grid" style={{ margin: '12px 0' }}>
@@ -124,7 +123,7 @@ const NutritionScreen = () => {
 
       {/* Grocery list */}
       <details className="card">
-        <summary style={{ cursor: 'pointer', fontWeight: 800 }}>{t('🛒 Grocery list')}</summary>
+        <summary style={{ cursor: 'pointer', fontWeight: 800 }}>{t('Grocery list')}</summary>
         <div className="stack" style={{ marginTop: 12 }}>
           {diets.grocery.map((g) => (
             <div key={g.group}>
@@ -139,7 +138,7 @@ const NutritionScreen = () => {
 
       {/* Rules */}
       <details className="card">
-        <summary style={{ cursor: 'pointer', fontWeight: 800 }}>{t('📋 Simple rules')}</summary>
+        <summary style={{ cursor: 'pointer', fontWeight: 800 }}>{t('Simple rules')}</summary>
         <ul style={{ margin: '12px 0 0', paddingLeft: 18, lineHeight: 1.6, fontSize: 13 }}>
           {diets.rules.map((r) => (
             <li key={r}>{r}</li>
