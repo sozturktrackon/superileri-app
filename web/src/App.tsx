@@ -18,11 +18,25 @@ import NutritionScreen from './screens/NutritionScreen';
 import AboutScreen from './screens/AboutScreen';
 import TvDisplay from './screens/TvDisplay';
 import ErrorBoundary from './components/ErrorBoundary';
+import LegalScreen from './screens/LegalScreen';
+import ConsentScreen, { type ConsentResult } from './screens/ConsentScreen';
+import { updateProfile } from './lib/api';
 import { amplifyLangCode, LANGS, useT, type Lang } from './lib/i18n';
 import { I18n } from 'aws-amplify/utils';
 
+// New users must consent BEFORE we collect any data (photos included), so
+// their acceptance is staged locally and written into the profile at creation.
+const CONSENT_STAGE_KEY = 'superileri.consentStage';
+export const stagedConsent = (): ConsentResult | null => {
+  try {
+    return JSON.parse(sessionStorage.getItem(CONSENT_STAGE_KEY) || 'null');
+  } catch {
+    return null;
+  }
+};
+
 const Shell = ({ signOut }: { signOut?: () => void }) => {
-  const { profile, loading } = useProfile();
+  const { profile, loading, refresh } = useProfile();
   const { lang, setLang } = useT();
 
   // The profile's saved language wins over the device guess, so the app
@@ -44,8 +58,43 @@ const Shell = ({ signOut }: { signOut?: () => void }) => {
     );
   }
 
-  // First run: no profile yet -> onboarding (plan choice + first selfie).
-  if (!profile) return <Onboarding />;
+  // First run: consent gate BEFORE onboarding (no data before agreement),
+  // then onboarding (plan choice + first selfie).
+  if (!profile) {
+    if (!stagedConsent()) {
+      return (
+        <ConsentScreen
+          onAccept={(c) => {
+            try {
+              sessionStorage.setItem(CONSENT_STAGE_KEY, JSON.stringify(c));
+            } catch {
+              /* ignore */
+            }
+            refresh();
+          }}
+          onDecline={() => signOut?.()}
+        />
+      );
+    }
+    return <Onboarding />;
+  }
+
+  // Existing accounts (or a terms-version bump): ask once, store on profile.
+  if (!profile.termsAcceptedAt) {
+    return (
+      <ConsentScreen
+        onAccept={async (c) => {
+          await updateProfile(profile.id, {
+            termsAcceptedAt: c.termsAcceptedAt,
+            termsVersion: c.termsVersion,
+            healthConsentAt: c.healthConsentAt,
+          });
+          await refresh();
+        }}
+        onDecline={() => signOut?.()}
+      />
+    );
+  }
 
   return (
     <div className="app-shell">
@@ -91,12 +140,23 @@ const AuthLanguageHeader = () => {
   );
 };
 
+const AuthLegalFooter = () => {
+  const { t } = useT();
+  return (
+    <p style={{ textAlign: 'center', fontSize: 12, padding: '10px 0' }} className="muted">
+      <a href="#/legal/terms">{t('Terms of Use')}</a>
+      {' · '}
+      <a href="#/legal/privacy">{t('Privacy Policy')}</a>
+    </p>
+  );
+};
+
 const AuthenticatedApp = () => {
   const { t } = useT();
   return (
   <>
   <Authenticator
-    components={{ Header: AuthLanguageHeader }}
+    components={{ Header: AuthLanguageHeader, Footer: AuthLegalFooter }}
     signUpAttributes={['preferred_username']}
     formFields={{
       signUp: {
@@ -127,7 +187,8 @@ const App = () => (
   <ErrorBoundary>
     <Router>
       <Routes>
-        <Route path="/tv" element={<TvDisplay />} />
+        <Route path="/legal/:doc" element={<LegalScreen />} />
+      <Route path="/tv" element={<TvDisplay />} />
         <Route path="/tv/:code" element={<TvDisplay />} />
         <Route path="*" element={<AuthenticatedApp />} />
       </Routes>

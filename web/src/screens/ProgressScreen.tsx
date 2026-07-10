@@ -3,6 +3,8 @@ import {
   ANGLES,
   analyzeCheckIn,
   checkInPhotos,
+  deleteMyAccount,
+  exportMyData,
   checkInThumbnail,
   deleteCheckIn,
   listCheckIns,
@@ -497,6 +499,44 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
             {t('Sign out')}
           </button>
         </div>
+        <div className="btn-grid" style={{ marginTop: 12 }}>
+          <button
+            className="btn ghost"
+            onClick={async () => {
+              const data = await exportMyData();
+              const blob = new Blob([JSON.stringify(data, null, 2)], {
+                type: 'application/json',
+              });
+              const a = document.createElement('a');
+              a.href = URL.createObjectURL(blob);
+              a.download = 'superileri-my-data.json';
+              a.click();
+              URL.revokeObjectURL(a.href);
+            }}
+          >
+            {t('Export my data')}
+          </button>
+          <button
+            className="btn ghost"
+            style={{ borderColor: 'var(--accent-2)', color: 'var(--accent-2)' }}
+            onClick={async () => {
+              if (!window.confirm(t('Delete your account and ALL data (profile, history, photos)? This cannot be undone.'))) return;
+              const word = window.prompt(t('Type DELETE to confirm permanent deletion.'));
+              if (word !== 'DELETE') return;
+              try {
+                await deleteMyAccount();
+                window.location.reload();
+              } catch (e) {
+                window.alert(e instanceof Error ? e.message : 'Failed');
+              }
+            }}
+          >
+            {t('Delete account')}
+          </button>
+        </div>
+        <p className="muted" style={{ fontSize: 11, marginTop: 8, marginBottom: 0 }}>
+          {t('Export gives you a JSON of everything we store. Deletion permanently removes your login, history, and photos.')}
+        </p>
       </div>
 
       <CrashReports />

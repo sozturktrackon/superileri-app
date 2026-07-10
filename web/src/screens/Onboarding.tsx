@@ -10,6 +10,7 @@ import {
 import { useProfile } from '../state';
 import AnglePhotoCapture from '../components/AnglePhotoCapture';
 import { useT } from '../lib/i18n';
+import { stagedConsent } from '../App';
 
 const Onboarding = () => {
   const { displayName, refresh } = useProfile();
@@ -31,19 +32,29 @@ const Onboarding = () => {
     setFiles((f) => ({ ...f, [angle]: file }));
   };
 
+  const consent = stagedConsent();
+  const photosAllowed = !!consent?.healthConsentAt;
+
   const finish = async () => {
-    if (!files.front) {
+    if (photosAllowed && !files.front) {
       setError(t('Please add at least a front photo so we can track your progress.'));
       return;
     }
     setBusy(true);
     setError(null);
     try {
-      const photos = await uploadAnglePhotos(files);
-      const checkIn = await createCheckIn({ photos, kind: 'onboarding' });
+      const checkIn = photosAllowed
+        ? await createCheckIn({
+            photos: await uploadAnglePhotos(files),
+            kind: 'onboarding',
+          })
+        : null;
       await createProfile({
         plan,
         language: lang,
+        termsAcceptedAt: consent?.termsAcceptedAt,
+        termsVersion: consent?.termsVersion,
+        healthConsentAt: consent?.healthConsentAt ?? null,
         displayName: name,
         sex,
         birthYear: birthYear ? Number(birthYear) : undefined,
@@ -51,7 +62,12 @@ const Onboarding = () => {
         goal,
       });
       // Fire-and-forget AI analysis; don't block onboarding if Bedrock is slow.
-      analyzeCheckIn(checkIn).catch(() => {});
+      if (checkIn) analyzeCheckIn(checkIn).catch(() => {});
+      try {
+        sessionStorage.removeItem('superileri.consentStage');
+      } catch {
+        /* ignore */
+      }
       await refresh();
       // Land brand-new users on the philosophy page once; it stays reachable
       // from Progress afterwards.
@@ -142,10 +158,15 @@ const Onboarding = () => {
         <>
           <div className="card">
             <h3 style={{ marginBottom: 6 }}>{t('📸 Your starting photos')}</h3>
+            {!photosAllowed && (
+              <p className="muted" style={{ fontSize: 13 }}>
+                {t('You skipped the photo consent, so this step is optional and photos stay off. You can grant consent later from the Check-in screen.')}
+              </p>
+            )}
             <p className="muted" style={{ fontSize: 13, marginTop: 0 }}>
               {t("Take full-body photos in good light. Front is required; add back and side views too if you can. This is private to you and becomes your Day 1 baseline, so we'll compare future check-ins to it.")}
             </p>
-            <AnglePhotoCapture files={files} onChange={setAngle} />
+            {photosAllowed && <AnglePhotoCapture files={files} onChange={setAngle} />}
           </div>
 
           {error && <p className="error-text">{error}</p>}

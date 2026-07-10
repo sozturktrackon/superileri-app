@@ -1,4 +1,4 @@
-import { fetchUserAttributes, getCurrentUser } from 'aws-amplify/auth';
+import { deleteUser, fetchUserAttributes, getCurrentUser } from 'aws-amplify/auth';
 import { getUrl, remove, uploadData } from 'aws-amplify/storage';
 import { client } from './amplify';
 import { getLang, LANG_NAMES } from './i18n';
@@ -29,6 +29,9 @@ export const getMyProfile = async (): Promise<UserProfile | null> => {
 export const createProfile = async (input: {
   plan: 'lean' | 'bulk';
   language?: string;
+  termsAcceptedAt?: string;
+  termsVersion?: string;
+  healthConsentAt?: string | null;
   displayName?: string;
   sex?: 'male' | 'female' | 'other';
   birthYear?: number;
@@ -83,6 +86,51 @@ export const logWorkout = async (input: {
 export const listWorkouts = async (): Promise<WorkoutLog[]> => {
   const { data } = await client.models.WorkoutLog.list({ limit: 500 });
   return data;
+};
+
+/* ------------------------- GDPR data rights ------------------------------ */
+
+/** Everything we hold about the user, as a downloadable JSON (portability). */
+export const exportMyData = async (): Promise<Record<string, unknown>> => {
+  const [profile, workouts, checkIns, partners] = await Promise.all([
+    getMyProfile(),
+    client.models.WorkoutLog.list({ limit: 1000 }).then((r) => r.data),
+    client.models.CheckIn.list({ limit: 500 }).then((r) => r.data),
+    client.models.Partner.list({ limit: 100 }).then((r) => r.data),
+  ]);
+  return {
+    exportedAt: new Date().toISOString(),
+    profile,
+    workouts,
+    checkIns: checkIns.map((c) => ({ ...c, photos: checkInPhotos(c) })),
+    partners,
+    note: 'Photo files can be saved from the Progress screen; paths above identify them.',
+  };
+};
+
+/** Permanent, full erasure: photos (S3), all rows (DynamoDB), then the
+ *  Cognito account itself. Irreversible by design (GDPR Art. 17). */
+export const deleteMyAccount = async (): Promise<void> => {
+  const [profile, workouts, checkIns, partners, sessions] = await Promise.all([
+    getMyProfile(),
+    client.models.WorkoutLog.list({ limit: 1000 }).then((r) => r.data),
+    client.models.CheckIn.list({ limit: 500 }).then((r) => r.data),
+    client.models.Partner.list({ limit: 100 }).then((r) => r.data),
+    client.models.LiveSession.list().then((r) => r.data).catch(() => []),
+  ]);
+  for (const c of checkIns) {
+    for (const ph of checkInPhotos(c)) {
+      await remove({ path: ph.path }).catch(() => {});
+    }
+  }
+  await Promise.all([
+    ...checkIns.map((c) => client.models.CheckIn.delete({ id: c.id })),
+    ...workouts.map((w) => client.models.WorkoutLog.delete({ id: w.id })),
+    ...partners.map((x) => client.models.Partner.delete({ id: x.id })),
+    ...sessions.map((sn) => client.models.LiveSession.delete({ code: sn.code })),
+  ].map((pr) => pr.catch(() => {})));
+  if (profile) await client.models.UserProfile.delete({ id: profile.id }).catch(() => {});
+  await deleteUser(); // removes the Cognito account and ends the session
 };
 
 /** Manually tick a day done (e.g. trained offline/with a friend). Writes one

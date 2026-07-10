@@ -9,12 +9,16 @@ import {
 } from '../lib/api';
 import AnglePhotoCapture from '../components/AnglePhotoCapture';
 import { useT } from '../lib/i18n';
+import { useProfile } from '../state';
+import { updateProfile } from '../lib/api';
 
 const daysSince = (iso: string) =>
   Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
 
 const CheckInScreen = () => {
   const { t } = useT();
+  const { profile, refresh } = useProfile();
+  const photosAllowed = !!profile?.healthConsentAt;
   const [last, setLast] = useState<CheckIn | null>(null);
   const [files, setFiles] = useState<Partial<Record<Angle, File>>>({});
   const [weight, setWeight] = useState('');
@@ -59,6 +63,35 @@ const CheckInScreen = () => {
       setStage('');
     }
   };
+
+  if (!photosAllowed) {
+    return (
+      <div>
+        <h1 className="page-title">{t('Check-in')}</h1>
+        <div className="card">
+          <p style={{ margin: 0, lineHeight: 1.55, fontSize: 14 }}>
+            {t('Photo check-ins and AI body analysis are off because you have not given the separate consent for processing body photos.')}
+          </p>
+          <button
+            className="btn primary block"
+            style={{ marginTop: 12 }}
+            onClick={async () => {
+              if (!profile) return;
+              await updateProfile(profile.id, {
+                healthConsentAt: new Date().toISOString(),
+              });
+              await refresh();
+            }}
+          >
+            {t('I consent to photo & AI analysis')}
+          </button>
+          <p className="muted" style={{ fontSize: 12, marginTop: 8, marginBottom: 0 }}>
+            {t('Withdraw anytime by deleting your photos or account. Details in the Privacy Policy.')}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>

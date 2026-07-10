@@ -15,7 +15,13 @@ const schema = a.schema({
   UserProfile: a
     .model({
       plan: a.enum(['lean', 'bulk', 'lean2', 'bulk2']), // II = graduate programs
-      language: a.string(), // BCP-47-ish code: en, tr, hi, ru, fr, de, es, pt
+      language: a.string(), // BCP-47-ish code (en, tr, hi, fr, de, es, pt, ...)
+      // GDPR consent audit trail: when the user accepted which terms version,
+      // and the separate explicit consent for health-related data (body
+      // photos + AI analysis; GDPR Art. 9 requires it to be distinct).
+      termsAcceptedAt: a.datetime(),
+      termsVersion: a.string(),
+      healthConsentAt: a.datetime(),
       startDate: a.date(),
       currentDay: a.integer().default(1), // raw ever-increasing; wraps per plan length
       displayName: a.string(),
