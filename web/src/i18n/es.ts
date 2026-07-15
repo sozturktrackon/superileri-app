@@ -292,4 +292,5 @@ export const es: Record<string, string> = {
   'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'Un mes entero cumpliendo. Un masaje ya no es un lujo, es mantenimiento.',
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Cincuenta días firmes. Regálate equipo nuevo de entrenamiento, le vas a dar uso.',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'Cien días. Reserva el día completo de spa, te has ganado cada minuto.',
+  'Today\'s check-in is saved. You can add the next one tomorrow.': 'Tu check-in de hoy quedó guardado. Mañana podrás agregar el siguiente.',
 };

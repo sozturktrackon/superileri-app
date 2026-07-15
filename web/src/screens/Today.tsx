@@ -24,6 +24,7 @@ const Today = () => {
   const day = useMemo(() => getDay(planId, dayNumber), [planId, dayNumber]);
   const [streak, setStreak] = useState(0);
   const [totalCircuits, setTotalCircuits] = useState(0);
+  const [doneToday, setDoneToday] = useState(false);
   const [coachLine, setCoachLine] = useState('');
   const [milestone, setMilestone] = useState<number | null>(null);
 
@@ -35,6 +36,8 @@ const Today = () => {
         const s = computeStreaks(planId, rawDay, completedDaySet(planId, logs)).current;
         setStreak(s);
         setTotalCircuits(logs.filter((l) => l.completed).length);
+        const todayIso = new Date().toISOString().slice(0, 10);
+        setDoneToday(logs.some((l) => l.completed && l.date === todayIso));
         setMilestone(pendingMilestone(s, seenMilestones(profile?.milestonesSeen)));
       })
       .catch(() => {});
@@ -50,10 +53,11 @@ const Today = () => {
       streak,
       totalCircuits,
       isRest: !!day.rest,
+      doneToday,
       groups: day.groups.map((g) => g.name).join(', '),
     }).then(setCoachLine);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dayNumber, streak, totalCircuits]);
+  }, [dayNumber, streak, totalCircuits, doneToday]);
 
   const next = async () => {
     if (profile) {

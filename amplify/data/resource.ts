@@ -104,6 +104,7 @@ const schema = a.schema({
       streak: a.integer(),
       totalCircuits: a.integer(),
       isRest: a.boolean(),
+      doneToday: a.boolean(), // today's session already completed → congratulate, don't preview
       groups: a.string(),
     })
     .returns(a.string())

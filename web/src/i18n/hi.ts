@@ -310,4 +310,5 @@ export const hiAuth: Record<string, string> = {
   'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'पूरा एक महीना डटे रहे। अब मालिश कोई ऐशो-आराम नहीं, शरीर की देखभाल है।',
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'पचास दिन, पूरी मज़बूती से। खुद को नया वर्कआउट गियर दिलाओ, काम आएगा।',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'सौ दिन। अब पूरा स्पा डे बुक कर लो, इसका हर पल तुमने कमाया है।',
+  'Today\'s check-in is saved. You can add the next one tomorrow.': 'आज का चेक-इन सेव हो गया है। अगला आप कल जोड़ सकते हैं।',
 };

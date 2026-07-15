@@ -14,6 +14,7 @@ type Args = {
   streak?: number;
   totalCircuits?: number;
   isRest?: boolean;
+  doneToday?: boolean; // today's session already completed
   groups?: string; // today's circuit names, comma-joined (already localized)
 };
 
@@ -29,7 +30,11 @@ export const handler = async (event: { arguments: Args }) => {
   const context = [
     a.name ? `User's first name: ${a.name}` : null,
     `Program day ${a.dayNumber ?? '?'}${(a.cycle ?? 1) > 1 ? `, cycle ${a.cycle}` : ''}`,
-    a.isRest ? 'Today is a REST day' : `Today's circuits: ${a.groups || 'workout'}`,
+    a.isRest
+      ? 'Today is a REST day'
+      : a.doneToday
+        ? `The user ALREADY COMPLETED today's session (${a.groups || 'workout'})`
+        : `Today's circuits (not done yet): ${a.groups || 'workout'}`,
     `Current streak: ${a.streak ?? 0} training days`,
     `Lifetime circuits completed: ${a.totalCircuits ?? 0}`,
   ]
@@ -44,6 +49,7 @@ Rules:
 - Sound like a calm, seasoned coach who knows this person: specific to today's context, never generic fortune-cookie.
 - Warm and encouraging, zero guilt, zero hype-speak, no exclamation spam (one "!" max), no emojis, no em dashes.
 - On rest days: endorse the rest, never suggest training.
+- If today's session is already completed: acknowledge the finished work and point to recovery; never talk about the workout as if it is still ahead, never push extra training.
 - Never give medical or nutrition advice. Never mention being an AI.
 - Write ONLY the line itself in ${language}, nothing else.`;
 
@@ -56,8 +62,11 @@ Rules:
       })
     );
     const text = res.output?.message?.content?.[0]?.text?.trim() ?? '';
-    // Defensive: strip wrapping quotes some models add.
-    return text.replace(/^["'“‘]+|["'”’]+$/g, '');
+    // Defensive: strip wrapping quotes some models add; the prompt bans em
+    // dashes but models slip, so sanitize to a plain hyphen (app-wide rule).
+    return text
+      .replace(/^["'“‘]+|["'”’]+$/g, '')
+      .replace(/\s*[—–]\s*/g, ' - ');
   } catch (e) {
     console.error('coach line failed', e);
     return ''; // client shows nothing; the app never blocks on this

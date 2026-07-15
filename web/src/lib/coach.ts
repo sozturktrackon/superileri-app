@@ -15,6 +15,7 @@ type CoachContext = {
   streak: number;
   totalCircuits: number;
   isRest: boolean;
+  doneToday: boolean;
   groups: string;
 };
 
@@ -25,9 +26,17 @@ export const getCoachLine = async (ctx: CoachContext): Promise<string> => {
     const cached = JSON.parse(localStorage.getItem(KEY) || 'null') as {
       date: string;
       lang: string;
+      done?: boolean;
       line: string;
     } | null;
-    if (cached && cached.date === today && cached.lang === lang) {
+    // done is part of the key: finishing the session earns a fresh line that
+    // congratulates instead of previewing the workout.
+    if (
+      cached &&
+      cached.date === today &&
+      cached.lang === lang &&
+      !!cached.done === ctx.doneToday
+    ) {
       return cached.line;
     }
   } catch {
@@ -42,10 +51,14 @@ export const getCoachLine = async (ctx: CoachContext): Promise<string> => {
       streak: ctx.streak,
       totalCircuits: ctx.totalCircuits,
       isRest: ctx.isRest,
+      doneToday: ctx.doneToday,
       groups: ctx.groups,
     });
     const line = (data ?? '').trim();
-    localStorage.setItem(KEY, JSON.stringify({ date: today, lang, line }));
+    localStorage.setItem(
+      KEY,
+      JSON.stringify({ date: today, lang, done: ctx.doneToday, line })
+    );
     return line;
   } catch {
     return '';

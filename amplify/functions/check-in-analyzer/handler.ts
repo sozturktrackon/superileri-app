@@ -117,14 +117,29 @@ export const handler: Schema['analyzeCheckIn']['functionHandler'] = async (
       accept: 'application/json',
       body: JSON.stringify({
         anthropic_version: 'bedrock-2023-05-31',
-        max_tokens: 1200,
+        // Sonnet 5 may spend tokens on internal reasoning blocks before the
+        // JSON answer; leave generous headroom or hard compares come back empty.
+        max_tokens: 4000,
         messages: [{ role: 'user', content }],
       }),
     })
   );
 
   const decoded = JSON.parse(new TextDecoder().decode(res.body));
-  const text: string = decoded?.content?.[0]?.text ?? '';
+  // Sonnet 5 can prepend reasoning blocks; the JSON answer is not necessarily
+  // content[0]. Join every text block instead of reading only the first.
+  const text: string = (decoded?.content ?? [])
+    .filter((b: { type?: string }) => b?.type === 'text')
+    .map((b: { text?: string }) => b.text ?? '')
+    .join('')
+    .trim();
+  if (!text) {
+    console.error('empty model text', {
+      stopReason: decoded?.stop_reason,
+      blockTypes: (decoded?.content ?? []).map((b: { type?: string }) => b?.type),
+      usage: decoded?.usage,
+    });
+  }
 
   let parsed: {
     bodyFatPct?: number;

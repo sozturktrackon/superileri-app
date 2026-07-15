@@ -292,4 +292,5 @@ export const tr: Record<string, string> = {
   'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'Tam bir ay boyunca sözünü tuttun. Masaj artık lüks değil, bakım.',
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Elli gün, dimdik. Kendine yeni antrenman ekipmanı al, kullanacaksın.',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'Yüz gün. O spa gününü ayırt artık, her dakikasını hak ettin.',
+  'Today\'s check-in is saved. You can add the next one tomorrow.': 'Bugünkü check-in\'in kaydedildi. Yenisini yarın ekleyebilirsin.',
 };

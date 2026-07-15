@@ -292,4 +292,5 @@ export const he: Record<string, string> = {
   'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'חודש שלם של התמדה. עיסוי הוא כבר לא מותרות, הוא תחזוקה של הגוף.',
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'חמישים ימים של עקביות. מגיע לך ציוד אימון חדש, והוא עוד ישרת אותך היטב.',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'מאה ימים. זה הזמן להזמין יום ספא מלא, הרווחת כל דקה ממנו.',
+  'Today\'s check-in is saved. You can add the next one tomorrow.': 'הצ\'ק-אין של היום נשמר. אפשר להוסיף את הבא מחר.',
 };

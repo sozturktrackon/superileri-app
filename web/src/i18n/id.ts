@@ -292,4 +292,5 @@ export const id: Record<string, string> = {
   'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'Sebulan penuh terus hadir. Pijat sekarang bukan kemewahan, tapi perawatan.',
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Lima puluh hari, tetap kuat. Hadiahkan dirimu perlengkapan latihan baru, pasti terpakai.',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'Seratus hari. Pesan satu hari penuh di spa, kamu pantas menikmati setiap menitnya.',
+  'Today\'s check-in is saved. You can add the next one tomorrow.': 'Check-in hari ini sudah tersimpan. Kamu bisa menambahkan yang berikutnya besok.',
 };

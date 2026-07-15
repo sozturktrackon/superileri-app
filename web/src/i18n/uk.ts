@@ -292,4 +292,5 @@ export const uk: Record<string, string> = {
   'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'Цілий місяць без пропусків. Масаж тепер не розкіш, а необхідний догляд за тілом.',
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'П\'ятдесят днів сили. Потіш себе новим спорядженням для тренувань, воно точно знадобиться.',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'Сто днів. Сміливо бронюй цілий день у спа: кожна його хвилина чесно зароблена.',
+  'Today\'s check-in is saved. You can add the next one tomorrow.': 'Сьогоднішній чек-ін збережено. Наступний можна буде додати завтра.',
 };

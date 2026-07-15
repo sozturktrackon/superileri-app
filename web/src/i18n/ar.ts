@@ -310,4 +310,5 @@ export const arAuth: Record<string, string> = {
   'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'شهر كامل من الالتزام. المساج الآن ليس رفاهية، بل صيانة لجسمك.',
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'خمسون يومًا من الثبات. كافئ نفسك بمعدات تدريب جديدة، فستستخدمها بالتأكيد.',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'مئة يوم. احجز يومًا كاملًا في السبا، فقد استحققت كل دقيقة فيه.',
+  'Today\'s check-in is saved. You can add the next one tomorrow.': 'تم حفظ تسجيل اليوم. يمكنك إضافة التسجيل التالي غدًا.',
 };

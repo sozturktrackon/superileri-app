@@ -310,4 +310,5 @@ export const tlAuth: Record<string, string> = {
   'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'Isang buong buwan na hindi ka nagpalya. Ang massage, hindi na luho ngayon, maintenance na.',
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Fifty days strong. Bilhan mo na ang sarili mo ng bagong training gear, magagamit mo \'yan.',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'Isang daang araw. I-book mo na ang buong spa day, pinaghirapan mo ang bawat minuto niyan.',
+  'Today\'s check-in is saved. You can add the next one tomorrow.': 'Na-save na ang check-in mo ngayong araw. Pwede kang mag-add ulit bukas.',
 };

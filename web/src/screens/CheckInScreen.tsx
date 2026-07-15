@@ -27,6 +27,11 @@ const CheckInScreen = () => {
   const [result, setResult] = useState<CheckIn | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // One check-in per day: once today's set is saved (this session or a
+  // previous one), the capture form stays closed so it can't be re-submitted.
+  const todayIso = new Date().toISOString().slice(0, 10);
+  const shownResult = result ?? (last && last.date === todayIso ? last : null);
+
   useEffect(() => {
     listCheckIns().then((cs) => setLast(cs[0] ?? null));
   }, []);
@@ -102,7 +107,7 @@ const CheckInScreen = () => {
         )}
       </p>
 
-      {last && !result && (
+      {last && !shownResult && (
         <div className="banner">
           {t('Last check-in: {date} ({days} days ago).', {
             date: last.date,
@@ -114,38 +119,48 @@ const CheckInScreen = () => {
         </div>
       )}
 
-      <div className="card">
-        <AnglePhotoCapture files={files} onChange={setAngle} />
-        <div className="field" style={{ marginTop: 14, marginBottom: 0 }}>
-          <label>{t('Weight today (kg, optional)')}</label>
-          <input
-            inputMode="decimal"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            placeholder={t('e.g. 78.5')}
-          />
+      {shownResult && (
+        <div className="banner">
+          {t("Today's check-in is saved. You can add the next one tomorrow.")}
         </div>
-      </div>
+      )}
 
-      {error && <p className="error-text">{error}</p>}
+      {!shownResult && (
+        <>
+          <div className="card">
+            <AnglePhotoCapture files={files} onChange={setAngle} />
+            <div className="field" style={{ marginTop: 14, marginBottom: 0 }}>
+              <label>{t('Weight today (kg, optional)')}</label>
+              <input
+                inputMode="decimal"
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+                placeholder={t('e.g. 78.5')}
+              />
+            </div>
+          </div>
 
-      <button className="btn primary block" onClick={submit} disabled={busy}>
-        {busy ? stage || t('Working…') : t('Save & analyze 🤖')}
-      </button>
+          {error && <p className="error-text">{error}</p>}
 
-      {result && (
+          <button className="btn primary block" onClick={submit} disabled={busy}>
+            {busy ? stage || t('Working…') : t('Save & analyze 🤖')}
+          </button>
+        </>
+      )}
+
+      {shownResult && (
         <div className="card" style={{ marginTop: 16 }}>
           <h3 style={{ marginBottom: 8 }}>{t('🤖 AI Body Analysis')}</h3>
-          {typeof result.aiBodyFatPct === 'number' && (
+          {typeof shownResult.aiBodyFatPct === 'number' && (
             <div className="card-row" style={{ marginBottom: 8 }}>
               <span className="muted">{t('Estimated body fat')}</span>
               <span className="pill accent" style={{ fontSize: 16 }}>
-                {result.aiBodyFatPct.toFixed(1)}%
+                {shownResult.aiBodyFatPct.toFixed(1)}%
               </span>
             </div>
           )}
-          <p style={{ lineHeight: 1.5 }}>{result.aiSummary}</p>
-          {result.aiComparison && (
+          <p style={{ lineHeight: 1.5 }}>{shownResult.aiSummary}</p>
+          {shownResult.aiComparison && (
             <div
               style={{
                 marginTop: 12,
@@ -156,7 +171,7 @@ const CheckInScreen = () => {
               <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 4 }}>
                 {t('📈 Progress vs your first check-in')}
               </div>
-              <p style={{ lineHeight: 1.5, margin: 0 }}>{result.aiComparison}</p>
+              <p style={{ lineHeight: 1.5, margin: 0 }}>{shownResult.aiComparison}</p>
             </div>
           )}
           <p className="muted" style={{ fontSize: 12, marginTop: 8 }}>

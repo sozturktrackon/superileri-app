@@ -292,4 +292,5 @@ export const th: Record<string, string> = {
   'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'ครบหนึ่งเดือนเต็มที่คุณมาซ้อมไม่ขาด ตอนนี้การนวดไม่ใช่ความฟุ่มเฟือยอีกต่อไป แต่เป็นการดูแลร่างกาย',
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'ห้าสิบวันอย่างแข็งแกร่ง ให้รางวัลตัวเองด้วยอุปกรณ์ออกกำลังกายชุดใหม่ รับรองว่าได้ใช้แน่',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'หนึ่งร้อยวันแล้ว จองสปาแบบเต็มวันไปเลย คุณคู่ควรกับทุกนาทีของมัน',
+  'Today\'s check-in is saved. You can add the next one tomorrow.': 'บันทึกเช็กอินของวันนี้เรียบร้อยแล้ว คุณเพิ่มครั้งถัดไปได้ในวันพรุ่งนี้',
 };
