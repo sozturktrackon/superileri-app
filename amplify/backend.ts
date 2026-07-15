@@ -5,6 +5,7 @@ import { auth } from './auth/resource';
 import { data } from './data/resource';
 import { storage } from './storage/resource';
 import { checkInAnalyzer } from './functions/check-in-analyzer/resource';
+import { coach } from './functions/coach/resource';
 import { partnerLogger } from './functions/partner-logger/resource';
 
 /**
@@ -15,6 +16,7 @@ const backend = defineBackend({
   data,
   storage,
   checkInAnalyzer,
+  coach,
   partnerLogger,
 });
 
@@ -22,6 +24,7 @@ const region = backend.stack.region;
 const account = backend.stack.account;
 const photosBucket = backend.storage.resources.bucket;
 const analyzerFn = backend.checkInAnalyzer.resources.lambda as LambdaFunction;
+const coachFn = backend.coach.resources.lambda as LambdaFunction;
 
 // The analyzer needs the bucket name at runtime.
 analyzerFn.addEnvironment('PHOTOS_BUCKET', photosBucket.bucketName);
@@ -30,6 +33,18 @@ analyzerFn.addEnvironment('PHOTOS_BUCKET', photosBucket.bucketName);
 // inference profile (global.anthropic.claude-opus-4-8), which routes across
 // regions — so grant the profile ARN plus foundation models in every region.
 analyzerFn.addToRolePolicy(
+  new PolicyStatement({
+    actions: ['bedrock:InvokeModel', 'bedrock:InvokeModelWithResponseStream'],
+    resources: [
+      `arn:aws:bedrock:*::foundation-model/anthropic.*`,
+      `arn:aws:bedrock:${region}:${account}:inference-profile/global.*`,
+      `arn:aws:bedrock:${region}:${account}:inference-profile/*anthropic.*`,
+    ],
+  })
+);
+
+// The coach shares the same Bedrock access (Sonnet global profile).
+coachFn.addToRolePolicy(
   new PolicyStatement({
     actions: ['bedrock:InvokeModel', 'bedrock:InvokeModelWithResponseStream'],
     resources: [

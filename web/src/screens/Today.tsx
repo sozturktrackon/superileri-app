@@ -2,12 +2,19 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProfile } from '../state';
 import { getDay, getPlan, intervals, normalizeDay, planLength } from '../lib/content';
-import { advanceDay, listWorkouts } from '../lib/api';
+import { advanceDay, listWorkouts, updateProfile } from '../lib/api';
 import { completedDaySet, computeStreaks } from '../lib/streak';
+import {
+  dismissMilestone,
+  getCoachLine,
+  milestoneReward,
+  pendingMilestone,
+  seenMilestones,
+} from '../lib/coach';
 import { useT } from '../lib/i18n';
 
 const Today = () => {
-  const { profile, displayName, refresh } = useProfile();
+  const { profile, displayName, refresh, setProfile } = useProfile();
   const { t } = useT();
 
   const planId = profile?.plan ?? 'lean';
@@ -16,18 +23,37 @@ const Today = () => {
   const plan = getPlan(planId);
   const day = useMemo(() => getDay(planId, dayNumber), [planId, dayNumber]);
   const [streak, setStreak] = useState(0);
+  const [totalCircuits, setTotalCircuits] = useState(0);
+  const [coachLine, setCoachLine] = useState('');
+  const [milestone, setMilestone] = useState<number | null>(null);
 
   const cycle = Math.floor((rawDay - 1) / planLength(planId)) + 1;
 
   useEffect(() => {
     listWorkouts()
-      .then((logs) =>
-        setStreak(
-          computeStreaks(planId, rawDay, completedDaySet(planId, logs)).current
-        )
-      )
+      .then((logs) => {
+        const s = computeStreaks(planId, rawDay, completedDaySet(planId, logs)).current;
+        setStreak(s);
+        setTotalCircuits(logs.filter((l) => l.completed).length);
+        setMilestone(pendingMilestone(s, seenMilestones(profile?.milestonesSeen)));
+      })
       .catch(() => {});
-  }, [planId, rawDay]);
+  }, [planId, rawDay, profile?.milestonesSeen]);
+
+  // One warm coach sentence per day, in the user's language (cached locally).
+  useEffect(() => {
+    if (!day || !plan) return;
+    getCoachLine({
+      name: displayName,
+      dayNumber,
+      cycle,
+      streak,
+      totalCircuits,
+      isRest: !!day.rest,
+      groups: day.groups.map((g) => g.name).join(', '),
+    }).then(setCoachLine);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dayNumber, streak, totalCircuits]);
 
   const next = async () => {
     if (profile) {
@@ -69,6 +95,50 @@ const Today = () => {
           ? t("It's a rest day. Recovery is where growth happens.")
           : t("Today's session · {n} rounds of 30s on / 30s off", { n: intervals.rounds })}
       </p>
+
+      {coachLine && (
+        <div className="card coach-line">
+          <span className="coach-badge">{t('Coach')}</span>
+          <p style={{ margin: 0, lineHeight: 1.5, fontSize: 14 }}>{coachLine}</p>
+        </div>
+      )}
+
+      {milestone && (
+        <div className="card milestone-card">
+          <div style={{ fontSize: 40, textAlign: 'center' }}>🏆</div>
+          <h3 style={{ textAlign: 'center', margin: '6px 0' }}>
+            {t('{n}-day streak', { n: milestone })}
+          </h3>
+          <p style={{ textAlign: 'center', margin: '0 0 12px', lineHeight: 1.5, fontSize: 14 }}>
+            {milestoneReward(milestone)}
+          </p>
+          <button
+            className="btn primary block"
+            onClick={async () => {
+              const seen = dismissMilestone(
+                milestone,
+                seenMilestones(profile?.milestonesSeen)
+              );
+              setMilestone(null);
+              if (profile) {
+                try {
+                  setProfile(await updateProfile(profile.id, { milestonesSeen: seen }));
+                } catch {
+                  /* localStorage already hides it on this device */
+                }
+              }
+            }}
+          >
+            {t('Thank you, coach')}
+          </button>
+        </div>
+      )}
+
+      {streak === 0 && totalCircuits > 0 && (
+        <div className="banner" style={{ marginBottom: 12 }}>
+          {t('Your streak is starting fresh, but your work is not lost: {n} circuits are in the bank forever.', { n: totalCircuits })}
+        </div>
+      )}
 
       {day.rest ? (
         <div className="card" style={{ textAlign: 'center', padding: 28 }}>

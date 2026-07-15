@@ -281,4 +281,15 @@ export const th: Record<string, string> = {
   'Delete your account and ALL data (profile, history, photos)? This cannot be undone.': 'ลบบัญชีและข้อมูลทั้งหมด (โปรไฟล์ ประวัติ รูปภาพ) ใช่หรือไม่ การดำเนินการนี้ไม่สามารถย้อนกลับได้',
   'Type DELETE to confirm permanent deletion.': 'พิมพ์ DELETE เพื่อยืนยันการลบถาวร',
   'Export gives you a JSON of everything we store. Deletion permanently removes your login, history, and photos.': 'การส่งออกจะให้ไฟล์ JSON ที่มีทุกอย่างที่เราจัดเก็บ การลบจะลบข้อมูลการเข้าสู่ระบบ ประวัติ และรูปภาพของคุณอย่างถาวร',
+
+  // Engagement: coach line, streak milestones, comeback
+  'Coach': 'โค้ช',
+  '{n}-day streak': 'สตรีค {n} วัน',
+  'Thank you, coach': 'ขอบคุณโค้ช',
+  'Your streak is starting fresh, but your work is not lost: {n} circuits are in the bank forever.': 'สตรีคของคุณเริ่มนับใหม่ แต่สิ่งที่คุณสั่งสมมาไม่ได้หายไปไหน เซอร์กิต {n} รอบถูกบันทึกไว้ในบัญชีของคุณตลอดไป',
+  'Seven days straight. Treat yourself to something that helps you recover: an early night, a long stretch, a proper massage.': 'เจ็ดวันติดต่อกันแล้ว ให้รางวัลตัวเองด้วยอะไรที่ช่วยฟื้นฟูร่างกาย เช่น นอนเร็วสักคืน ยืดเหยียดยาว ๆ หรือนวดดี ๆ สักครั้ง',
+  'Two weeks without missing. A long sauna or hammam evening has your name on it.': 'สองสัปดาห์โดยไม่พลาดสักวัน ค่ำคืนซาวน่าหรืออบไอน้ำแบบยาว ๆ รอคุณอยู่',
+  'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'ครบหนึ่งเดือนเต็มที่คุณมาซ้อมไม่ขาด ตอนนี้การนวดไม่ใช่ความฟุ่มเฟือยอีกต่อไป แต่เป็นการดูแลร่างกาย',
+  'Fifty days strong. Treat yourself to new training gear, you will use it.': 'ห้าสิบวันอย่างแข็งแกร่ง ให้รางวัลตัวเองด้วยอุปกรณ์ออกกำลังกายชุดใหม่ รับรองว่าได้ใช้แน่',
+  'A hundred days. Book the full spa day, you have earned every minute of it.': 'หนึ่งร้อยวันแล้ว จองสปาแบบเต็มวันไปเลย คุณคู่ควรกับทุกนาทีของมัน',
 };

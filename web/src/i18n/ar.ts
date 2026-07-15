@@ -299,4 +299,15 @@ export const arAuth: Record<string, string> = {
   'Back to Sign In': 'العودة إلى تسجيل الدخول',
   'Send code': 'إرسال الرمز',
   'Submit': 'إرسال',
+
+  // Engagement: coach line, streak milestones, comeback
+  'Coach': 'المدرب',
+  '{n}-day streak': 'سلسلة {n} يوم',
+  'Thank you, coach': 'شكرًا يا مدرب',
+  'Your streak is starting fresh, but your work is not lost: {n} circuits are in the bank forever.': 'بدأت سلسلتك من جديد، لكن جهدك لم يضع: {n} من التمارين الدائرية محفوظة في رصيدك إلى الأبد.',
+  'Seven days straight. Treat yourself to something that helps you recover: an early night, a long stretch, a proper massage.': 'سبعة أيام متتالية. كافئ نفسك بما يساعدك على الاستشفاء: نوم مبكر، أو جلسة إطالة طويلة، أو جلسة مساج حقيقية.',
+  'Two weeks without missing. A long sauna or hammam evening has your name on it.': 'أسبوعان دون انقطاع. أمسية طويلة في الساونا أو الحمّام تنتظرك.',
+  'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'شهر كامل من الالتزام. المساج الآن ليس رفاهية، بل صيانة لجسمك.',
+  'Fifty days strong. Treat yourself to new training gear, you will use it.': 'خمسون يومًا من الثبات. كافئ نفسك بمعدات تدريب جديدة، فستستخدمها بالتأكيد.',
+  'A hundred days. Book the full spa day, you have earned every minute of it.': 'مئة يوم. احجز يومًا كاملًا في السبا، فقد استحققت كل دقيقة فيه.',
 };

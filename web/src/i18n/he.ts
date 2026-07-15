@@ -281,4 +281,15 @@ export const he: Record<string, string> = {
   'Delete your account and ALL data (profile, history, photos)? This cannot be undone.': 'למחוק את החשבון ואת כל הנתונים (פרופיל, היסטוריה, תמונות)? פעולה זו אינה ניתנת לביטול.',
   'Type DELETE to confirm permanent deletion.': 'יש להקליד DELETE כדי לאשר מחיקה לצמיתות.',
   'Export gives you a JSON of everything we store. Deletion permanently removes your login, history, and photos.': 'הייצוא נותן קובץ JSON עם כל מה שאנחנו שומרים. המחיקה מסירה לצמיתות את פרטי ההתחברות, ההיסטוריה והתמונות שלך.',
+
+  // Engagement: coach line, streak milestones, comeback
+  'Coach': 'מאמן',
+  '{n}-day streak': 'רצף של {n} ימים',
+  'Thank you, coach': 'תודה, מאמן',
+  'Your streak is starting fresh, but your work is not lost: {n} circuits are in the bank forever.': 'הרצף מתחיל מחדש, אבל העבודה שלך לא הלכה לאיבוד: {n} סבבי אימון נשארים רשומים לזכותך לתמיד.',
+  'Seven days straight. Treat yourself to something that helps you recover: an early night, a long stretch, a proper massage.': 'שבעה ימים ברצף. זה הזמן לפנק את עצמך במשהו שעוזר להתאושש: שינה מוקדמת, מתיחות ארוכות או עיסוי אמיתי.',
+  'Two weeks without missing. A long sauna or hammam evening has your name on it.': 'שבועיים בלי לפספס אף יום. ערב ארוך בסאונה או בחמאם מחכה לך.',
+  'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'חודש שלם של התמדה. עיסוי הוא כבר לא מותרות, הוא תחזוקה של הגוף.',
+  'Fifty days strong. Treat yourself to new training gear, you will use it.': 'חמישים ימים של עקביות. מגיע לך ציוד אימון חדש, והוא עוד ישרת אותך היטב.',
+  'A hundred days. Book the full spa day, you have earned every minute of it.': 'מאה ימים. זה הזמן להזמין יום ספא מלא, הרווחת כל דקה ממנו.',
 };

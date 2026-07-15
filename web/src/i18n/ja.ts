@@ -281,4 +281,15 @@ export const ja: Record<string, string> = {
   'Delete your account and ALL data (profile, history, photos)? This cannot be undone.': 'アカウントとすべてのデータ（プロフィール、履歴、写真）を削除しますか？この操作は取り消せません。',
   'Type DELETE to confirm permanent deletion.': '完全に削除するには「DELETE」と入力してください。',
   'Export gives you a JSON of everything we store. Deletion permanently removes your login, history, and photos.': 'エクスポートでは、保存されているすべてのデータをJSON形式で受け取れます。削除すると、ログイン情報、履歴、写真が完全に消去されます。',
+
+  // Engagement: coach line, streak milestones, comeback
+  'Coach': 'コーチ',
+  '{n}-day streak': '{n}日連続',
+  'Thank you, coach': 'コーチ、ありがとうございます',
+  'Your streak is starting fresh, but your work is not lost: {n} circuits are in the bank forever.': '連続記録はリセットされましたが、積み重ねた努力は消えません。{n}回のサーキットは、あなたの実績としてずっと残ります。',
+  'Seven days straight. Treat yourself to something that helps you recover: an early night, a long stretch, a proper massage.': '7日間連続で続きました。体の回復につながるご褒美をどうぞ。早めの就寝、じっくりストレッチ、本格的なマッサージなどがおすすめです。',
+  'Two weeks without missing. A long sauna or hammam evening has your name on it.': '2週間、一度も休まず継続。今夜はサウナや銭湯でゆっくり温まる時間を用意してあげてください。',
+  'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'まる1か月、続けてきました。マッサージはもう贅沢ではなく、体のメンテナンスです。',
+  'Fifty days strong. Treat yourself to new training gear, you will use it.': '50日間の継続、お見事です。新しいトレーニングギアをご褒美にどうぞ。きっと活躍します。',
+  'A hundred days. Book the full spa day, you have earned every minute of it.': '100日達成。スパで丸一日過ごす予約をどうぞ。その一分一秒は、あなたが自分で勝ち取ったものです。',
 };

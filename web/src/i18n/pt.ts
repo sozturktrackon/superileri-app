@@ -281,4 +281,15 @@ export const pt: Record<string, string> = {
   'Delete your account and ALL data (profile, history, photos)? This cannot be undone.': 'Excluir sua conta e TODOS os dados (perfil, histórico, fotos)? Isso não pode ser desfeito.',
   'Type DELETE to confirm permanent deletion.': 'Digite DELETE para confirmar a exclusão permanente.',
   'Export gives you a JSON of everything we store. Deletion permanently removes your login, history, and photos.': 'A exportação gera um JSON com tudo o que guardamos. A exclusão remove permanentemente seu login, seu histórico e suas fotos.',
+
+  // Engagement: coach line, streak milestones, comeback
+  'Coach': 'Coach',
+  '{n}-day streak': 'Sequência de {n} dias',
+  'Thank you, coach': 'Valeu, coach',
+  'Your streak is starting fresh, but your work is not lost: {n} circuits are in the bank forever.': 'Sua sequência está começando do zero, mas seu trabalho não se perdeu: {n} circuitos ficam guardados para sempre.',
+  'Seven days straight. Treat yourself to something that helps you recover: an early night, a long stretch, a proper massage.': 'Sete dias seguidos. Se presenteie com algo que ajude na recuperação: dormir mais cedo, um alongamento longo, uma boa massagem.',
+  'Two weeks without missing. A long sauna or hammam evening has your name on it.': 'Duas semanas sem falhar. Uma noite bem longa de sauna está com o seu nome.',
+  'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'Um mês inteiro de presença. Massagem agora não é luxo, é manutenção.',
+  'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Cinquenta dias firmes. Se presenteie com equipamento novo de treino, você vai usar.',
+  'A hundred days. Book the full spa day, you have earned every minute of it.': 'Cem dias. Reserve o dia inteiro de spa, você mereceu cada minuto.',
 };

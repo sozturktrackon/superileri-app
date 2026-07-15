@@ -281,4 +281,15 @@ export const tr: Record<string, string> = {
   'Delete your account and ALL data (profile, history, photos)? This cannot be undone.': 'Hesabın ve TÜM verilerin (profil, geçmiş, fotoğraflar) silinsin mi? Bu geri alınamaz.',
   'Type DELETE to confirm permanent deletion.': 'Kalıcı silmeyi onaylamak için DELETE yaz.',
   'Export gives you a JSON of everything we store. Deletion permanently removes your login, history, and photos.': 'İndirme, sakladığımız her şeyi JSON olarak verir. Silme; girişini, geçmişini ve fotoğraflarını kalıcı olarak kaldırır.',
+
+  // Engagement: coach line, streak milestones, comeback
+  'Coach': 'Koç',
+  '{n}-day streak': '{n} günlük seri',
+  'Thank you, coach': 'Sağ ol koç',
+  'Your streak is starting fresh, but your work is not lost: {n} circuits are in the bank forever.': 'Serin yeniden başlıyor ama emeğin kaybolmadı: {n} devre sonsuza dek kasanda.',
+  'Seven days straight. Treat yourself to something that helps you recover: an early night, a long stretch, a proper massage.': 'Yedi gün üst üste. Kendine toparlanmana iyi gelecek bir şey armağan et: erken bir uyku, uzun bir esneme, iyi bir masaj.',
+  'Two weeks without missing. A long sauna or hammam evening has your name on it.': 'İki hafta hiç aksatmadın. Uzun bir hamam akşamı seni bekliyor.',
+  'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'Tam bir ay boyunca sözünü tuttun. Masaj artık lüks değil, bakım.',
+  'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Elli gün, dimdik. Kendine yeni antrenman ekipmanı al, kullanacaksın.',
+  'A hundred days. Book the full spa day, you have earned every minute of it.': 'Yüz gün. O spa gününü ayırt artık, her dakikasını hak ettin.',
 };

@@ -281,4 +281,15 @@ export const uk: Record<string, string> = {
   'Delete your account and ALL data (profile, history, photos)? This cannot be undone.': 'Видалити акаунт і ВСІ дані (профіль, історію, фото)? Цю дію не можна скасувати.',
   'Type DELETE to confirm permanent deletion.': 'Введи DELETE, щоб підтвердити остаточне видалення.',
   'Export gives you a JSON of everything we store. Deletion permanently removes your login, history, and photos.': 'Під час експорту ти отримаєш JSON з усіма даними, які ми зберігаємо. Видалення назавжди стирає твій логін, історію та фото.',
+
+  // Engagement: coach line, streak milestones, comeback
+  'Coach': 'Тренер',
+  '{n}-day streak': 'Серія: {n} дн.',
+  'Thank you, coach': 'Дякую, тренере',
+  'Your streak is starting fresh, but your work is not lost: {n} circuits are in the bank forever.': 'Серія починається заново, але твоя праця нікуди не зникла: {n} кругових тренувань назавжди записані на твій рахунок.',
+  'Seven days straight. Treat yourself to something that helps you recover: an early night, a long stretch, a proper massage.': 'Сім днів поспіль. Потіш себе тим, що допомагає відновитися: лягти раніше, добре порозтягуватися, сходити на справжній масаж.',
+  'Two weeks without missing. A long sauna or hammam evening has your name on it.': 'Два тижні без жодного пропуску. Довгий вечір у лазні чи сауні вже чекає на тебе.',
+  'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'Цілий місяць без пропусків. Масаж тепер не розкіш, а необхідний догляд за тілом.',
+  'Fifty days strong. Treat yourself to new training gear, you will use it.': 'П\'ятдесят днів сили. Потіш себе новим спорядженням для тренувань, воно точно знадобиться.',
+  'A hundred days. Book the full spa day, you have earned every minute of it.': 'Сто днів. Сміливо бронюй цілий день у спа: кожна його хвилина чесно зароблена.',
 };

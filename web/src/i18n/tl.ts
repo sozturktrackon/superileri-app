@@ -299,4 +299,15 @@ export const tlAuth: Record<string, string> = {
   'Back to Sign In': 'Balik sa Sign In',
   'Send code': 'Ipadala ang code',
   'Submit': 'I-submit',
+
+  // Engagement: coach line, streak milestones, comeback
+  'Coach': 'Coach',
+  '{n}-day streak': '{n}-day streak',
+  'Thank you, coach': 'Salamat, Coach',
+  'Your streak is starting fresh, but your work is not lost: {n} circuits are in the bank forever.': 'Nag-reset ang streak mo, pero hindi nawala ang pinaghirapan mo: {n} circuits na ang naipon mo, sa\'yo na \'yan habambuhay.',
+  'Seven days straight. Treat yourself to something that helps you recover: an early night, a long stretch, a proper massage.': 'Pitong araw na tuloy-tuloy. I-reward mo ang sarili mo ng makakatulong sa recovery: matulog nang maaga, mag-stretch nang matagal, o magpamasahe nang maayos.',
+  'Two weeks without missing. A long sauna or hammam evening has your name on it.': 'Dalawang linggo nang walang palya. May nakalaan nang mahabang sauna o spa night para sa\'yo.',
+  'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'Isang buong buwan na hindi ka nagpalya. Ang massage, hindi na luho ngayon, maintenance na.',
+  'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Fifty days strong. Bilhan mo na ang sarili mo ng bagong training gear, magagamit mo \'yan.',
+  'A hundred days. Book the full spa day, you have earned every minute of it.': 'Isang daang araw. I-book mo na ang buong spa day, pinaghirapan mo ang bawat minuto niyan.',
 };

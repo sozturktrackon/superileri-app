@@ -299,4 +299,15 @@ export const hiAuth: Record<string, string> = {
   'Back to Sign In': 'साइन इन पर वापस जाओ',
   'Send code': 'कोड भेजो',
   'Submit': 'सबमिट करो',
+
+  // Engagement: coach line, streak milestones, comeback
+  'Coach': 'कोच',
+  '{n}-day streak': '{n} दिन की स्ट्रीक',
+  'Thank you, coach': 'शुक्रिया, कोच',
+  'Your streak is starting fresh, but your work is not lost: {n} circuits are in the bank forever.': 'स्ट्रीक फिर से शुरू हो रही है, लेकिन तुम्हारी मेहनत कहीं नहीं गई: {n} सर्किट हमेशा के लिए तुम्हारे खाते में जमा हैं।',
+  'Seven days straight. Treat yourself to something that helps you recover: an early night, a long stretch, a proper massage.': 'लगातार सात दिन। खुद को कुछ ऐसा दो जिससे शरीर को आराम मिले: जल्दी सोना, लंबी स्ट्रेचिंग, या एक अच्छी मालिश।',
+  'Two weeks without missing. A long sauna or hammam evening has your name on it.': 'दो हफ्ते बिना नागा। एक लंबी सॉना या स्टीम बाथ वाली शाम अब तुम्हारे नाम है।',
+  'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'पूरा एक महीना डटे रहे। अब मालिश कोई ऐशो-आराम नहीं, शरीर की देखभाल है।',
+  'Fifty days strong. Treat yourself to new training gear, you will use it.': 'पचास दिन, पूरी मज़बूती से। खुद को नया वर्कआउट गियर दिलाओ, काम आएगा।',
+  'A hundred days. Book the full spa day, you have earned every minute of it.': 'सौ दिन। अब पूरा स्पा डे बुक कर लो, इसका हर पल तुमने कमाया है।',
 };

@@ -299,4 +299,15 @@ export const viAuth: Record<string, string> = {
   'Back to Sign In': 'Quay lại đăng nhập',
   'Send code': 'Gửi mã',
   'Submit': 'Gửi',
+
+  // Engagement: coach line, streak milestones, comeback
+  'Coach': 'HLV',
+  '{n}-day streak': 'Chuỗi {n} ngày',
+  'Thank you, coach': 'Cảm ơn HLV',
+  'Your streak is starting fresh, but your work is not lost: {n} circuits are in the bank forever.': 'Chuỗi của bạn bắt đầu lại từ đầu, nhưng công sức thì không hề mất đi: {n} vòng tập đã được ghi nhận mãi mãi.',
+  'Seven days straight. Treat yourself to something that helps you recover: an early night, a long stretch, a proper massage.': 'Bảy ngày liên tiếp. Hãy tự thưởng cho mình điều gì đó giúp cơ thể phục hồi: một đêm ngủ sớm, một buổi giãn cơ thật kỹ, hay một buổi massage đúng nghĩa.',
+  'Two weeks without missing. A long sauna or hammam evening has your name on it.': 'Hai tuần không bỏ lỡ buổi nào. Một buổi tối xông hơi thư thả đang chờ sẵn bạn đó.',
+  'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'Tròn một tháng kiên trì có mặt. Giờ thì massage không còn là xa xỉ nữa, mà là bảo dưỡng cho cơ thể.',
+  'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Năm mươi ngày bền bỉ. Hãy tự thưởng một bộ đồ tập mới, bạn sẽ dùng đến nó thôi.',
+  'A hundred days. Book the full spa day, you have earned every minute of it.': 'Một trăm ngày. Cứ đặt hẳn một ngày spa trọn gói, bạn xứng đáng với từng phút ở đó.',
 };

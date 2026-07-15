@@ -1,5 +1,6 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 import { checkInAnalyzer } from '../functions/check-in-analyzer/resource';
+import { coach } from '../functions/coach/resource';
 import { partnerLogger } from '../functions/partner-logger/resource';
 
 /**
@@ -22,6 +23,9 @@ const schema = a.schema({
       termsAcceptedAt: a.datetime(),
       termsVersion: a.string(),
       healthConsentAt: a.datetime(),
+      // Streak milestones already celebrated (7, 14, 30, ...). Server-side so
+      // dismissing the celebration once dismisses it on every device.
+      milestonesSeen: a.integer().array(),
       startDate: a.date(),
       currentDay: a.integer().default(1), // raw ever-increasing; wraps per plan length
       displayName: a.string(),
@@ -87,6 +91,24 @@ const schema = a.schema({
     .returns(a.ref('CheckInAnalysis'))
     .authorization((allow) => [allow.authenticated()])
     .handler(a.handler.function(checkInAnalyzer)),
+
+  // One warm daily coaching sentence for the Today screen, in the user's
+  // language. Cheap by design: the client caches it per (date, language).
+  coachLine: a
+    .query()
+    .arguments({
+      language: a.string(),
+      name: a.string(),
+      dayNumber: a.integer(),
+      cycle: a.integer(),
+      streak: a.integer(),
+      totalCircuits: a.integer(),
+      isRest: a.boolean(),
+      groups: a.string(),
+    })
+    .returns(a.string())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(coach)),
 
   // A training partner you've linked by email. Logging on a partner's behalf is
   // only allowed when BOTH have added each other (mutual consent), enforced in

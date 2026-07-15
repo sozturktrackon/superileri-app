@@ -281,4 +281,15 @@ export const id: Record<string, string> = {
   'Delete your account and ALL data (profile, history, photos)? This cannot be undone.': 'Hapus akunmu dan SEMUA data (profil, riwayat, foto)? Tindakan ini tidak bisa dibatalkan.',
   'Type DELETE to confirm permanent deletion.': 'Ketik DELETE untuk mengonfirmasi penghapusan permanen.',
   'Export gives you a JSON of everything we store. Deletion permanently removes your login, history, and photos.': 'Ekspor memberimu file JSON berisi semua yang kami simpan. Penghapusan menghilangkan login, riwayat, dan fotomu secara permanen.',
+
+  // Engagement: coach line, streak milestones, comeback
+  'Coach': 'Coach',
+  '{n}-day streak': 'Streak {n} hari',
+  'Thank you, coach': 'Makasih, Coach',
+  'Your streak is starting fresh, but your work is not lost: {n} circuits are in the bank forever.': 'Streak kamu mulai lagi dari awal, tapi hasil kerjamu tidak hilang: {n} sirkuit tersimpan selamanya.',
+  'Seven days straight. Treat yourself to something that helps you recover: an early night, a long stretch, a proper massage.': 'Tujuh hari berturut-turut. Beri dirimu sesuatu yang membantu pemulihan: tidur lebih awal, peregangan panjang, atau pijat sungguhan.',
+  'Two weeks without missing. A long sauna or hammam evening has your name on it.': 'Dua minggu tanpa bolong. Malam sauna atau spa yang panjang sudah menunggumu.',
+  'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'Sebulan penuh terus hadir. Pijat sekarang bukan kemewahan, tapi perawatan.',
+  'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Lima puluh hari, tetap kuat. Hadiahkan dirimu perlengkapan latihan baru, pasti terpakai.',
+  'A hundred days. Book the full spa day, you have earned every minute of it.': 'Seratus hari. Pesan satu hari penuh di spa, kamu pantas menikmati setiap menitnya.',
 };

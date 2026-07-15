@@ -281,4 +281,15 @@ export const fr: Record<string, string> = {
   'Delete your account and ALL data (profile, history, photos)? This cannot be undone.': 'Supprimer ton compte et TOUTES tes données (profil, historique, photos) ? Cette action est irréversible.',
   'Type DELETE to confirm permanent deletion.': 'Tape DELETE pour confirmer la suppression définitive.',
   'Export gives you a JSON of everything we store. Deletion permanently removes your login, history, and photos.': 'L\'export te donne un JSON de tout ce que nous stockons. La suppression efface définitivement ton identifiant, ton historique et tes photos.',
+
+  // Engagement: coach line, streak milestones, comeback
+  'Coach': 'Coach',
+  '{n}-day streak': 'Série de {n} jours',
+  'Thank you, coach': 'Merci coach',
+  'Your streak is starting fresh, but your work is not lost: {n} circuits are in the bank forever.': 'Ta série repart de zéro, mais ton travail n\'est pas perdu : {n} circuits restent à ton actif pour toujours.',
+  'Seven days straight. Treat yourself to something that helps you recover: an early night, a long stretch, a proper massage.': 'Sept jours d\'affilée. Offre-toi quelque chose qui t\'aide à récupérer : un coucher tôt, une longue séance d\'étirements, un vrai massage.',
+  'Two weeks without missing. A long sauna or hammam evening has your name on it.': 'Deux semaines sans rien manquer. Une longue soirée sauna ou hammam t\'attend.',
+  'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'Un mois complet de présence. Le massage n\'est plus un luxe, c\'est de l\'entretien.',
+  'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Cinquante jours, solide. Offre-toi du nouveau matériel d\'entraînement, tu vas t\'en servir.',
+  'A hundred days. Book the full spa day, you have earned every minute of it.': 'Cent jours. Réserve la journée spa complète, tu as mérité chaque minute.',
 };

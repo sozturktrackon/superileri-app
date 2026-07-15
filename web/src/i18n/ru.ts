@@ -281,4 +281,15 @@ export const ru: Record<string, string> = {
   'Delete your account and ALL data (profile, history, photos)? This cannot be undone.': 'Удалить аккаунт и ВСЕ данные (профиль, историю, фото)? Это действие нельзя отменить.',
   'Type DELETE to confirm permanent deletion.': 'Введи DELETE, чтобы подтвердить окончательное удаление.',
   'Export gives you a JSON of everything we store. Deletion permanently removes your login, history, and photos.': 'При экспорте ты получишь JSON со всеми данными, которые мы храним. Удаление навсегда стирает твой логин, историю и фото.',
+
+  // Engagement: coach line, streak milestones, comeback
+  'Coach': 'Тренер',
+  '{n}-day streak': 'Серия: {n} дн.',
+  'Thank you, coach': 'Спасибо, тренер',
+  'Your streak is starting fresh, but your work is not lost: {n} circuits are in the bank forever.': 'Серия начинается заново, но твой труд никуда не делся: {n} круговых тренировок навсегда записаны на твой счёт.',
+  'Seven days straight. Treat yourself to something that helps you recover: an early night, a long stretch, a proper massage.': 'Семь дней подряд. Порадуй себя тем, что помогает восстановиться: лечь пораньше, хорошенько потянуться, сходить на нормальный массаж.',
+  'Two weeks without missing. A long sauna or hammam evening has your name on it.': 'Две недели без единого пропуска. Долгий вечер в бане или сауне уже ждёт тебя.',
+  'A full month of showing up. A massage is not a luxury now, it is maintenance.': 'Целый месяц без пропусков. Массаж теперь не роскошь, а необходимый уход за телом.',
+  'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Пятьдесят дней силы. Порадуй себя новой экипировкой для тренировок, она точно пригодится.',
+  'A hundred days. Book the full spa day, you have earned every minute of it.': 'Сто дней. Смело бронируй целый день в спа: каждая его минута честно заработана.',
 };
