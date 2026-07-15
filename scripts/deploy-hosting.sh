@@ -3,9 +3,9 @@
 # Targets the canonical app/region explicitly so it never creates a duplicate.
 set -euo pipefail
 
-APP_ID="${APP_ID:-d1jwmrz4ddo322}"   # canonical Amplify Hosting app (us-east-1)
+APP_ID="${APP_ID:-d2tkdh7wcv3ggv}"   # canonical Amplify Hosting app (fitness account, us-east-1)
 BRANCH="main"
-PROFILE="${AWS_PROFILE:-sandbox}"
+PROFILE="${AWS_PROFILE:-fitness}"
 REGION="us-east-1"                   # pinned: your shell defaults to ap-south-1
 export AWS_REGION="$REGION"
 export AWS_DEFAULT_REGION="$REGION"

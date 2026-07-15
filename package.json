@@ -4,8 +4,8 @@
   "description": "Superileri Fitness APP — Amplify Gen 2 backend",
   "license": "ISC",
   "scripts": {
-    "sandbox": "ampx sandbox --profile sandbox",
-    "sandbox:once": "ampx sandbox --profile sandbox --once"
+    "sandbox": "ampx sandbox --profile fitness",
+    "sandbox:once": "ampx sandbox --profile fitness --once"
   },
   "devDependencies": {
     "@aws-amplify/backend": "^1.23.0",
