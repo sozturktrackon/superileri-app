@@ -5,7 +5,7 @@ set -euo pipefail
 
 APP_ID="${APP_ID:-d2tkdh7wcv3ggv}"   # canonical Amplify Hosting app (fitness account, us-east-1)
 BRANCH="main"
-PROFILE="${AWS_PROFILE:-fitness}"
+PROFILE="fitness"                    # pinned: shell may export AWS_PROFILE for company work
 REGION="us-east-1"                   # pinned: your shell defaults to ap-south-1
 export AWS_REGION="$REGION"
 export AWS_DEFAULT_REGION="$REGION"
