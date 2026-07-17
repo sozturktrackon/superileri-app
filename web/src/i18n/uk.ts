@@ -293,4 +293,5 @@ export const uk: Record<string, string> = {
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'П\'ятдесят днів сили. Потіш себе новим спорядженням для тренувань, воно точно знадобиться.',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'Сто днів. Сміливо бронюй цілий день у спа: кожна його хвилина чесно зароблена.',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'Сьогоднішній чек-ін збережено. Наступний можна буде додати завтра.',
+  'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'Ваші дані зберігаються на серверах AWS у США; продовжуючи, ви даєте явну згоду на їх зберігання та обробку там.',
 };

@@ -293,4 +293,5 @@ export const th: Record<string, string> = {
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'ห้าสิบวันอย่างแข็งแกร่ง ให้รางวัลตัวเองด้วยอุปกรณ์ออกกำลังกายชุดใหม่ รับรองว่าได้ใช้แน่',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'หนึ่งร้อยวันแล้ว จองสปาแบบเต็มวันไปเลย คุณคู่ควรกับทุกนาทีของมัน',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'บันทึกเช็กอินของวันนี้เรียบร้อยแล้ว คุณเพิ่มครั้งถัดไปได้ในวันพรุ่งนี้',
+  'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'ข้อมูลของคุณจะถูกจัดเก็บบนเซิร์ฟเวอร์ AWS ในสหรัฐอเมริกา หากดำเนินการต่อ ถือว่าคุณให้ความยินยอมโดยชัดแจ้งให้จัดเก็บและประมวลผลข้อมูลของคุณที่นั่น',
 };

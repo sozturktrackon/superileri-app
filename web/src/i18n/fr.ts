@@ -293,4 +293,5 @@ export const fr: Record<string, string> = {
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Cinquante jours, solide. Offre-toi du nouveau matériel d\'entraînement, tu vas t\'en servir.',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'Cent jours. Réserve la journée spa complète, tu as mérité chaque minute.',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'Ton check-in du jour est enregistré. Tu pourras ajouter le prochain demain.',
+  'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'Vos données sont stockées sur des serveurs AWS situés aux États-Unis ; en continuant, vous consentez explicitement à ce qu\'elles y soient stockées et traitées.',
 };

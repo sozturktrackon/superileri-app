@@ -42,6 +42,7 @@ const ConsentScreen = ({
         <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.6, fontSize: 14 }}>
           <li>{t('Exercise at your own risk; check with a doctor first if you have any condition. This app is not medical advice.')}</li>
           <li>{t('Your data (profile, workouts, photos) is private to your account, stored on AWS, never sold or shared.')}</li>
+          <li>{t('Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.')}</li>
           <li>{t('Progress photos and AI body analysis are optional and need your separate consent below.')}</li>
           <li>{t('You can export or permanently delete everything, anytime, from Progress.')}</li>
         </ul>

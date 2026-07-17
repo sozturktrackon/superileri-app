@@ -293,4 +293,5 @@ export const ja: Record<string, string> = {
   'Fifty days strong. Treat yourself to new training gear, you will use it.': '50日間の継続、お見事です。新しいトレーニングギアをご褒美にどうぞ。きっと活躍します。',
   'A hundred days. Book the full spa day, you have earned every minute of it.': '100日達成。スパで丸一日過ごす予約をどうぞ。その一分一秒は、あなたが自分で勝ち取ったものです。',
   'Today\'s check-in is saved. You can add the next one tomorrow.': '今日のチェックインを保存しました。次回は明日追加できます。',
+  'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'お客様のデータは、アメリカ合衆国にあるAWSのサーバーに保存されます。続行すると、データがそこで保存・処理されることに明示的に同意したことになります。',
 };

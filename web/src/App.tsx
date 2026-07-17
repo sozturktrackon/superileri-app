@@ -20,6 +20,7 @@ import TvDisplay from './screens/TvDisplay';
 import ErrorBoundary from './components/ErrorBoundary';
 import LegalScreen from './screens/LegalScreen';
 import ConsentScreen, { type ConsentResult } from './screens/ConsentScreen';
+import { TERMS_VERSION } from './content/legal';
 import { updateProfile } from './lib/api';
 import { amplifyLangCode, LANGS, useT, type Lang } from './lib/i18n';
 import { I18n } from 'aws-amplify/utils';
@@ -80,7 +81,7 @@ const Shell = ({ signOut }: { signOut?: () => void }) => {
   }
 
   // Existing accounts (or a terms-version bump): ask once, store on profile.
-  if (!profile.termsAcceptedAt) {
+  if (!profile.termsAcceptedAt || profile.termsVersion !== TERMS_VERSION) {
     return (
       <ConsentScreen
         onAccept={async (c) => {

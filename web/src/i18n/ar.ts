@@ -311,4 +311,5 @@ export const arAuth: Record<string, string> = {
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'خمسون يومًا من الثبات. كافئ نفسك بمعدات تدريب جديدة، فستستخدمها بالتأكيد.',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'مئة يوم. احجز يومًا كاملًا في السبا، فقد استحققت كل دقيقة فيه.',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'تم حفظ تسجيل اليوم. يمكنك إضافة التسجيل التالي غدًا.',
+  'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'يتم تخزين بياناتك على خوادم AWS في الولايات المتحدة؛ وبمتابعتك، فإنك توافق صراحةً على تخزينها ومعالجتها هناك.',
 };

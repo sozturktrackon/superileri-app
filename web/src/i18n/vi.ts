@@ -311,4 +311,5 @@ export const viAuth: Record<string, string> = {
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Năm mươi ngày bền bỉ. Hãy tự thưởng một bộ đồ tập mới, bạn sẽ dùng đến nó thôi.',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'Một trăm ngày. Cứ đặt hẳn một ngày spa trọn gói, bạn xứng đáng với từng phút ở đó.',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'Đã lưu check-in hôm nay. Bạn có thể thêm lần tiếp theo vào ngày mai.',
+  'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'Dữ liệu của bạn được lưu trữ trên các máy chủ AWS đặt tại Hoa Kỳ; khi tiếp tục, bạn đồng ý một cách rõ ràng để dữ liệu được lưu trữ và xử lý tại đó.',
 };

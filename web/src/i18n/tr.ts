@@ -293,4 +293,5 @@ export const tr: Record<string, string> = {
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Elli gün, dimdik. Kendine yeni antrenman ekipmanı al, kullanacaksın.',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'Yüz gün. O spa gününü ayırt artık, her dakikasını hak ettin.',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'Bugünkü check-in\'in kaydedildi. Yenisini yarın ekleyebilirsin.',
+  'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'Verileriniz Amerika Birleşik Devletleri\'ndeki AWS sunucularında saklanır; devam ederek verilerinizin orada saklanmasına ve işlenmesine açıkça rıza vermiş olursunuz.',
 };

@@ -7,7 +7,7 @@
  * governing-law clause and the contact details below.
  */
 
-export const TERMS_VERSION = '2026-07-09';
+export const TERMS_VERSION = '2026-07-17';
 export const LEGAL_CONTACT = 'mso@outlook.com';
 
 export type LegalSection = { h: string; p: string[] };

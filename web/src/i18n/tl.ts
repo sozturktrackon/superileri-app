@@ -311,4 +311,5 @@ export const tlAuth: Record<string, string> = {
   'Fifty days strong. Treat yourself to new training gear, you will use it.': 'Fifty days strong. Bilhan mo na ang sarili mo ng bagong training gear, magagamit mo \'yan.',
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'Isang daang araw. I-book mo na ang buong spa day, pinaghirapan mo ang bawat minuto niyan.',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'Na-save na ang check-in mo ngayong araw. Pwede kang mag-add ulit bukas.',
+  'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'Naka-store ang data mo sa mga AWS server sa United States; kapag nag-continue ka, hayagan kang pumapayag na i-store at i-process ito doon.',
 };
