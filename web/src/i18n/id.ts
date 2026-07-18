@@ -294,4 +294,9 @@ export const id: Record<string, string> = {
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'Seratus hari. Pesan satu hari penuh di spa, kamu pantas menikmati setiap menitnya.',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'Check-in hari ini sudah tersimpan. Kamu bisa menambahkan yang berikutnya besok.',
   'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'Data kamu disimpan di server AWS di Amerika Serikat; dengan melanjutkan, kamu memberikan persetujuan eksplisit agar data tersebut disimpan dan diproses di sana.',
+  '🆚 Compare': '🆚 Bandingkan',
+  'Select two check-ins to compare them side by side.': 'Pilih dua check-in untuk membandingkannya berdampingan.',
+  'Compare side by side →': 'Bandingkan berdampingan →',
+  'Tap the photo to zoom.': 'Ketuk foto untuk memperbesar.',
+  'No {angle} photo in this check-in.': 'Tidak ada foto {angle} di check-in ini.',
 };

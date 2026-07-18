@@ -18,6 +18,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useProfile } from '../state';
 import { allPlans, getPlan, normalizeDay, type PlanId } from '../lib/content';
+import PhotoLightbox from '../components/PhotoLightbox';
 import MusicSettings from '../components/MusicSettings';
 import ExerciseVideoSettings from '../components/ExerciseVideoSettings';
 import PartnerSettings from '../components/PartnerSettings';
@@ -83,6 +84,10 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
   const [streaks, setStreaks] = useState({ current: 0, best: 0 });
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  // Fullscreen viewer: one shot = browse angles, two shots = side-by-side.
+  const [viewShots, setViewShots] = useState<Shot[] | null>(null);
+  const [compareMode, setCompareMode] = useState(false);
 
   // Merge mode: combine old single-photo check-ins into one angle-tagged one.
   const [mergeMode, setMergeMode] = useState(false);
@@ -293,7 +298,19 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
         >
           {t('+ New check-in')}
         </Link>
-        {shots.length >= 2 && !assigning && (
+        {shots.length >= 2 && !assigning && !mergeMode && (
+          <button
+            className="btn ghost"
+            style={{ padding: '6px 10px', fontSize: 12 }}
+            onClick={() => {
+              setCompareMode((c) => !c);
+              setSelectedIds([]);
+            }}
+          >
+            {compareMode ? t('Cancel') : t('🆚 Compare')}
+          </button>
+        )}
+        {shots.length >= 2 && !assigning && !compareMode && (
           <button
             className="btn ghost"
             style={{ padding: '6px 10px', fontSize: 12 }}
@@ -306,6 +323,12 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
           </button>
         )}
       </div>
+
+      {compareMode && (
+        <p className="muted" style={{ fontSize: 12, marginTop: -4, marginBottom: 10 }}>
+          {t('Select two check-ins to compare them side by side.')}
+        </p>
+      )}
 
       {mergeMode && !assigning && (
         <p className="muted" style={{ fontSize: 12, marginTop: -4, marginBottom: 10 }}>
@@ -327,7 +350,12 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
             <div
               key={s.id}
               style={{ position: 'relative' }}
-              onClick={() => mergeMode && toggleSelect(s.id)}
+              onClick={() => {
+                if (mergeMode) toggleSelect(s.id);
+                else if (compareMode) {
+                  if (selectedIds.includes(s.id) || selectedIds.length < 2) toggleSelect(s.id);
+                } else setViewShots([s]);
+              }}
             >
               {s.url ? <img src={s.url} alt={s.date} /> : <div className="gallery" />}
               <span
@@ -340,7 +368,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
                   : ''}
                 {(s.angleCount ?? 1) > 1 ? ` · ${t('{count} angles', { count: s.angleCount ?? 0 })}` : ''}
               </span>
-              {mergeMode ? (
+              {mergeMode || compareMode ? (
                 <div
                   className={`merge-check ${selectedIds.includes(s.id) ? 'on' : ''}`}
                 >
@@ -362,6 +390,20 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
             </div>
           ))}
         </div>
+      )}
+
+      {compareMode && selectedIds.length === 2 && (
+        <button
+          className="btn primary block"
+          style={{ marginTop: 12 }}
+          onClick={() => {
+            setViewShots(shots.filter((s) => selectedIds.includes(s.id)));
+            setCompareMode(false);
+            setSelectedIds([]);
+          }}
+        >
+          {t('Compare side by side →')}
+        </button>
       )}
 
       {mergeMode && !assigning && selectedIds.length >= 2 && (
@@ -544,6 +586,8 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
       <p className="muted" style={{ fontSize: 11, textAlign: 'center', marginTop: 8 }}>
         {t('Superileri Fit · your data is private to your account.')} · v{__APP_VERSION__}
       </p>
+
+      {viewShots && <PhotoLightbox shots={viewShots} onClose={() => setViewShots(null)} />}
     </div>
   );
 };

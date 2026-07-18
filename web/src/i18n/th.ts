@@ -294,4 +294,9 @@ export const th: Record<string, string> = {
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'หนึ่งร้อยวันแล้ว จองสปาแบบเต็มวันไปเลย คุณคู่ควรกับทุกนาทีของมัน',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'บันทึกเช็กอินของวันนี้เรียบร้อยแล้ว คุณเพิ่มครั้งถัดไปได้ในวันพรุ่งนี้',
   'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'ข้อมูลของคุณจะถูกจัดเก็บบนเซิร์ฟเวอร์ AWS ในสหรัฐอเมริกา หากดำเนินการต่อ ถือว่าคุณให้ความยินยอมโดยชัดแจ้งให้จัดเก็บและประมวลผลข้อมูลของคุณที่นั่น',
+  '🆚 Compare': '🆚 เปรียบเทียบ',
+  'Select two check-ins to compare them side by side.': 'เลือกเช็กอิน 2 รายการเพื่อเปรียบเทียบแบบเคียงข้างกัน',
+  'Compare side by side →': 'เปรียบเทียบแบบเคียงข้างกัน →',
+  'Tap the photo to zoom.': 'แตะรูปภาพเพื่อซูม',
+  'No {angle} photo in this check-in.': 'ไม่มีรูป{angle}ในเช็กอินนี้',
 };

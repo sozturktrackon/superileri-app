@@ -294,4 +294,9 @@ export const pt: Record<string, string> = {
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'Cem dias. Reserve o dia inteiro de spa, você mereceu cada minuto.',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'Seu check-in de hoje foi salvo. Você pode adicionar o próximo amanhã.',
   'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'Seus dados são armazenados em servidores da AWS nos Estados Unidos; ao continuar, você dá seu consentimento expresso para que eles sejam armazenados e tratados lá.',
+  '🆚 Compare': '🆚 Comparar',
+  'Select two check-ins to compare them side by side.': 'Selecione dois check-ins para compará-los lado a lado.',
+  'Compare side by side →': 'Comparar lado a lado →',
+  'Tap the photo to zoom.': 'Toque na foto para dar zoom.',
+  'No {angle} photo in this check-in.': 'Não há foto de {angle} neste check-in.',
 };

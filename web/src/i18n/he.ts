@@ -294,4 +294,9 @@ export const he: Record<string, string> = {
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'מאה ימים. זה הזמן להזמין יום ספא מלא, הרווחת כל דקה ממנו.',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'הצ\'ק-אין של היום נשמר. אפשר להוסיף את הבא מחר.',
   'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'הנתונים שלך מאוחסנים בשרתי AWS בארצות הברית; המשך התהליך מהווה הסכמה מפורשת מצדך לאחסונם ולעיבודם שם.',
+  '🆚 Compare': '🆚 השוואה',
+  'Select two check-ins to compare them side by side.': 'יש לבחור שני צ\'ק-אינים כדי להשוות ביניהם זה לצד זה.',
+  'Compare side by side →': 'השוואה זה לצד זה ←',
+  'Tap the photo to zoom.': 'אפשר להקיש על התמונה כדי להגדיל.',
+  'No {angle} photo in this check-in.': 'אין תמונת {angle} בצ\'ק-אין הזה.',
 };

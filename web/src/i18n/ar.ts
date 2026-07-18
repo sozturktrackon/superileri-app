@@ -312,4 +312,9 @@ export const arAuth: Record<string, string> = {
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'مئة يوم. احجز يومًا كاملًا في السبا، فقد استحققت كل دقيقة فيه.',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'تم حفظ تسجيل اليوم. يمكنك إضافة التسجيل التالي غدًا.',
   'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'يتم تخزين بياناتك على خوادم AWS في الولايات المتحدة؛ وبمتابعتك، فإنك توافق صراحةً على تخزينها ومعالجتها هناك.',
+  '🆚 Compare': '🆚 قارن',
+  'Select two check-ins to compare them side by side.': 'اختر تسجيلين لمقارنتهما جنبًا إلى جنب.',
+  'Compare side by side →': 'قارن جنبًا إلى جنب ←',
+  'Tap the photo to zoom.': 'انقر على الصورة للتكبير.',
+  'No {angle} photo in this check-in.': 'لا توجد صورة {angle} في هذا التسجيل.',
 };

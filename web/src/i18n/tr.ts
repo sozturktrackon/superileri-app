@@ -294,4 +294,9 @@ export const tr: Record<string, string> = {
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'Yüz gün. O spa gününü ayırt artık, her dakikasını hak ettin.',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'Bugünkü check-in\'in kaydedildi. Yenisini yarın ekleyebilirsin.',
   'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'Verileriniz Amerika Birleşik Devletleri\'ndeki AWS sunucularında saklanır; devam ederek verilerinizin orada saklanmasına ve işlenmesine açıkça rıza vermiş olursunuz.',
+  '🆚 Compare': '🆚 Karşılaştır',
+  'Select two check-ins to compare them side by side.': 'Yan yana karşılaştırmak için iki check-in seç.',
+  'Compare side by side →': 'Yan yana karşılaştır →',
+  'Tap the photo to zoom.': 'Yakınlaştırmak için fotoğrafa dokun.',
+  'No {angle} photo in this check-in.': 'Bu check-in\'de {angle} fotoğrafı yok.',
 };

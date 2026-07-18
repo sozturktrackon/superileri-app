@@ -312,4 +312,9 @@ export const hiAuth: Record<string, string> = {
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'सौ दिन। अब पूरा स्पा डे बुक कर लो, इसका हर पल तुमने कमाया है।',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'आज का चेक-इन सेव हो गया है। अगला आप कल जोड़ सकते हैं।',
   'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'आपका डेटा संयुक्त राज्य अमेरिका में स्थित AWS सर्वरों पर स्टोर किया जाता है; जारी रखकर आप उसे वहाँ स्टोर और प्रोसेस किए जाने की स्पष्ट सहमति देते हैं।',
+  '🆚 Compare': '🆚 तुलना करें',
+  'Select two check-ins to compare them side by side.': 'साथ-साथ तुलना करने के लिए दो चेक-इन चुनें।',
+  'Compare side by side →': 'साथ-साथ तुलना करें →',
+  'Tap the photo to zoom.': 'ज़ूम करने के लिए फ़ोटो पर टैप करें।',
+  'No {angle} photo in this check-in.': 'इस चेक-इन में {angle} की फ़ोटो नहीं है।',
 };

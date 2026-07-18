@@ -312,4 +312,9 @@ export const tlAuth: Record<string, string> = {
   'A hundred days. Book the full spa day, you have earned every minute of it.': 'Isang daang araw. I-book mo na ang buong spa day, pinaghirapan mo ang bawat minuto niyan.',
   'Today\'s check-in is saved. You can add the next one tomorrow.': 'Na-save na ang check-in mo ngayong araw. Pwede kang mag-add ulit bukas.',
   'Your data is stored on AWS servers in the United States; by continuing you explicitly consent to it being stored and processed there.': 'Naka-store ang data mo sa mga AWS server sa United States; kapag nag-continue ka, hayagan kang pumapayag na i-store at i-process ito doon.',
+  '🆚 Compare': '🆚 I-compare',
+  'Select two check-ins to compare them side by side.': 'Pumili ng dalawang check-in para ma-compare mo ang mga ito nang side by side.',
+  'Compare side by side →': 'I-compare side by side →',
+  'Tap the photo to zoom.': 'I-tap ang photo para mag-zoom.',
+  'No {angle} photo in this check-in.': 'Walang {angle} photo sa check-in na ito.',
 };
