@@ -13,6 +13,7 @@ import { es } from '../i18n/es';
 import { pt } from '../i18n/pt';
 import { tl } from '../i18n/tl';
 import { id } from '../i18n/id';
+import { it } from '../i18n/it';
 import { ja } from '../i18n/ja';
 import { vi } from '../i18n/vi';
 import { th } from '../i18n/th';
@@ -32,7 +33,7 @@ import { he } from '../i18n/he';
  */
 export type Lang =
   | 'en' | 'tr' | 'hi' | 'fr' | 'de' | 'es' | 'pt' | 'tl'
-  | 'id' | 'ja' | 'vi' | 'th' | 'ru' | 'uk' | 'ar' | 'he';
+  | 'id' | 'it' | 'ja' | 'vi' | 'th' | 'ru' | 'uk' | 'ar' | 'he';
 
 // Picker order: English pinned first (the default), then native names
 // (endonyms) alphabetically - Latin script A-Z, then other scripts grouped
@@ -45,6 +46,7 @@ export const LANGS: { code: Lang; label: string }[] = [
   { code: 'de', label: 'Deutsch' },
   { code: 'es', label: 'Español' },
   { code: 'fr', label: 'Français' },
+  { code: 'it', label: 'Italiano' },
   { code: 'pt', label: 'Português' },
   { code: 'tl', label: 'Tagalog' },
   { code: 'vi', label: 'Tiếng Việt' },
@@ -62,7 +64,7 @@ export const LANGS: { code: Lang; label: string }[] = [
 export const LANG_NAMES: Record<Lang, string> = {
   en: 'English', tr: 'Turkish', hi: 'Hindi', fr: 'French',
   de: 'German', es: 'Spanish', pt: 'Portuguese', tl: 'Filipino (Tagalog)',
-  id: 'Indonesian', ja: 'Japanese', vi: 'Vietnamese', th: 'Thai',
+  id: 'Indonesian', it: 'Italian', ja: 'Japanese', vi: 'Vietnamese', th: 'Thai',
   ru: 'Russian', uk: 'Ukrainian', ar: 'Arabic', he: 'Hebrew',
 };
 
@@ -81,7 +83,7 @@ export const amplifyLangCode = (l: Lang): string => (l === 'uk' ? 'ua' : l);
 
 const LS_KEY = 'superileri.lang';
 const DICTS: Partial<Record<Lang, Record<string, string>>> = {
-  tr, hi, fr, de, es, pt, tl, id, ja, vi, th, ru, uk, ar, he,
+  tr, hi, fr, de, es, pt, tl, id, it, ja, vi, th, ru, uk, ar, he,
 };
 
 export const detectLang = (): Lang => {

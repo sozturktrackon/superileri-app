@@ -55,7 +55,8 @@ const CheckInScreen = () => {
       const ci = await createCheckIn({
         photos,
         kind: 'monthly',
-        weightKg: weight ? Number(weight) : undefined,
+        // Comma decimals ("78,5") are the norm in most of our locales.
+        weightKg: weight ? Number(weight.replace(',', '.')) : undefined,
       });
       setStage(t('Analyzing with AI…'));
       const analyzed = await analyzeCheckIn(ci);
