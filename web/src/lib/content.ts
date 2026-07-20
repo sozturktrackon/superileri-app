@@ -74,6 +74,10 @@ export type PlanId = 'lean' | 'bulk' | 'lean2' | 'bulk2';
 // ---- Content localization: names are swapped per active language at the
 // accessor level, so every screen gets localized content for free. English is
 // canonical; anything missing in an overlay falls back to it.
+
+/** Which repeat of the plan a raw ever-increasing day counter is in (1-based). */
+export const cycleOf = (rawDay: number, planId: string): number =>
+  Math.floor((rawDay - 1) / planLength(planId)) + 1;
 const locGroup = (g: Group): Group => {
   const o = overlay();
   if (!o) return g;

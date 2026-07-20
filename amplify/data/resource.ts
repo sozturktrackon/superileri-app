@@ -42,7 +42,8 @@ const schema = a.schema({
     .model({
       date: a.date().required(),
       planId: a.string().required(), // 'lean' | 'bulk'
-      dayNumber: a.integer().required(), // 1..30
+      dayNumber: a.integer().required(), // 1..30 (normalized program day)
+      cycle: a.integer(), // which repeat of the plan; missing = cycle 1 (legacy)
       groupKeys: a.string().array(), // e.g. ["Chest","CH"]
       participants: a.string().array(), // names of people who did this circuit
       completed: a.boolean().default(false),

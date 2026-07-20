@@ -15,6 +15,10 @@ const REGION = process.env.AWS_REGION ?? 'us-east-1';
 const USER_POOL_ID = process.env.USER_POOL_ID!;
 const PARTNER_TABLE = process.env.PARTNER_TABLE!;
 const WORKOUTLOG_TABLE = process.env.WORKOUTLOG_TABLE!;
+const USERPROFILE_TABLE = process.env.USERPROFILE_TABLE!;
+
+// Mirror of the frontend plan lengths (content/calendars.json).
+const PLAN_LENGTHS: Record<string, number> = { lean: 28, bulk: 30, lean2: 28, bulk2: 30 };
 
 const cognito = new CognitoIdentityProviderClient({ region: REGION });
 const ddb = DynamoDBDocumentClient.from(new DynamoDBClient({ region: REGION }));
@@ -62,7 +66,26 @@ export const handler: Schema['logForPartner']['functionHandler'] = async (
     );
   }
 
-  // 3. Write the completed WorkoutLog onto the partner's calendar.
+  // 3. The log belongs to the PARTNER's current cycle, not the caller's.
+  let cycle = 1;
+  try {
+    const prof = await ddb.send(
+      new ScanCommand({
+        TableName: USERPROFILE_TABLE,
+        FilterExpression: '#o = :o',
+        ExpressionAttributeNames: { '#o': 'owner' },
+        ExpressionAttributeValues: { ':o': partnerOwner },
+      })
+    );
+    const item = prof.Items?.[0];
+    const raw = Number(item?.currentDay ?? 1);
+    const len = PLAN_LENGTHS[String(item?.plan ?? 'lean')] ?? 28;
+    cycle = Math.floor((raw - 1) / len) + 1;
+  } catch {
+    /* default to cycle 1 rather than failing the log */
+  }
+
+  // 4. Write the completed WorkoutLog onto the partner's calendar.
   const now = new Date().toISOString();
   await ddb.send(
     new PutCommand({
@@ -74,6 +97,7 @@ export const handler: Schema['logForPartner']['functionHandler'] = async (
         date: event.arguments.date,
         planId: event.arguments.planId,
         dayNumber: event.arguments.dayNumber,
+        cycle,
         groupKeys: event.arguments.groupKeys,
         participants: [partnerEmail],
         completed: true,

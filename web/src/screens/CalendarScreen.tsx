@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../state';
+import { cycleOf } from '../lib/content';
 import { allPlans, getDay, getPlan, groupShort, normalizeDay, type PlanId } from '../lib/content';
 import { useT } from '../lib/i18n';
 import {
@@ -20,6 +21,10 @@ const CalendarScreen = () => {
   const [planId, setPlanId] = useState<PlanId>(profile?.plan ?? 'lean');
   const plan = getPlan(planId)!;
   const isActivePlan = planId === profile?.plan;
+  // Ticks shown are for the cycle you're currently in; legacy logs without a
+  // cycle field count as cycle 1.
+  const viewedCycle = isActivePlan ? cycleOf(profile?.currentDay ?? 1, planId) : 1;
+  const inViewedCycle = (l: { cycle?: number | null }) => (l.cycle ?? 1) === viewedCycle;
   const today = normalizeDay(profile?.currentDay ?? 1, planId);
   const [logs, setLogs] = useState<WorkoutLog[]>([]);
   const [selected, setSelected] = useState<number | null>(null);
@@ -42,7 +47,7 @@ const CalendarScreen = () => {
       if (required.length === 0) continue;
       const loggedKeys = new Set(
         logs
-          .filter((l) => l.planId === planId && l.dayNumber === d.day && l.completed)
+          .filter((l) => l.planId === planId && l.dayNumber === d.day && l.completed && inViewedCycle(l))
           .flatMap((l) => l.groupKeys ?? [])
       );
       if (required.every((k) => loggedKeys.has(k))) done.add(d.day);
@@ -57,7 +62,7 @@ const CalendarScreen = () => {
 
   const hasManualMark = (day: number) =>
     logs.some(
-      (l) => l.planId === planId && l.dayNumber === day && l.notes === 'manual'
+      (l) => l.planId === planId && l.dayNumber === day && l.notes === 'manual' && inViewedCycle(l)
     );
 
   const doMarkDone = async (day: number) => {
@@ -65,7 +70,7 @@ const CalendarScreen = () => {
     if (keys.length === 0) return;
     setBusy(true);
     try {
-      await markDayComplete(planId, day, keys);
+      await markDayComplete(planId, day, keys, viewedCycle);
       await reloadLogs();
     } finally {
       setBusy(false);
@@ -75,7 +80,7 @@ const CalendarScreen = () => {
   const doUndo = async (day: number) => {
     setBusy(true);
     try {
-      await clearManualMark(planId, day);
+      await clearManualMark(planId, day, viewedCycle);
       await reloadLogs();
     } finally {
       setBusy(false);

@@ -70,6 +70,7 @@ export const advanceDay = async (profile: UserProfile): Promise<UserProfile> => 
 export const logWorkout = async (input: {
   planId: string;
   dayNumber: number;
+  cycle?: number;
   groupKeys: string[];
   participants?: string[];
   durationSec?: number;
@@ -138,12 +139,14 @@ export const deleteMyAccount = async (): Promise<void> => {
 export const markDayComplete = async (
   planId: string,
   dayNumber: number,
-  groupKeys: string[]
+  groupKeys: string[],
+  cycle?: number
 ): Promise<void> => {
   const { errors } = await client.models.WorkoutLog.create({
     date: todayISO(),
     planId,
     dayNumber,
+    cycle,
     groupKeys,
     completed: true,
     notes: 'manual',
@@ -154,14 +157,16 @@ export const markDayComplete = async (
 /** Undo only a MANUAL mark for a day (never deletes real workout sessions). */
 export const clearManualMark = async (
   planId: string,
-  dayNumber: number
+  dayNumber: number,
+  cycle?: number
 ): Promise<void> => {
   const { data } = await client.models.WorkoutLog.list({ limit: 500 });
   const toDelete = data.filter(
     (l) =>
       l.planId === planId &&
       l.dayNumber === dayNumber &&
-      l.notes === 'manual'
+      l.notes === 'manual' &&
+      (cycle === undefined || (l.cycle ?? 1) === cycle)
   );
   await Promise.all(
     toDelete.map((l) => client.models.WorkoutLog.delete({ id: l.id }))

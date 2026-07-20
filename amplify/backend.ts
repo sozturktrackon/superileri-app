@@ -69,10 +69,12 @@ const partnerFn = backend.partnerLogger.resources.lambda as LambdaFunction;
 const userPool = backend.auth.resources.userPool;
 const partnerTable = backend.data.resources.tables['Partner'];
 const workoutTable = backend.data.resources.tables['WorkoutLog'];
+const profileTable = backend.data.resources.tables['UserProfile'];
 
 partnerFn.addEnvironment('USER_POOL_ID', userPool.userPoolId);
 partnerFn.addEnvironment('PARTNER_TABLE', partnerTable.tableName);
 partnerFn.addEnvironment('WORKOUTLOG_TABLE', workoutTable.tableName);
+partnerFn.addEnvironment('USERPROFILE_TABLE', profileTable.tableName);
 
 // Look up a partner's account by email.
 partnerFn.addToRolePolicy(
@@ -85,7 +87,10 @@ partnerFn.addToRolePolicy(
 partnerFn.addToRolePolicy(
   new PolicyStatement({
     actions: ['dynamodb:Scan', 'dynamodb:Query'],
-    resources: [partnerTable.tableArn, `${partnerTable.tableArn}/index/*`],
+    resources: [
+      partnerTable.tableArn, `${partnerTable.tableArn}/index/*`,
+      profileTable.tableArn, `${profileTable.tableArn}/index/*`,
+    ],
   })
 );
 partnerFn.addToRolePolicy(

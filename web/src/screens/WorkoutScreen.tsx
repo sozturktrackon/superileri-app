@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getGroupByKey, intervals } from '../lib/content';
+import { cycleOf, getGroupByKey, intervals } from '../lib/content';
 import { buildPhases, fmtClock, totalSeconds } from '../lib/timer';
 import { useWorkoutTimer } from '../lib/useWorkoutTimer';
 import { loadVoice, unlockAudio } from '../lib/sound';
 import { releaseWakeLock, requestWakeLock } from '../lib/wakeLock';
 import { listPartners, logForPartner, logWorkout, type Partner } from '../lib/api';
+import { useProfile } from '../state';
 import {
   clearTvCode,
   endLiveSession,
@@ -90,6 +91,7 @@ const loadProgress = (
 };
 
 const WorkoutScreen = () => {
+  const { profile } = useProfile();
   const { t } = useT();
   const { planId, day, groupKey } = useParams();
   const navigate = useNavigate();
@@ -290,6 +292,7 @@ const WorkoutScreen = () => {
         logWorkout({
           planId: planId ?? 'lean',
           dayNumber: Number(day) || 1,
+          cycle: cycleOf(profile?.currentDay ?? 1, planId ?? 'lean'),
           groupKeys: [group.key],
           durationSec: activeSecRef.current,
         }).catch(() => {});
