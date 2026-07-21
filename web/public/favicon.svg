@@ -1,21 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="hop30">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#1b2535"/>
-      <stop offset="1" stop-color="#0b0f17"/>
-    </linearGradient>
-    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="work" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#ff8a3d"/>
-      <stop offset="1" stop-color="#ff3b6b"/>
+      <stop offset="1" stop-color="#ff5a36"/>
+    </linearGradient>
+    <linearGradient id="rest" x1="1" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#16a34a"/>
+      <stop offset="1" stop-color="#22c55e"/>
     </linearGradient>
   </defs>
-  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
-  <!-- dumbbell -->
-  <g fill="url(#accent)">
-    <rect x="150" y="232" width="212" height="48" rx="24"/>
-    <rect x="96" y="196" width="56" height="120" rx="22"/>
-    <rect x="360" y="196" width="56" height="120" rx="22"/>
-    <rect x="70" y="220" width="40" height="72" rx="18"/>
-    <rect x="402" y="220" width="40" height="72" rx="18"/>
+  <rect width="512" height="512" fill="#0b0f17"/>
+  <g fill="none" stroke-width="60" stroke-linecap="round">
+    <!-- work interval: top half, orange -->
+    <path d="M122.85 212.74 A140 140 0 0 1 389.15 212.74" stroke="url(#work)"/>
+    <!-- rest interval: bottom half, green -->
+    <path d="M122.85 299.26 A140 140 0 0 0 389.15 299.26" stroke="url(#rest)"/>
   </g>
 </svg>
