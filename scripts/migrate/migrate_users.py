@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Superileri Fit: migrate selected users from the OLD (sandbox) stack to the
+hop30: migrate selected users from the OLD (sandbox) stack to the
 NEW dedicated-account stack.
 
 What it does, per user in USERS:

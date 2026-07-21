@@ -4,7 +4,7 @@ import { coach } from '../functions/coach/resource';
 import { partnerLogger } from '../functions/partner-logger/resource';
 
 /**
- * Data model for Superileri Fitness.
+ * Data model for hop30.
  *
  * The exercise catalog and the Lean/Bulk calendars are STATIC content bundled
  * in the frontend (see /content/*.json) — they are not stored here. This schema

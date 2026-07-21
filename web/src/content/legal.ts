@@ -20,7 +20,7 @@ export const privacyPolicy: LegalDoc = {
     {
       h: '1. Who we are',
       p: [
-        `Superileri Fit ("the App") is a personal fitness application operated by the App's owner (the "Controller"). For any privacy matter, contact: ${LEGAL_CONTACT}.`,
+        `hop30 ("the App") is a personal fitness application operated by the App's owner (the "Controller"). For any privacy matter, contact: ${LEGAL_CONTACT}.`,
       ],
     },
     {
@@ -91,7 +91,7 @@ export const termsOfUse: LegalDoc = {
     {
       h: '1. The service',
       p: [
-        'Superileri Fit provides self-guided home-workout programs (timed interval circuits), general nutrition guidance, progress tracking, and optional AI-generated body-composition estimates. It is provided as-is, free of charge, for personal, non-commercial use.',
+        'hop30 provides self-guided home-workout programs (timed interval circuits), general nutrition guidance, progress tracking, and optional AI-generated body-composition estimates. It is provided as-is, free of charge, for personal, non-commercial use.',
       ],
     },
     {

@@ -1,4 +1,4 @@
-# Superileri Fit — "How it works" explainer script
+# hop30 — "How it works" explainer script
 
 A tight, no-BS voiceover (~60–75s). Visual cues in brackets.
 

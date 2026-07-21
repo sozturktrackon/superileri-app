@@ -2,14 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // Legacy domain → new domain. Runs before the app bundle loads so
+      // old bookmarks/links land on hop30.com with no flash of the app.
+      if (location.hostname === 'app.superileri.com') {
+        location.replace(
+          'https://hop30.com' + location.pathname + location.search + location.hash
+        );
+      }
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Superileri" />
+    <meta name="apple-mobile-web-app-title" content="hop30" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#0b0f17" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Superileri Fit</title>
+    <title>hop30</title>
   </head>
   <body>
     <div id="root"></div>

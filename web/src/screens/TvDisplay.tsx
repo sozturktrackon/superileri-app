@@ -279,7 +279,7 @@ const TvDisplay = () => {
   if (!session || stale) {
     return (
       <div className="tv-screen tv-waiting">
-        <h1 style={{ marginBottom: 4 }}>📺 Superileri Fit</h1>
+        <h1 style={{ marginBottom: 4 }}>📺 hop30</h1>
         <p className="muted" style={{ marginBottom: 22 }}>
           {stale
             ? t('Phone disconnected. Start a workout and tap 📺 to reconnect.')

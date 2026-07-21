@@ -584,7 +584,7 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
       <CrashReports />
 
       <p className="muted" style={{ fontSize: 11, textAlign: 'center', marginTop: 8 }}>
-        {t('Superileri Fit · your data is private to your account.')} · v{__APP_VERSION__}
+        {t('hop30 · your data is private to your account.')} · v{__APP_VERSION__}
       </p>
 
       {viewShots && <PhotoLightbox shots={viewShots} onClose={() => setViewShots(null)} />}

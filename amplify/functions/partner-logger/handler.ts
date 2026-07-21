@@ -45,7 +45,7 @@ export const handler: Schema['logForPartner']['functionHandler'] = async (
     })
   );
   const user = users.Users?.[0];
-  if (!user?.Username) return fail(`No Superileri account found for ${partnerEmail}.`);
+  if (!user?.Username) return fail(`No hop30 account found for ${partnerEmail}.`);
   const sub = user.Attributes?.find((a) => a.Name === 'sub')?.Value;
   if (!sub) return fail('Partner account is missing an id.');
   const partnerOwner = `${sub}::${user.Username}`;

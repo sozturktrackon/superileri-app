@@ -1,7 +1,7 @@
 {
   "name": "superileri-app",
   "version": "1.0.0",
-  "description": "Superileri Fitness APP — Amplify Gen 2 backend",
+  "description": "hop30 APP — Amplify Gen 2 backend",
   "license": "ISC",
   "scripts": {
     "sandbox": "ampx sandbox --profile fitness",

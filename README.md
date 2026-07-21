@@ -1,4 +1,4 @@
-# Superileri Fit 💪
+# hop30 💪
 
 A personal home-workout app rebuilt from the old "Motivated Fit" program: a
 30-day Lean/Bulk calendar, an interval timer that talks you through every

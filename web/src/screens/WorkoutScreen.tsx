@@ -33,8 +33,8 @@ const localizePartnerMsg = (
     'Partner account is missing an id.',
   ];
   if (exact.includes(msg)) return t(msg);
-  let m = /^No Superileri account found for (.+)\.$/.exec(msg);
-  if (m) return t('No Superileri account found for {email}.', { email: m[1] });
+  let m = /^No hop30 account found for (.+)\.$/.exec(msg);
+  if (m) return t('No hop30 account found for {email}.', { email: m[1] });
   m = /^Marked complete for (.+)\.$/.exec(msg);
   if (m) return t('Marked complete for {email}.', { email: m[1] });
   m = /^(.+) hasn't added you as a partner yet.+add (.+) in Progress/.exec(msg);

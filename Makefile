@@ -1,4 +1,4 @@
-# Superileri Fit — one Makefile to rule the cloud.
+# hop30 — one Makefile to rule the cloud.
 # Deploys with AWS_PROFILE=sandbox in us-east-1 (your shell sets a different
 # default region, so we pin it explicitly on every AWS-touching target).
 

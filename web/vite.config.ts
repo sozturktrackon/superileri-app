@@ -20,8 +20,8 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg,mp3}'],
       },
       manifest: {
-        name: 'Superileri Fit',
-        short_name: 'Superileri',
+        name: 'hop30',
+        short_name: 'hop30',
         description: 'Home workouts with a smart interval timer.',
         theme_color: '#0b0f17',
         background_color: '#0b0f17',
