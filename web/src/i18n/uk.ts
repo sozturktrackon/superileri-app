@@ -299,4 +299,6 @@ export const uk: Record<string, string> = {
   'Compare side by side →': 'Порівняти поруч →',
   'Tap the photo to zoom.': 'Торкнись фото, щоб збільшити.',
   'No {angle} photo in this check-in.': 'У цьому чек-іні немає фото для ракурсу «{angle}».',
+  '✓ {done}/{total} this cycle': '✓ {done}/{total} у цьому циклі',
+  '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Цикл {n} завершено - цілий місяць, кожен тренувальний день.',
 };

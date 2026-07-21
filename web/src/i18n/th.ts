@@ -299,4 +299,6 @@ export const th: Record<string, string> = {
   'Compare side by side →': 'เปรียบเทียบแบบเคียงข้างกัน →',
   'Tap the photo to zoom.': 'แตะรูปภาพเพื่อซูม',
   'No {angle} photo in this check-in.': 'ไม่มีรูป{angle}ในเช็กอินนี้',
+  '✓ {done}/{total} this cycle': '✓ {done}/{total} ในรอบนี้',
+  '🏆 Cycle {n} completed - a full month, every training day.': '🏆 จบรอบที่ {n} แล้ว - เต็มหนึ่งเดือน ครบทุกวันฝึก',
 };

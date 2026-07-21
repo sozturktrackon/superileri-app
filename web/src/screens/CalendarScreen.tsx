@@ -100,6 +100,39 @@ const CalendarScreen = () => {
   };
 
   const completedCount = completedDays.size;
+
+  // Highest past cycle finished end-to-end (every training day logged).
+  const completedDayCountFor = (cycle: number): number => {
+    let n = 0;
+    for (const d of plan.days) {
+      const resolved = getDay(planId, d.day);
+      if (!resolved || resolved.rest) continue;
+      const required = resolved.groups
+        .filter((g) => g.exercises.length > 0)
+        .map((g) => g.key);
+      if (required.length === 0) continue;
+      const loggedKeys = new Set(
+        logs
+          .filter(
+            (l) =>
+              l.planId === planId &&
+              l.dayNumber === d.day &&
+              l.completed &&
+              (l.cycle ?? 1) === cycle
+          )
+          .flatMap((l) => l.groupKeys ?? [])
+      );
+      if (required.every((k) => loggedKeys.has(k))) n++;
+    }
+    return n;
+  };
+  let lastFinishedCycle = 0;
+  if (isActivePlan) {
+    for (let c = 1; c < viewedCycle; c++) {
+      if (completedDayCountFor(c) >= plan.days.filter((d) => !d.rest).length)
+        lastFinishedCycle = c;
+    }
+  }
   const trainingDays = plan.days.filter((d) => !d.rest).length;
   const selDay = selected != null ? plan.days.find((d) => d.day === selected) : null;
   const selResolved = selected != null ? getDay(planId, selected) : null;
@@ -136,9 +169,17 @@ const CalendarScreen = () => {
       )}
 
       <div className="card-row" style={{ marginBottom: 12 }}>
-        <span className="pill rest">{t('✓ {n} done', { n: completedCount })}</span>
-        <span className="pill">{t('{n} training days', { n: trainingDays })}</span>
+        <span className="pill accent">{t('Cycle {c}', { c: viewedCycle })}</span>
+        <span className="pill rest">
+          {t('✓ {done}/{total} this cycle', { done: completedCount, total: trainingDays })}
+        </span>
       </div>
+
+      {lastFinishedCycle > 0 && (
+        <p className="muted" style={{ fontSize: 12, marginTop: -4, marginBottom: 12 }}>
+          {t('🏆 Cycle {n} completed - a full month, every training day.', { n: lastFinishedCycle })}
+        </p>
+      )}
 
       <div className="cal-grid">
         {plan.days.map((d) => {

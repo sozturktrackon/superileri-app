@@ -299,4 +299,6 @@ export const ja: Record<string, string> = {
   'Compare side by side →': '並べて比較 →',
   'Tap the photo to zoom.': '写真をタップすると拡大できます。',
   'No {angle} photo in this check-in.': 'このチェックインには{angle}の写真がありません。',
+  '✓ {done}/{total} this cycle': '✓ 今サイクル {done}/{total}',
+  '🏆 Cycle {n} completed - a full month, every training day.': '🏆 サイクル{n}完了 - 丸1か月、すべてのトレーニング日をやり遂げました。',
 };

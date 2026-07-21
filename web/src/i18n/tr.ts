@@ -299,4 +299,6 @@ export const tr: Record<string, string> = {
   'Compare side by side →': 'Yan yana karşılaştır →',
   'Tap the photo to zoom.': 'Yakınlaştırmak için fotoğrafa dokun.',
   'No {angle} photo in this check-in.': 'Bu check-in\'de {angle} fotoğrafı yok.',
+  '✓ {done}/{total} this cycle': '✓ Bu döngüde {done}/{total}',
+  '🏆 Cycle {n} completed - a full month, every training day.': '🏆 {n}. döngü tamamlandı - tam bir ay, her antrenman günü.',
 };

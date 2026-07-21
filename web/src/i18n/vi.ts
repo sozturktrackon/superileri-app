@@ -317,4 +317,6 @@ export const viAuth: Record<string, string> = {
   'Compare side by side →': 'So sánh cạnh nhau →',
   'Tap the photo to zoom.': 'Chạm vào ảnh để phóng to.',
   'No {angle} photo in this check-in.': 'Không có ảnh {angle} trong check-in này.',
+  '✓ {done}/{total} this cycle': '✓ {done}/{total} chu kỳ này',
+  '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Hoàn thành chu kỳ {n} - trọn một tháng, đủ mọi ngày tập.',
 };

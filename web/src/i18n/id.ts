@@ -299,4 +299,6 @@ export const id: Record<string, string> = {
   'Compare side by side →': 'Bandingkan berdampingan →',
   'Tap the photo to zoom.': 'Ketuk foto untuk memperbesar.',
   'No {angle} photo in this check-in.': 'Tidak ada foto {angle} di check-in ini.',
+  '✓ {done}/{total} this cycle': '✓ {done}/{total} siklus ini',
+  '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Siklus {n} selesai - sebulan penuh, setiap hari latihan.',
 };

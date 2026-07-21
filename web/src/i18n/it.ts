@@ -299,4 +299,6 @@ export const it: Record<string, string> = {
   'Compare side by side →': 'Confronta fianco a fianco →',
   'Tap the photo to zoom.': 'Tocca la foto per ingrandirla.',
   'No {angle} photo in this check-in.': 'Nessuna foto "{angle}" in questo check-in.',
+  '✓ {done}/{total} this cycle': '✓ {done}/{total} in questo ciclo',
+  '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Ciclo {n} completato - un mese intero, ogni giorno di allenamento.',
 };

@@ -317,4 +317,6 @@ export const tlAuth: Record<string, string> = {
   'Compare side by side →': 'I-compare side by side →',
   'Tap the photo to zoom.': 'I-tap ang photo para mag-zoom.',
   'No {angle} photo in this check-in.': 'Walang {angle} photo sa check-in na ito.',
+  '✓ {done}/{total} this cycle': '✓ {done}/{total} ngayong cycle',
+  '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Na-complete ang Cycle {n} - isang buong buwan, bawat training day.',
 };

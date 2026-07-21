@@ -317,4 +317,6 @@ export const hiAuth: Record<string, string> = {
   'Compare side by side →': 'साथ-साथ तुलना करें →',
   'Tap the photo to zoom.': 'ज़ूम करने के लिए फ़ोटो पर टैप करें।',
   'No {angle} photo in this check-in.': 'इस चेक-इन में {angle} की फ़ोटो नहीं है।',
+  '✓ {done}/{total} this cycle': '✓ इस चक्र में {done}/{total}',
+  '🏆 Cycle {n} completed - a full month, every training day.': '🏆 चक्र {n} पूरा हुआ - पूरा एक महीना, हर ट्रेनिंग दिन।',
 };

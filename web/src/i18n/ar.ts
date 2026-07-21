@@ -317,4 +317,6 @@ export const arAuth: Record<string, string> = {
   'Compare side by side →': 'قارن جنبًا إلى جنب ←',
   'Tap the photo to zoom.': 'انقر على الصورة للتكبير.',
   'No {angle} photo in this check-in.': 'لا توجد صورة {angle} في هذا التسجيل.',
+  '✓ {done}/{total} this cycle': '✓ {done}/{total} في هذه الدورة',
+  '🏆 Cycle {n} completed - a full month, every training day.': '🏆 اكتملت الدورة {n} - شهر كامل، كل يوم تدريب.',
 };

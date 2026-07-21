@@ -299,4 +299,6 @@ export const he: Record<string, string> = {
   'Compare side by side →': 'השוואה זה לצד זה ←',
   'Tap the photo to zoom.': 'אפשר להקיש על התמונה כדי להגדיל.',
   'No {angle} photo in this check-in.': 'אין תמונת {angle} בצ\'ק-אין הזה.',
+  '✓ {done}/{total} this cycle': '✓ {done}/{total} במחזור הזה',
+  '🏆 Cycle {n} completed - a full month, every training day.': '🏆 מחזור {n} הושלם - חודש שלם, כל יום אימון.',
 };
