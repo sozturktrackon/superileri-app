@@ -10,10 +10,9 @@
     </linearGradient>
   </defs>
   <rect width="512" height="512" fill="#0b0f17"/>
-  <g fill="none" stroke-width="60" stroke-linecap="round">
-    <!-- work interval: top half, orange -->
+  <!-- split rotated -25deg to match the app icon; number omitted: unreadable at favicon sizes -->
+  <g fill="none" stroke-width="60" stroke-linecap="round" transform="rotate(-25 256 256)">
     <path d="M122.85 212.74 A140 140 0 0 1 389.15 212.74" stroke="url(#work)"/>
-    <!-- rest interval: bottom half, green -->
     <path d="M122.85 299.26 A140 140 0 0 0 389.15 299.26" stroke="url(#rest)"/>
   </g>
 </svg>
