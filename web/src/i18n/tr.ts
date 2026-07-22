@@ -309,4 +309,13 @@ export const tr: Record<string, string> = {
   'Pinch to zoom, drag to position each photo.': 'Fotoğrafları iki parmakla yakınlaştır, sürükleyerek yerlerini ayarla.',
   'Share': 'Paylaş',
   'Could not prepare the image. Take a screenshot instead.': 'Görsel hazırlanamadı. Bunun yerine ekran görüntüsü al.',
+  'Your workout for today lives here. Tap Start on a circuit to begin.': 'Bugünkü antrenmanın burada. Başlamak için bir devrede Başla\'ya dokun.',
+  'Calendar, nutrition, monthly photo check-ins and your progress are all down here.': 'Takvim, beslenme, aylık fotoğraf çekimleri ve ilerlemen. Hepsi burada, aşağıda.',
+  'Press play to start. The timer guides you: 30 seconds of exercise, 30 seconds of rest.': 'Başlamak için oynat tuşuna bas. Sayaç sana yol gösterir: 30 saniye egzersiz, 30 saniye dinlenme.',
+  'Your whole month at a glance. Tap any day to open it or mark it done.': 'Bütün ayı tek bakışta gör. Bir güne dokunup aç ya da yapıldı olarak işaretle.',
+  'Once a month, take progress photos here. The AI gives you an honest read.': 'Ayda bir kez burada ilerleme fotoğrafı çek. Yapay zeka sana dürüst bir değerlendirme verir.',
+  'Next': 'İleri',
+  'Turn off tips': 'İpuçlarını kapat',
+  'Show tips again': 'İpuçlarını yeniden göster',
+  'Tips are back on. They will appear as you visit each screen.': 'İpuçları yeniden açıldı. Her ekrana girdiğinde görünecekler.',
 };

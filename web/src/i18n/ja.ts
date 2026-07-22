@@ -309,4 +309,13 @@ export const ja: Record<string, string> = {
   'Pinch to zoom, drag to position each photo.': 'ピンチで拡大縮小、ドラッグで各写真の位置を調整できます。',
   'Share': '共有',
   'Could not prepare the image. Take a screenshot instead.': '画像を作成できませんでした。代わりにスクリーンショットを撮ってください。',
+  'Your workout for today lives here. Tap Start on a circuit to begin.': '今日のワークアウトはここにあります。サーキットの「スタート」をタップして始めましょう。',
+  'Calendar, nutrition, monthly photo check-ins and your progress are all down here.': 'カレンダー、栄養、毎月の写真チェックイン、進捗はすべてこの下にあります。',
+  'Press play to start. The timer guides you: 30 seconds of exercise, 30 seconds of rest.': '再生ボタンを押してスタートしましょう。タイマーが案内してくれます:運動30秒、休憩30秒です。',
+  'Your whole month at a glance. Tap any day to open it or mark it done.': '1か月の予定をひと目で確認できます。日付をタップすると、開いたり完了にしたりできます。',
+  'Once a month, take progress photos here. The AI gives you an honest read.': '月に1回、ここで進捗写真を撮りましょう。AIが正直に評価してくれます。',
+  'Next': '次へ',
+  'Turn off tips': 'ヒントをオフにする',
+  'Show tips again': 'ヒントを再表示',
+  'Tips are back on. They will appear as you visit each screen.': 'ヒントを再びオンにしました。各画面を開くたびに表示されます。',
 };

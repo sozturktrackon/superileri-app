@@ -309,4 +309,13 @@ export const uk: Record<string, string> = {
   'Pinch to zoom, drag to position each photo.': 'Змінюй масштаб двома пальцями та перетягуй кожне фото, щоб його вирівняти.',
   'Share': 'Поділитися',
   'Could not prepare the image. Take a screenshot instead.': 'Не вдалося підготувати зображення. Зроби знімок екрана.',
+  'Your workout for today lives here. Tap Start on a circuit to begin.': 'Твоє тренування на сьогодні тут. Натисни «Старт» на будь-якому колі, щоб почати.',
+  'Calendar, nutrition, monthly photo check-ins and your progress are all down here.': 'Календар, харчування, щомісячні фотозвіти та твій прогрес: усе тут, унизу.',
+  'Press play to start. The timer guides you: 30 seconds of exercise, 30 seconds of rest.': 'Натисни кнопку відтворення, щоб почати. Таймер підкаже тобі: 30 секунд вправи, 30 секунд відпочинку.',
+  'Your whole month at a glance. Tap any day to open it or mark it done.': 'Весь місяць як на долоні. Натисни на будь-який день, щоб відкрити його або позначити виконаним.',
+  'Once a month, take progress photos here. The AI gives you an honest read.': 'Раз на місяць роби тут фото прогресу. ШІ дасть тобі чесну оцінку.',
+  'Next': 'Далі',
+  'Turn off tips': 'Вимкнути підказки',
+  'Show tips again': 'Показати підказки знову',
+  'Tips are back on. They will appear as you visit each screen.': 'Підказки знову ввімкнено. Вони з\'являтимуться на кожному екрані, який ти відкриваєш.',
 };

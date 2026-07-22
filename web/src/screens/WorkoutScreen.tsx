@@ -16,6 +16,7 @@ import {
 } from '../lib/liveSession';
 import { loadExVideos } from '../lib/exerciseVideos';
 import ExerciseVideo from '../components/ExerciseVideo';
+import Tour from '../components/Tour';
 import YouTubeMusic, { type MusicState } from '../components/YouTubeMusic';
 import QrScanner from '../components/QrScanner';
 import { useT } from '../lib/i18n';
@@ -611,11 +612,17 @@ const WorkoutScreen = () => {
           <div className="timer-bar">
             <div style={{ width: `${progress}%` }} />
           </div>
+          <Tour
+            screen="workout"
+            steps={[
+              { target: '[data-tour="play"]', text: 'Press play to start. The timer guides you: 30 seconds of exercise, 30 seconds of rest.' },
+            ]}
+          />
           <div className="timer-controls">
             <button className="tctrl" onClick={prev} aria-label={t('Previous')}>
               ⏮
             </button>
-            <button className="tctrl big" onClick={onPrimary} aria-label={t('Play/Pause')}>
+            <button className="tctrl big" data-tour="play" onClick={onPrimary} aria-label={t('Play/Pause')}>
               {state.status === 'running' ? '⏸' : '▶'}
             </button>
             <button className="tctrl" onClick={skip} aria-label={t('Skip')}>

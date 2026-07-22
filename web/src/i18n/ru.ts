@@ -309,4 +309,13 @@ export const ru: Record<string, string> = {
   'Pinch to zoom, drag to position each photo.': 'Меняй масштаб двумя пальцами и перетаскивай каждое фото, чтобы его выровнять.',
   'Share': 'Поделиться',
   'Could not prepare the image. Take a screenshot instead.': 'Не удалось подготовить изображение. Сделай скриншот.',
+  'Your workout for today lives here. Tap Start on a circuit to begin.': 'Твоя тренировка на сегодня здесь. Нажми «Старт» на любом круге, чтобы начать.',
+  'Calendar, nutrition, monthly photo check-ins and your progress are all down here.': 'Календарь, питание, ежемесячные фотоотчёты и твой прогресс: всё здесь, внизу.',
+  'Press play to start. The timer guides you: 30 seconds of exercise, 30 seconds of rest.': 'Нажми на плей, чтобы начать. Таймер ведёт тебя: 30 секунд упражнения, 30 секунд отдыха.',
+  'Your whole month at a glance. Tap any day to open it or mark it done.': 'Весь месяц как на ладони. Нажми на любой день, чтобы открыть его или отметить выполненным.',
+  'Once a month, take progress photos here. The AI gives you an honest read.': 'Раз в месяц делай здесь фото прогресса. ИИ даст тебе честную оценку.',
+  'Next': 'Далее',
+  'Turn off tips': 'Отключить подсказки',
+  'Show tips again': 'Показать подсказки снова',
+  'Tips are back on. They will appear as you visit each screen.': 'Подсказки снова включены. Они будут появляться на каждом экране, который ты открываешь.',
 };

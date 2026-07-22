@@ -309,4 +309,13 @@ export const id: Record<string, string> = {
   'Pinch to zoom, drag to position each photo.': 'Cubit untuk zoom, geser untuk mengatur posisi tiap foto.',
   'Share': 'Bagikan',
   'Could not prepare the image. Take a screenshot instead.': 'Gagal menyiapkan gambar. Ambil screenshot saja.',
+  'Your workout for today lives here. Tap Start on a circuit to begin.': 'Latihanmu hari ini ada di sini. Ketuk Mulai di salah satu sirkuit untuk memulai.',
+  'Calendar, nutrition, monthly photo check-ins and your progress are all down here.': 'Kalender, nutrisi, cek-in foto bulanan, dan progresmu semuanya ada di bawah sini.',
+  'Press play to start. The timer guides you: 30 seconds of exercise, 30 seconds of rest.': 'Tekan tombol play untuk mulai. Timer akan memandumu: 30 detik latihan, 30 detik istirahat.',
+  'Your whole month at a glance. Tap any day to open it or mark it done.': 'Seluruh bulanmu dalam sekali lihat. Ketuk hari mana saja untuk membukanya atau menandainya selesai.',
+  'Once a month, take progress photos here. The AI gives you an honest read.': 'Sebulan sekali, ambil foto progres di sini. AI akan memberimu penilaian yang jujur.',
+  'Next': 'Lanjut',
+  'Turn off tips': 'Matikan tips',
+  'Show tips again': 'Tampilkan tips lagi',
+  'Tips are back on. They will appear as you visit each screen.': 'Tips sudah aktif lagi. Tips akan muncul saat kamu membuka setiap layar.',
 };

@@ -23,6 +23,7 @@ import MusicSettings from '../components/MusicSettings';
 import ExerciseVideoSettings from '../components/ExerciseVideoSettings';
 import PartnerSettings from '../components/PartnerSettings';
 import { clearCrashLog, getCrashLog } from '../lib/crashLog';
+import { resetTour } from '../lib/tourState';
 import { completedDaySet, computeStreaks } from '../lib/streak';
 import { LANGS, useT, type Lang } from '../lib/i18n';
 
@@ -524,6 +525,21 @@ const ProgressScreen = ({ signOut }: { signOut?: () => void }) => {
               <option key={l.code} value={l.code}>{l.label}</option>
             ))}
           </select>
+        </div>
+        <div className="card-row" style={{ marginTop: 10 }}>
+          <div>
+            <strong>{t('Guided tips')}</strong>
+          </div>
+          <button
+            className="btn ghost"
+            style={{ padding: '8px 14px', fontSize: 13 }}
+            onClick={() => {
+              resetTour();
+              window.alert(t('Tips are back on. They will appear as you visit each screen.'));
+            }}
+          >
+            {t('Show tips again')}
+          </button>
         </div>
       </div>
 

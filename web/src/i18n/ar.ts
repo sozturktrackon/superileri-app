@@ -327,4 +327,13 @@ export const arAuth: Record<string, string> = {
   'Pinch to zoom, drag to position each photo.': 'قرّب أو بعّد بإصبعين، واسحب كل صورة لضبط موضعها.',
   'Share': 'مشاركة',
   'Could not prepare the image. Take a screenshot instead.': 'تعذّر تجهيز الصورة. التقط لقطة شاشة بدلًا من ذلك.',
+  'Your workout for today lives here. Tap Start on a circuit to begin.': 'تمرينك لليوم هنا. اضغط على «ابدأ» في أي جولة لتبدأ.',
+  'Calendar, nutrition, monthly photo check-ins and your progress are all down here.': 'التقويم والتغذية وصور المتابعة الشهرية وتقدمك، كل ذلك هنا في الأسفل.',
+  'Press play to start. The timer guides you: 30 seconds of exercise, 30 seconds of rest.': 'اضغط على زر التشغيل للبدء. المؤقت يرشدك: 30 ثانية تمرين و30 ثانية راحة.',
+  'Your whole month at a glance. Tap any day to open it or mark it done.': 'شهرك كله في نظرة واحدة. اضغط على أي يوم لفتحه أو لتحديده كمكتمل.',
+  'Once a month, take progress photos here. The AI gives you an honest read.': 'مرة واحدة في الشهر، التقط صور التقدم هنا. الذكاء الاصطناعي يعطيك تقييمًا صادقًا.',
+  'Next': 'التالي',
+  'Turn off tips': 'إيقاف النصائح',
+  'Show tips again': 'إظهار النصائح مجددًا',
+  'Tips are back on. They will appear as you visit each screen.': 'تم تشغيل النصائح مجددًا. ستظهر أثناء تنقلك بين الشاشات.',
 };

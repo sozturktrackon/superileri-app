@@ -12,6 +12,7 @@ import {
   seenMilestones,
 } from '../lib/coach';
 import { useT } from '../lib/i18n';
+import Tour from '../components/Tour';
 
 const Today = () => {
   const { profile, displayName, refresh, setProfile } = useProfile();
@@ -77,6 +78,13 @@ const Today = () => {
 
   return (
     <div>
+      <Tour
+        screen="today"
+        steps={[
+          { target: '[data-tour="today-circuits"]', text: "Your workout for today lives here. Tap Start on a circuit to begin." },
+          { target: '[data-tour="bottom-nav"]', text: 'Calendar, nutrition, monthly photo check-ins and your progress are all down here.' },
+        ]}
+      />
       <div className="card-row" style={{ marginBottom: 4 }}>
         <span className="pill accent">{plan.name}</span>
         <div style={{ display: 'flex', gap: 6 }}>
@@ -173,7 +181,7 @@ const Today = () => {
         </div>
       ) : (
         <>
-          <div className="stack">
+          <div className="stack" data-tour="today-circuits">
             {day.groups.map((g, i) => (
               <div className="card" key={g.key}>
                 <div className="card-row">

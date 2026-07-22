@@ -327,4 +327,13 @@ export const tlAuth: Record<string, string> = {
   'Pinch to zoom, drag to position each photo.': 'I-pinch para mag-zoom, i-drag para ayusin ang posisyon ng bawat photo.',
   'Share': 'I-share',
   'Could not prepare the image. Take a screenshot instead.': 'Hindi ma-prepare ang image. Mag-screenshot na lang.',
+  'Your workout for today lives here. Tap Start on a circuit to begin.': 'Nandito ang workout mo para ngayong araw. I-tap ang Simulan sa isang circuit para magsimula.',
+  'Calendar, nutrition, monthly photo check-ins and your progress are all down here.': 'Calendar, nutrition, monthly photo check-ins, at ang progress mo, nandito lahat sa baba.',
+  'Press play to start. The timer guides you: 30 seconds of exercise, 30 seconds of rest.': 'Pindutin ang play para magsimula. Gagabayan ka ng timer: 30 seconds na exercise, 30 seconds na pahinga.',
+  'Your whole month at a glance. Tap any day to open it or mark it done.': 'Ang buong buwan mo sa isang tingin. I-tap ang kahit anong araw para buksan ito o i-mark na tapos na.',
+  'Once a month, take progress photos here. The AI gives you an honest read.': 'Isang beses kada buwan, kumuha ng progress photos dito. Bibigyan ka ng AI ng honest na feedback.',
+  'Next': 'Next',
+  'Turn off tips': 'I-off ang tips',
+  'Show tips again': 'Ipakita ulit ang tips',
+  'Tips are back on. They will appear as you visit each screen.': 'Naka-on na ulit ang tips. Lalabas ang mga ito habang binubuksan mo ang bawat screen.',
 };

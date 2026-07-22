@@ -309,4 +309,13 @@ export const he: Record<string, string> = {
   'Pinch to zoom, drag to position each photo.': 'צובטים כדי לעשות זום וגוררים כדי למקם כל תמונה.',
   'Share': 'שיתוף',
   'Could not prepare the image. Take a screenshot instead.': 'לא הצלחנו להכין את התמונה. אפשר לצלם צילום מסך במקום.',
+  'Your workout for today lives here. Tap Start on a circuit to begin.': 'האימון של היום נמצא כאן. כדי להתחיל, מקישים על התחל באחד המעגלים.',
+  'Calendar, nutrition, monthly photo check-ins and your progress are all down here.': 'לוח שנה, תזונה, צילומי מעקב חודשיים וההתקדמות שלך, הכול כאן למטה.',
+  'Press play to start. The timer guides you: 30 seconds of exercise, 30 seconds of rest.': 'מקישים על נגן כדי להתחיל. הטיימר מוביל אותך: 30 שניות תרגיל, 30 שניות מנוחה.',
+  'Your whole month at a glance. Tap any day to open it or mark it done.': 'כל החודש במבט אחד. מקישים על כל יום כדי לפתוח אותו או לסמן שהושלם.',
+  'Once a month, take progress photos here. The AI gives you an honest read.': 'פעם בחודש מצלמים כאן תמונות התקדמות. הבינה המלאכותית נותנת לך חוות דעת כנה.',
+  'Next': 'הבא',
+  'Turn off tips': 'כיבוי הטיפים',
+  'Show tips again': 'הצגת הטיפים מחדש',
+  'Tips are back on. They will appear as you visit each screen.': 'הטיפים חזרו לפעול. הם יופיעו כשמגיעים לכל מסך.',
 };

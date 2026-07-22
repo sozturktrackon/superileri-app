@@ -309,4 +309,13 @@ export const th: Record<string, string> = {
   'Pinch to zoom, drag to position each photo.': 'บีบนิ้วเพื่อซูม ลากเพื่อจัดตำแหน่งรูปแต่ละรูป',
   'Share': 'แชร์',
   'Could not prepare the image. Take a screenshot instead.': 'ไม่สามารถเตรียมรูปภาพได้ ลองแคปหน้าจอแทน',
+  'Your workout for today lives here. Tap Start on a circuit to begin.': 'เวิร์กเอาต์วันนี้ของคุณอยู่ที่นี่ แตะปุ่มเริ่มบนเซอร์กิตเพื่อเริ่มออกกำลัง',
+  'Calendar, nutrition, monthly photo check-ins and your progress are all down here.': 'ปฏิทิน โภชนาการ เช็กอินรูปภาพประจำเดือน และความคืบหน้าของคุณ ทั้งหมดอยู่ด้านล่างนี้',
+  'Press play to start. The timer guides you: 30 seconds of exercise, 30 seconds of rest.': 'กดปุ่มเล่นเพื่อเริ่ม ตัวจับเวลาจะคอยนำคุณ: ออกกำลัง 30 วินาที พัก 30 วินาที',
+  'Your whole month at a glance. Tap any day to open it or mark it done.': 'เห็นทั้งเดือนได้ในครั้งเดียว แตะวันไหนก็ได้เพื่อเปิดดูหรือทำเครื่องหมายว่าเสร็จแล้ว',
+  'Once a month, take progress photos here. The AI gives you an honest read.': 'เดือนละครั้ง ถ่ายรูปความคืบหน้าที่นี่ AI จะให้คำประเมินอย่างตรงไปตรงมา',
+  'Next': 'ถัดไป',
+  'Turn off tips': 'ปิดเคล็ดลับ',
+  'Show tips again': 'แสดงเคล็ดลับอีกครั้ง',
+  'Tips are back on. They will appear as you visit each screen.': 'เปิดเคล็ดลับอีกครั้งแล้ว เคล็ดลับจะปรากฏเมื่อคุณเข้าแต่ละหน้าจอ',
 };

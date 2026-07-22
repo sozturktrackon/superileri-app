@@ -12,7 +12,7 @@ const items = [
 const BottomNav = () => {
   const { t } = useT();
   return (
-  <nav className="bottom-nav">
+  <nav className="bottom-nav" data-tour="bottom-nav">
     {items.map((it) => (
       <NavLink
         key={it.to}

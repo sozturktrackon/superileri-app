@@ -327,4 +327,13 @@ export const hiAuth: Record<string, string> = {
   'Pinch to zoom, drag to position each photo.': 'पिंच करके ज़ूम करें, ड्रैग करके हर फ़ोटो को सही जगह पर रखें।',
   'Share': 'शेयर करें',
   'Could not prepare the image. Take a screenshot instead.': 'इमेज तैयार नहीं हो सकी। इसके बजाय स्क्रीनशॉट ले लें।',
+  'Your workout for today lives here. Tap Start on a circuit to begin.': 'आपका आज का वर्कआउट यहीं है। शुरू करने के लिए किसी सर्किट पर \'शुरू करो\' पर टैप करें।',
+  'Calendar, nutrition, monthly photo check-ins and your progress are all down here.': 'कैलेंडर, पोषण, हर महीने की फ़ोटो चेक-इन और आपकी प्रगति, सब कुछ यहां नीचे है।',
+  'Press play to start. The timer guides you: 30 seconds of exercise, 30 seconds of rest.': 'शुरू करने के लिए प्ले पर टैप करें। टाइमर आपको गाइड करता है: 30 सेकंड एक्सरसाइज़, 30 सेकंड आराम।',
+  'Your whole month at a glance. Tap any day to open it or mark it done.': 'पूरा महीना एक नज़र में। किसी भी दिन पर टैप करके उसे खोलें या पूरा हुआ मार्क करें।',
+  'Once a month, take progress photos here. The AI gives you an honest read.': 'महीने में एक बार यहां प्रोग्रेस फ़ोटो लें। AI आपको ईमानदार आकलन देता है।',
+  'Next': 'आगे',
+  'Turn off tips': 'टिप्स बंद करें',
+  'Show tips again': 'टिप्स फिर से दिखाएं',
+  'Tips are back on. They will appear as you visit each screen.': 'टिप्स फिर से चालू हो गई हैं। हर स्क्रीन पर जाने पर वे दिखाई देंगी।',
 };

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../state';
 import { cycleOf } from '../lib/content';
+import Tour from '../components/Tour';
 import { allPlans, getDay, getPlan, groupShort, normalizeDay, type PlanId } from '../lib/content';
 import { useT } from '../lib/i18n';
 import {
@@ -139,6 +140,12 @@ const CalendarScreen = () => {
 
   return (
     <div>
+      <Tour
+        screen="calendar"
+        steps={[
+          { target: '[data-tour="calendar-grid"]', text: 'Your whole month at a glance. Tap any day to open it or mark it done.' },
+        ]}
+      />
       <h1 className="page-title">{t('Calendar')}</h1>
       <p className="page-sub">{plan.note}</p>
 
@@ -181,7 +188,7 @@ const CalendarScreen = () => {
         </p>
       )}
 
-      <div className="cal-grid">
+      <div className="cal-grid" data-tour="calendar-grid">
         {plan.days.map((d) => {
           const isToday = d.day === today && planId === profile?.plan;
           const isDone = completedDays.has(d.day);

@@ -309,4 +309,13 @@ export const it: Record<string, string> = {
   'Pinch to zoom, drag to position each photo.': 'Pizzica per ingrandire, trascina per posizionare ogni foto.',
   'Share': 'Condividi',
   'Could not prepare the image. Take a screenshot instead.': 'Impossibile preparare l\'immagine. Fai uno screenshot.',
+  'Your workout for today lives here. Tap Start on a circuit to begin.': 'Il tuo allenamento di oggi è qui. Tocca Inizia su un circuito per cominciare.',
+  'Calendar, nutrition, monthly photo check-ins and your progress are all down here.': 'Calendario, nutrizione, foto di controllo mensili e i tuoi progressi: è tutto qui in basso.',
+  'Press play to start. The timer guides you: 30 seconds of exercise, 30 seconds of rest.': 'Premi play per iniziare. Il timer ti guida: 30 secondi di esercizio, 30 secondi di riposo.',
+  'Your whole month at a glance. Tap any day to open it or mark it done.': 'Tutto il tuo mese a colpo d\'occhio. Tocca un giorno per aprirlo o segnarlo come fatto.',
+  'Once a month, take progress photos here. The AI gives you an honest read.': 'Una volta al mese, scatta qui le foto dei tuoi progressi. L\'IA ti dà una valutazione sincera.',
+  'Next': 'Avanti',
+  'Turn off tips': 'Disattiva i suggerimenti',
+  'Show tips again': 'Mostra di nuovo i suggerimenti',
+  'Tips are back on. They will appear as you visit each screen.': 'I suggerimenti sono di nuovo attivi. Appariranno man mano che visiti le varie schermate.',
 };

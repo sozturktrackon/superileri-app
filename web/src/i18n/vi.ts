@@ -327,4 +327,13 @@ export const viAuth: Record<string, string> = {
   'Pinch to zoom, drag to position each photo.': 'Chụm hai ngón tay để thu phóng, kéo để căn chỉnh vị trí từng ảnh.',
   'Share': 'Chia sẻ',
   'Could not prepare the image. Take a screenshot instead.': 'Không thể tạo ảnh. Hãy chụp màn hình nhé.',
+  'Your workout for today lives here. Tap Start on a circuit to begin.': 'Bài tập hôm nay của bạn ở đây. Nhấn Bắt đầu trên một vòng tập để bắt đầu.',
+  'Calendar, nutrition, monthly photo check-ins and your progress are all down here.': 'Lịch, dinh dưỡng, ảnh theo dõi hằng tháng và tiến trình của bạn đều ở phía dưới này.',
+  'Press play to start. The timer guides you: 30 seconds of exercise, 30 seconds of rest.': 'Nhấn nút phát để bắt đầu. Bộ đếm giờ sẽ hướng dẫn bạn: 30 giây tập, 30 giây nghỉ.',
+  'Your whole month at a glance. Tap any day to open it or mark it done.': 'Xem nhanh cả tháng của bạn. Chạm vào ngày bất kỳ để mở hoặc đánh dấu là đã xong.',
+  'Once a month, take progress photos here. The AI gives you an honest read.': 'Mỗi tháng một lần, chụp ảnh tiến trình tại đây. AI sẽ đưa ra nhận xét thẳng thắn cho bạn.',
+  'Next': 'Tiếp theo',
+  'Turn off tips': 'Tắt mẹo',
+  'Show tips again': 'Hiện lại mẹo',
+  'Tips are back on. They will appear as you visit each screen.': 'Đã bật lại mẹo. Chúng sẽ xuất hiện khi bạn mở từng màn hình.',
 };

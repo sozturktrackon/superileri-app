@@ -10,6 +10,7 @@ import {
 import AnglePhotoCapture from '../components/AnglePhotoCapture';
 import { useT } from '../lib/i18n';
 import { useProfile } from '../state';
+import Tour from '../components/Tour';
 import { updateProfile } from '../lib/api';
 
 const daysSince = (iso: string) =>
@@ -101,6 +102,12 @@ const CheckInScreen = () => {
 
   return (
     <div>
+      <Tour
+        screen="checkin"
+        steps={[
+          { target: '[data-tour="checkin-capture"]', text: 'Once a month, take progress photos here. The AI gives you an honest read.' },
+        ]}
+      />
       <h1 className="page-title">{t('Check-in')}</h1>
       <p className="page-sub">
         {t(
@@ -128,7 +135,7 @@ const CheckInScreen = () => {
 
       {!shownResult && (
         <>
-          <div className="card">
+          <div className="card" data-tour="checkin-capture">
             <AnglePhotoCapture files={files} onChange={setAngle} />
             <div className="field" style={{ marginTop: 14, marginBottom: 0 }}>
               <label>{t('Weight today (kg, optional)')}</label>
