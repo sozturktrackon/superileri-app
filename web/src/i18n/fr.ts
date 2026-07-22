@@ -297,7 +297,6 @@ export const fr: Record<string, string> = {
   '🆚 Compare': '🆚 Comparer',
   'Select two check-ins to compare them side by side.': 'Sélectionne deux check-ins pour les comparer côte à côte.',
   'Compare side by side →': 'Comparer côte à côte →',
-  'Tap the photo to zoom.': 'Touche la photo pour zoomer.',
   'No {angle} photo in this check-in.': 'Aucune photo « {angle} » dans ce check-in.',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} ce cycle-ci',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Cycle {n} terminé - un mois complet, chaque jour d\'entraînement.',
@@ -307,4 +306,7 @@ export const fr: Record<string, string> = {
   'Get started': 'Commencer',
   '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': '30 secondes d\'exercice à la fois, jamais plus. Un entraînement complet à la maison en un peu plus de 30 minutes par jour : concentre-toi à fond sur chaque mouvement et les résultats arrivent vite.',
   'Daily home workouts': 'Entraînement quotidien à la maison',
+  'Pinch to zoom, drag to position each photo.': 'Pince pour zoomer, fais glisser pour positionner chaque photo.',
+  'Share': 'Partager',
+  'Could not prepare the image. Take a screenshot instead.': 'Impossible de préparer l\'image. Fais plutôt une capture d\'écran.',
 };

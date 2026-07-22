@@ -315,7 +315,6 @@ export const arAuth: Record<string, string> = {
   '🆚 Compare': '🆚 قارن',
   'Select two check-ins to compare them side by side.': 'اختر تسجيلين لمقارنتهما جنبًا إلى جنب.',
   'Compare side by side →': 'قارن جنبًا إلى جنب ←',
-  'Tap the photo to zoom.': 'انقر على الصورة للتكبير.',
   'No {angle} photo in this check-in.': 'لا توجد صورة {angle} في هذا التسجيل.',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} في هذه الدورة',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 اكتملت الدورة {n} - شهر كامل، كل يوم تدريب.',
@@ -325,4 +324,7 @@ export const arAuth: Record<string, string> = {
   'Get started': 'ابدأ',
   '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': '30 ثانية من التمرين في كل مرة، لا أكثر أبدًا. تمرين منزلي كامل في ما يزيد قليلًا عن 30 دقيقة يوميًا: ركّز بالكامل على كل حركة، وستظهر النتائج بسرعة.',
   'Daily home workouts': 'تمارين منزلية يومية',
+  'Pinch to zoom, drag to position each photo.': 'قرّب أو بعّد بإصبعين، واسحب كل صورة لضبط موضعها.',
+  'Share': 'مشاركة',
+  'Could not prepare the image. Take a screenshot instead.': 'تعذّر تجهيز الصورة. التقط لقطة شاشة بدلًا من ذلك.',
 };

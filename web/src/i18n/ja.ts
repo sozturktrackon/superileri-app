@@ -297,7 +297,6 @@ export const ja: Record<string, string> = {
   '🆚 Compare': '🆚 比較',
   'Select two check-ins to compare them side by side.': 'チェックインを2つ選ぶと、並べて比較できます。',
   'Compare side by side →': '並べて比較 →',
-  'Tap the photo to zoom.': '写真をタップすると拡大できます。',
   'No {angle} photo in this check-in.': 'このチェックインには{angle}の写真がありません。',
   '✓ {done}/{total} this cycle': '✓ 今サイクル {done}/{total}',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 サイクル{n}完了 - 丸1か月、すべてのトレーニング日をやり遂げました。',
@@ -307,4 +306,7 @@ export const ja: Record<string, string> = {
   'Get started': 'はじめる',
   '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': '運動は1回30秒だけ、それ以上は続きません。1日30分ちょっとで自宅トレーニングがひと通り完了。ひとつひとつの動きに集中すれば、結果は早く表れます。',
   'Daily home workouts': '毎日の自宅トレーニング',
+  'Pinch to zoom, drag to position each photo.': 'ピンチで拡大縮小、ドラッグで各写真の位置を調整できます。',
+  'Share': '共有',
+  'Could not prepare the image. Take a screenshot instead.': '画像を作成できませんでした。代わりにスクリーンショットを撮ってください。',
 };

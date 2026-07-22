@@ -315,7 +315,6 @@ export const viAuth: Record<string, string> = {
   '🆚 Compare': '🆚 So sánh',
   'Select two check-ins to compare them side by side.': 'Chọn hai check-in để so sánh cạnh nhau.',
   'Compare side by side →': 'So sánh cạnh nhau →',
-  'Tap the photo to zoom.': 'Chạm vào ảnh để phóng to.',
   'No {angle} photo in this check-in.': 'Không có ảnh {angle} trong check-in này.',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} chu kỳ này',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Hoàn thành chu kỳ {n} - trọn một tháng, đủ mọi ngày tập.',
@@ -325,4 +324,7 @@ export const viAuth: Record<string, string> = {
   'Get started': 'Bắt đầu',
   '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': 'Mỗi lần chỉ tập 30 giây, không bao giờ hơn. Một buổi tập đầy đủ tại nhà chỉ nhỉnh hơn 30 phút mỗi ngày: dồn toàn bộ sự tập trung vào từng động tác và kết quả sẽ đến nhanh.',
   'Daily home workouts': 'Tập luyện tại nhà mỗi ngày',
+  'Pinch to zoom, drag to position each photo.': 'Chụm hai ngón tay để thu phóng, kéo để căn chỉnh vị trí từng ảnh.',
+  'Share': 'Chia sẻ',
+  'Could not prepare the image. Take a screenshot instead.': 'Không thể tạo ảnh. Hãy chụp màn hình nhé.',
 };

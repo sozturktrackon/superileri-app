@@ -297,7 +297,6 @@ export const th: Record<string, string> = {
   '🆚 Compare': '🆚 เปรียบเทียบ',
   'Select two check-ins to compare them side by side.': 'เลือกเช็กอิน 2 รายการเพื่อเปรียบเทียบแบบเคียงข้างกัน',
   'Compare side by side →': 'เปรียบเทียบแบบเคียงข้างกัน →',
-  'Tap the photo to zoom.': 'แตะรูปภาพเพื่อซูม',
   'No {angle} photo in this check-in.': 'ไม่มีรูป{angle}ในเช็กอินนี้',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} ในรอบนี้',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 จบรอบที่ {n} แล้ว - เต็มหนึ่งเดือน ครบทุกวันฝึก',
@@ -307,4 +306,7 @@ export const th: Record<string, string> = {
   'Get started': 'เริ่มเลย',
   '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': 'ออกกำลังกายครั้งละ 30 วินาที ไม่มากไปกว่านั้น เวิร์กเอาต์ที่บ้านครบชุดด้วยเวลาเพียงวันละ 30 นาทีกว่า ๆ โฟกัสกับทุกท่าอย่างเต็มที่ แล้วผลลัพธ์จะมาเร็ว',
   'Daily home workouts': 'ออกกำลังกายที่บ้านทุกวัน',
+  'Pinch to zoom, drag to position each photo.': 'บีบนิ้วเพื่อซูม ลากเพื่อจัดตำแหน่งรูปแต่ละรูป',
+  'Share': 'แชร์',
+  'Could not prepare the image. Take a screenshot instead.': 'ไม่สามารถเตรียมรูปภาพได้ ลองแคปหน้าจอแทน',
 };

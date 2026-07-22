@@ -297,7 +297,6 @@ export const tr: Record<string, string> = {
   '🆚 Compare': '🆚 Karşılaştır',
   'Select two check-ins to compare them side by side.': 'Yan yana karşılaştırmak için iki check-in seç.',
   'Compare side by side →': 'Yan yana karşılaştır →',
-  'Tap the photo to zoom.': 'Yakınlaştırmak için fotoğrafa dokun.',
   'No {angle} photo in this check-in.': 'Bu check-in\'de {angle} fotoğrafı yok.',
   '✓ {done}/{total} this cycle': '✓ Bu döngüde {done}/{total}',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 {n}. döngü tamamlandı - tam bir ay, her antrenman günü.',
@@ -307,4 +306,7 @@ export const tr: Record<string, string> = {
   'Get started': 'Başla',
   '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': '30 saniye egzersiz yap, 30 saniye dinlen. Günün antrenmanı toplamda 30 dakikayı biraz geçiyor. Sadece o anki harekete odaklan; sonuç hızlı geliyor.',
   'Daily home workouts': 'Her gün ev antrenmanı',
+  'Pinch to zoom, drag to position each photo.': 'Fotoğrafları iki parmakla yakınlaştır, sürükleyerek yerlerini ayarla.',
+  'Share': 'Paylaş',
+  'Could not prepare the image. Take a screenshot instead.': 'Görsel hazırlanamadı. Bunun yerine ekran görüntüsü al.',
 };

@@ -315,7 +315,6 @@ export const tlAuth: Record<string, string> = {
   '🆚 Compare': '🆚 I-compare',
   'Select two check-ins to compare them side by side.': 'Pumili ng dalawang check-in para ma-compare mo ang mga ito nang side by side.',
   'Compare side by side →': 'I-compare side by side →',
-  'Tap the photo to zoom.': 'I-tap ang photo para mag-zoom.',
   'No {angle} photo in this check-in.': 'Walang {angle} photo sa check-in na ito.',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} ngayong cycle',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Na-complete ang Cycle {n} - isang buong buwan, bawat training day.',
@@ -325,4 +324,7 @@ export const tlAuth: Record<string, string> = {
   'Get started': 'Simulan na',
   '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': '30 seconds ng exercise sa bawat round, hindi hihigit pa. Kumpletong home workout sa mahigit 30 minutes lang bawat araw: full focus sa bawat move, at mabilis dumating ang resulta.',
   'Daily home workouts': 'Home workout araw-araw',
+  'Pinch to zoom, drag to position each photo.': 'I-pinch para mag-zoom, i-drag para ayusin ang posisyon ng bawat photo.',
+  'Share': 'I-share',
+  'Could not prepare the image. Take a screenshot instead.': 'Hindi ma-prepare ang image. Mag-screenshot na lang.',
 };

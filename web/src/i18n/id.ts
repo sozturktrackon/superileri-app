@@ -297,7 +297,6 @@ export const id: Record<string, string> = {
   '🆚 Compare': '🆚 Bandingkan',
   'Select two check-ins to compare them side by side.': 'Pilih dua check-in untuk membandingkannya berdampingan.',
   'Compare side by side →': 'Bandingkan berdampingan →',
-  'Tap the photo to zoom.': 'Ketuk foto untuk memperbesar.',
   'No {angle} photo in this check-in.': 'Tidak ada foto {angle} di check-in ini.',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} siklus ini',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Siklus {n} selesai - sebulan penuh, setiap hari latihan.',
@@ -307,4 +306,7 @@ export const id: Record<string, string> = {
   'Get started': 'Mulai',
   '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': 'Olahraga 30 detik setiap kali, tidak pernah lebih. Latihan lengkap di rumah hanya sedikit lebih dari 30 menit sehari: fokus penuh pada setiap gerakan dan hasilnya cepat terasa.',
   'Daily home workouts': 'Olahraga harian di rumah',
+  'Pinch to zoom, drag to position each photo.': 'Cubit untuk zoom, geser untuk mengatur posisi tiap foto.',
+  'Share': 'Bagikan',
+  'Could not prepare the image. Take a screenshot instead.': 'Gagal menyiapkan gambar. Ambil screenshot saja.',
 };

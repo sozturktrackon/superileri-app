@@ -297,7 +297,6 @@ export const he: Record<string, string> = {
   '🆚 Compare': '🆚 השוואה',
   'Select two check-ins to compare them side by side.': 'יש לבחור שני צ\'ק-אינים כדי להשוות ביניהם זה לצד זה.',
   'Compare side by side →': 'השוואה זה לצד זה ←',
-  'Tap the photo to zoom.': 'אפשר להקיש על התמונה כדי להגדיל.',
   'No {angle} photo in this check-in.': 'אין תמונת {angle} בצ\'ק-אין הזה.',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} במחזור הזה',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 מחזור {n} הושלם - חודש שלם, כל יום אימון.',
@@ -307,4 +306,7 @@ export const he: Record<string, string> = {
   'Get started': 'מתחילים',
   '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': '30 שניות של תרגיל בכל פעם, אף פעם לא יותר. אימון ביתי מלא בקצת יותר מ-30 דקות ביום: ריכוז מלא בכל תנועה, והתוצאות מגיעות מהר.',
   'Daily home workouts': 'אימון יומי בבית',
+  'Pinch to zoom, drag to position each photo.': 'צובטים כדי לעשות זום וגוררים כדי למקם כל תמונה.',
+  'Share': 'שיתוף',
+  'Could not prepare the image. Take a screenshot instead.': 'לא הצלחנו להכין את התמונה. אפשר לצלם צילום מסך במקום.',
 };

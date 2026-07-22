@@ -315,7 +315,6 @@ export const hiAuth: Record<string, string> = {
   '🆚 Compare': '🆚 तुलना करें',
   'Select two check-ins to compare them side by side.': 'साथ-साथ तुलना करने के लिए दो चेक-इन चुनें।',
   'Compare side by side →': 'साथ-साथ तुलना करें →',
-  'Tap the photo to zoom.': 'ज़ूम करने के लिए फ़ोटो पर टैप करें।',
   'No {angle} photo in this check-in.': 'इस चेक-इन में {angle} की फ़ोटो नहीं है।',
   '✓ {done}/{total} this cycle': '✓ इस चक्र में {done}/{total}',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 चक्र {n} पूरा हुआ - पूरा एक महीना, हर ट्रेनिंग दिन।',
@@ -325,4 +324,7 @@ export const hiAuth: Record<string, string> = {
   'Get started': 'शुरू करें',
   '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': 'एक बार में बस 30 सेकंड की कसरत, उससे ज़्यादा कभी नहीं। दिन में 30 मिनट से थोड़ा ज़्यादा समय में घर पर पूरा वर्कआउट: हर मूव पर पूरा ध्यान दें, नतीजे जल्दी मिलेंगे।',
   'Daily home workouts': 'रोज़ाना घर पर वर्कआउट',
+  'Pinch to zoom, drag to position each photo.': 'पिंच करके ज़ूम करें, ड्रैग करके हर फ़ोटो को सही जगह पर रखें।',
+  'Share': 'शेयर करें',
+  'Could not prepare the image. Take a screenshot instead.': 'इमेज तैयार नहीं हो सकी। इसके बजाय स्क्रीनशॉट ले लें।',
 };

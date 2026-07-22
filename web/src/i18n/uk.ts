@@ -297,7 +297,6 @@ export const uk: Record<string, string> = {
   '🆚 Compare': '🆚 Порівняти',
   'Select two check-ins to compare them side by side.': 'Вибери два чек-іни, щоб порівняти їх поруч.',
   'Compare side by side →': 'Порівняти поруч →',
-  'Tap the photo to zoom.': 'Торкнись фото, щоб збільшити.',
   'No {angle} photo in this check-in.': 'У цьому чек-іні немає фото для ракурсу «{angle}».',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} у цьому циклі',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Цикл {n} завершено - цілий місяць, кожен тренувальний день.',
@@ -307,4 +306,7 @@ export const uk: Record<string, string> = {
   'Get started': 'Почати',
   '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': '30 секунд вправи за раз, і ні секундою більше. Повноцінне домашнє тренування за трохи більше ніж 30 хвилин на день: повністю зосередься на кожному русі, і результат прийде швидко.',
   'Daily home workouts': 'Щоденні домашні тренування',
+  'Pinch to zoom, drag to position each photo.': 'Змінюй масштаб двома пальцями та перетягуй кожне фото, щоб його вирівняти.',
+  'Share': 'Поділитися',
+  'Could not prepare the image. Take a screenshot instead.': 'Не вдалося підготувати зображення. Зроби знімок екрана.',
 };
