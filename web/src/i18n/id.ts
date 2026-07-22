@@ -302,9 +302,9 @@ export const id: Record<string, string> = {
   '✓ {done}/{total} this cycle': '✓ {done}/{total} siklus ini',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Siklus {n} selesai - sebulan penuh, setiap hari latihan.',
   'The new you starts today.': 'Dirimu yang baru dimulai hari ini.',
-  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': 'Hanya 30 detik kerja setiap kali, tidak pernah lebih. Satu hari rata-rata berjalan lebih dari 30 menit: beri fokus penuh pada setiap gerakan, dan hasilnya datang cepat.',
   'No equipment': 'Tanpa alat',
-  '30+ minutes a day': '30+ menit sehari',
   'Free': 'Gratis',
   'Get started': 'Mulai',
+  '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': 'Olahraga 30 detik setiap kali, tidak pernah lebih. Latihan lengkap di rumah hanya sedikit lebih dari 30 menit sehari: fokus penuh pada setiap gerakan dan hasilnya cepat terasa.',
+  'Daily home workouts': 'Olahraga harian di rumah',
 };

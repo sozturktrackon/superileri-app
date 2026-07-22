@@ -34,11 +34,11 @@ const Landing = ({ onStart }: { onStart: () => void }) => {
         <h1 className="landing-name">hop30</h1>
         <h2 className="landing-headline">{t('The new you starts today.')}</h2>
         <p className="landing-sub">
-          {t('30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.')}
+          {t('30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.')}
         </p>
         <div className="landing-chips">
           <span className="pill">{t('No equipment')}</span>
-          <span className="pill">{t('30+ minutes a day')}</span>
+          <span className="pill">{t('Daily home workouts')}</span>
           <span className="pill">{t('Free')}</span>
         </div>
         <button className="btn primary block landing-cta" onClick={onStart}>

@@ -320,9 +320,9 @@ export const viAuth: Record<string, string> = {
   '✓ {done}/{total} this cycle': '✓ {done}/{total} chu kỳ này',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Hoàn thành chu kỳ {n} - trọn một tháng, đủ mọi ngày tập.',
   'The new you starts today.': 'Phiên bản mới của bạn, bắt đầu hôm nay.',
-  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': 'Mỗi lần chỉ tập 30 giây, không bao giờ hơn. Một ngày trung bình kéo dài hơn 30 phút: dồn trọn sự tập trung vào từng động tác, kết quả sẽ đến nhanh.',
   'No equipment': 'Không cần dụng cụ',
-  '30+ minutes a day': '30+ phút mỗi ngày',
   'Free': 'Miễn phí',
   'Get started': 'Bắt đầu',
+  '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': 'Mỗi lần chỉ tập 30 giây, không bao giờ hơn. Một buổi tập đầy đủ tại nhà chỉ nhỉnh hơn 30 phút mỗi ngày: dồn toàn bộ sự tập trung vào từng động tác và kết quả sẽ đến nhanh.',
+  'Daily home workouts': 'Tập luyện tại nhà mỗi ngày',
 };

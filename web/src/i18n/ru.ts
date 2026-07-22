@@ -302,9 +302,9 @@ export const ru: Record<string, string> = {
   '✓ {done}/{total} this cycle': '✓ {done}/{total} в этом цикле',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Цикл {n} завершён - целый месяц, каждый тренировочный день.',
   'The new you starts today.': 'Твоя новая версия начинается сегодня.',
-  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': 'Всего 30 секунд работы за раз, никогда больше. День в среднем занимает 30+ минут: отдавай каждому движению всё внимание, и результат приходит быстро.',
   'No equipment': 'Без инвентаря',
-  '30+ minutes a day': '30+ минут в день',
   'Free': 'Бесплатно',
   'Get started': 'Начать',
+  '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': '30 секунд упражнения за раз, никогда больше. Полноценная домашняя тренировка за 30 с небольшим минут в день: полностью сосредоточься на каждом движении, и результат придёт быстро.',
+  'Daily home workouts': 'Ежедневные домашние тренировки',
 };

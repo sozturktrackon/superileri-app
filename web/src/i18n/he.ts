@@ -302,9 +302,9 @@ export const he: Record<string, string> = {
   '✓ {done}/{total} this cycle': '✓ {done}/{total} במחזור הזה',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 מחזור {n} הושלם - חודש שלם, כל יום אימון.',
   'The new you starts today.': 'הגרסה החדשה שלך מתחילה היום.',
-  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': 'עובדים רק 30 שניות בכל פעם, אף פעם לא יותר. יום ממוצע נמשך יותר מ-30 דקות: ריכוז מלא בכל תרגיל, והתוצאות מגיעות מהר.',
   'No equipment': 'בלי ציוד',
-  '30+ minutes a day': '30+ דקות ביום',
   'Free': 'חינם',
   'Get started': 'מתחילים',
+  '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': '30 שניות של תרגיל בכל פעם, אף פעם לא יותר. אימון ביתי מלא בקצת יותר מ-30 דקות ביום: ריכוז מלא בכל תנועה, והתוצאות מגיעות מהר.',
+  'Daily home workouts': 'אימון יומי בבית',
 };

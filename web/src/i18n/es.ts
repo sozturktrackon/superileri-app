@@ -302,9 +302,9 @@ export const es: Record<string, string> = {
   '✓ {done}/{total} this cycle': '✓ {done}/{total} este ciclo',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Ciclo {n} completado - un mes entero, cada día de entrenamiento.',
   'The new you starts today.': 'El nuevo tú empieza hoy.',
-  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': '30 segundos de esfuerzo a la vez, nunca más que eso. Un día típico supera los 30 minutos: toda tu atención en cada movimiento y los resultados llegan rápido.',
   'No equipment': 'Sin equipamiento',
-  '30+ minutes a day': '30+ minutos al día',
   'Free': 'Gratis',
   'Get started': 'Empezar',
+  '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': '30 segundos de ejercicio cada vez, nunca más que eso. Un entrenamiento completo en casa en poco más de 30 minutos al día: pon toda tu atención en cada movimiento y los resultados llegan rápido.',
+  'Daily home workouts': 'Entrenamiento diario en casa',
 };
