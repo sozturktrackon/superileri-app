@@ -301,7 +301,7 @@ export const id: Record<string, string> = {
   'No {angle} photo in this check-in.': 'Tidak ada foto {angle} di check-in ini.',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} siklus ini',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Siklus {n} selesai - sebulan penuh, setiap hari latihan.',
-  'The new you starts today.': 'Dirimu yang baru dimulai hari ini.',
+  'The new you starts today.': 'Dirimu yang baru, mulai hari ini.',
   'No equipment': 'Tanpa alat',
   'Free': 'Gratis',
   'Get started': 'Mulai',

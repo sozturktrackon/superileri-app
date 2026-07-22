@@ -305,6 +305,6 @@ export const ja: Record<string, string> = {
   'No equipment': '器具不要',
   'Free': '無料',
   'Get started': 'はじめる',
-  '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': '運動は1回30秒だけ、それ以上は続けません。1日30分ちょっとで自宅トレーニングがひと通り完了。ひとつひとつの動きに集中すれば、結果は早く表れます。',
+  '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': '運動は1回30秒だけ、それ以上は続きません。1日30分ちょっとで自宅トレーニングがひと通り完了。ひとつひとつの動きに集中すれば、結果は早く表れます。',
   'Daily home workouts': '毎日の自宅トレーニング',
 };

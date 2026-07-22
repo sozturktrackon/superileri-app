@@ -305,6 +305,6 @@ export const ru: Record<string, string> = {
   'No equipment': 'Без инвентаря',
   'Free': 'Бесплатно',
   'Get started': 'Начать',
-  '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': '30 секунд упражнения за раз, никогда больше. Полноценная домашняя тренировка за 30 с небольшим минут в день: полностью сосредоточься на каждом движении, и результат придёт быстро.',
+  '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': '30 секунд упражнения за раз, и ни секундой больше. Полноценная домашняя тренировка за 30 с небольшим минут в день: полностью сосредоточься на каждом движении, и результат придёт быстро.',
   'Daily home workouts': 'Ежедневные домашние тренировки',
 };

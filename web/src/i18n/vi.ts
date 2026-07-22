@@ -319,7 +319,7 @@ export const viAuth: Record<string, string> = {
   'No {angle} photo in this check-in.': 'Không có ảnh {angle} trong check-in này.',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} chu kỳ này',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Hoàn thành chu kỳ {n} - trọn một tháng, đủ mọi ngày tập.',
-  'The new you starts today.': 'Phiên bản mới của bạn, bắt đầu hôm nay.',
+  'The new you starts today.': 'Phiên bản mới của bạn bắt đầu từ hôm nay.',
   'No equipment': 'Không cần dụng cụ',
   'Free': 'Miễn phí',
   'Get started': 'Bắt đầu',

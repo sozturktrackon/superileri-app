@@ -320,9 +320,9 @@ export const hiAuth: Record<string, string> = {
   '✓ {done}/{total} this cycle': '✓ इस चक्र में {done}/{total}',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 चक्र {n} पूरा हुआ - पूरा एक महीना, हर ट्रेनिंग दिन।',
   'The new you starts today.': 'नए आप की शुरुआत आज से।',
-  'No equipment': 'बिना उपकरण',
+  'No equipment': 'बिना उपकरण के',
   'Free': 'मुफ़्त',
   'Get started': 'शुरू करें',
-  '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': 'एक बार में बस 30 सेकंड की कसरत, उससे ज़्यादा कभी नहीं। दिन में 30 मिनट से थोड़े ही ज़्यादा में घर पर पूरा वर्कआउट: हर मूव पर पूरा ध्यान दें और नतीजे जल्दी मिलते हैं।',
+  '30 seconds of exercise at a time, never more. A full home workout in just over 30 minutes a day: give each move your full focus and results come fast.': 'एक बार में बस 30 सेकंड की कसरत, उससे ज़्यादा कभी नहीं। दिन में 30 मिनट से थोड़ा ज़्यादा समय में घर पर पूरा वर्कआउट: हर मूव पर पूरा ध्यान दें, नतीजे जल्दी मिलेंगे।',
   'Daily home workouts': 'रोज़ाना घर पर वर्कआउट',
 };
