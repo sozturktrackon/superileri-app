@@ -93,8 +93,17 @@ export const detectLang = (): Lang => {
   } catch {
     /* ignore */
   }
-  // Product decision: no browser-language guessing. English until the user
-  // explicitly picks a language (login screen, or Progress settings).
+  // First visit with no saved choice: honor the browser language if we
+  // support it (the landing page should greet article visitors in their own
+  // language). Any explicit pick, or the profile language, wins from then on.
+  try {
+    const nav = (navigator.languages?.[0] ?? navigator.language ?? '')
+      .toLowerCase()
+      .split('-')[0] as Lang;
+    if (LANGS.some((l) => l.code === nav)) return nav;
+  } catch {
+    /* ignore */
+  }
   return 'en';
 };
 
