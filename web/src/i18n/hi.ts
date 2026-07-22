@@ -319,4 +319,10 @@ export const hiAuth: Record<string, string> = {
   'No {angle} photo in this check-in.': 'इस चेक-इन में {angle} की फ़ोटो नहीं है।',
   '✓ {done}/{total} this cycle': '✓ इस चक्र में {done}/{total}',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 चक्र {n} पूरा हुआ - पूरा एक महीना, हर ट्रेनिंग दिन।',
+  'The new you starts today.': 'नए आप की शुरुआत आज से।',
+  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': 'एक बार में सिर्फ़ 30 सेकंड मेहनत, इससे ज़्यादा कभी नहीं। एक दिन औसतन 30+ मिनट चलता है: हर मूव पर पूरा ध्यान दें, नतीजे जल्दी दिखेंगे।',
+  'No equipment': 'बिना उपकरण',
+  '30+ minutes a day': 'रोज़ 30+ मिनट',
+  'Free': 'मुफ़्त',
+  'Get started': 'शुरू करें',
 };

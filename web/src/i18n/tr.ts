@@ -301,4 +301,10 @@ export const tr: Record<string, string> = {
   'No {angle} photo in this check-in.': 'Bu check-in\'de {angle} fotoğrafı yok.',
   '✓ {done}/{total} this cycle': '✓ Bu döngüde {done}/{total}',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 {n}. döngü tamamlandı - tam bir ay, her antrenman günü.',
+  'The new you starts today.': 'Başlamak için 30 saniye yeter.',
+  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': '30 saniye çalış, 30 saniye dinlen. Günün toplamı 30 dakikanın biraz üzerinde; aklın yalnız o anki harekette olsun, sonuç hızla gelsin.',
+  'No equipment': 'Ekipman gerekmez',
+  '30+ minutes a day': 'Günde 30+ dakika',
+  'Free': 'Ücretsiz',
+  'Get started': 'Başla',
 };

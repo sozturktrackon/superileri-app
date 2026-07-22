@@ -319,4 +319,10 @@ export const tlAuth: Record<string, string> = {
   'No {angle} photo in this check-in.': 'Walang {angle} photo sa check-in na ito.',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} ngayong cycle',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Na-complete ang Cycle {n} - isang buong buwan, bawat training day.',
+  'The new you starts today.': 'Ang bagong ikaw, simula ngayon.',
+  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': '30 seconds lang ng effort bawat round, hindi lalagpas. Karaniwang umaabot ng 30+ minutes ang isang araw: full focus sa bawat move, at mabilis dumating ang resulta.',
+  'No equipment': 'Walang equipment',
+  '30+ minutes a day': '30+ minutes bawat araw',
+  'Free': 'Libre',
+  'Get started': 'Simulan na',
 };

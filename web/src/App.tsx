@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Authenticator } from '@aws-amplify/ui-react';
+import { useEffect, useState } from 'react';
+import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 import {
   Navigate,
   Route,
@@ -19,6 +19,7 @@ import AboutScreen from './screens/AboutScreen';
 import TvDisplay from './screens/TvDisplay';
 import ErrorBoundary from './components/ErrorBoundary';
 import LegalScreen from './screens/LegalScreen';
+import Landing from './screens/Landing';
 import ConsentScreen, { type ConsentResult } from './screens/ConsentScreen';
 import { TERMS_VERSION } from './content/legal';
 import { updateProfile } from './lib/api';
@@ -154,6 +155,39 @@ const AuthLegalFooter = () => {
 
 const AuthenticatedApp = () => {
   const { t } = useT();
+  const { authStatus } = useAuthenticator((ctx) => [ctx.authStatus]);
+  const [entered, setEntered] = useState(() => {
+    try {
+      return sessionStorage.getItem('hop30.entered') === '1';
+    } catch {
+      return false;
+    }
+  });
+
+  // Strangers get a five-second pitch before the login form; signed-in users
+  // (and anyone who already tapped "Get started" this session) skip it.
+  if (authStatus === 'configuring') {
+    return (
+      <div className="center-screen">
+        <div className="spinner" />
+      </div>
+    );
+  }
+  if (authStatus === 'unauthenticated' && !entered) {
+    return (
+      <Landing
+        onStart={() => {
+          try {
+            sessionStorage.setItem('hop30.entered', '1');
+          } catch {
+            /* ignore */
+          }
+          setEntered(true);
+        }}
+      />
+    );
+  }
+
   return (
   <>
   <Authenticator

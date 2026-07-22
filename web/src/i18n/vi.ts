@@ -319,4 +319,10 @@ export const viAuth: Record<string, string> = {
   'No {angle} photo in this check-in.': 'Không có ảnh {angle} trong check-in này.',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} chu kỳ này',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Hoàn thành chu kỳ {n} - trọn một tháng, đủ mọi ngày tập.',
+  'The new you starts today.': 'Phiên bản mới của bạn, bắt đầu hôm nay.',
+  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': 'Mỗi lần chỉ tập 30 giây, không bao giờ hơn. Một ngày trung bình kéo dài hơn 30 phút: dồn trọn sự tập trung vào từng động tác, kết quả sẽ đến nhanh.',
+  'No equipment': 'Không cần dụng cụ',
+  '30+ minutes a day': '30+ phút mỗi ngày',
+  'Free': 'Miễn phí',
+  'Get started': 'Bắt đầu',
 };

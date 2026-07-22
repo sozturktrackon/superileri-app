@@ -301,4 +301,10 @@ export const th: Record<string, string> = {
   'No {angle} photo in this check-in.': 'ไม่มีรูป{angle}ในเช็กอินนี้',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} ในรอบนี้',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 จบรอบที่ {n} แล้ว - เต็มหนึ่งเดือน ครบทุกวันฝึก',
+  'The new you starts today.': 'ตัวคุณคนใหม่ เริ่มต้นวันนี้',
+  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': 'ออกแรงครั้งละ 30 วินาทีเท่านั้น ไม่มีเกินกว่านั้น ทั้งวันเฉลี่ยกว่า 30 นาที ทุ่มสมาธิให้แต่ละท่าอย่างเต็มที่ แล้วผลลัพธ์จะมาไว',
+  'No equipment': 'ไม่ต้องใช้อุปกรณ์',
+  '30+ minutes a day': 'วันละ 30+ นาที',
+  'Free': 'ฟรี',
+  'Get started': 'เริ่มเลย',
 };

@@ -301,4 +301,10 @@ export const ja: Record<string, string> = {
   'No {angle} photo in this check-in.': 'このチェックインには{angle}の写真がありません。',
   '✓ {done}/{total} this cycle': '✓ 今サイクル {done}/{total}',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 サイクル{n}完了 - 丸1か月、すべてのトレーニング日をやり遂げました。',
+  'The new you starts today.': '新しい自分は、今日から。',
+  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': '頑張るのは1回30秒だけ。それ以上はありません。1日の合計は平均30分以上。ひとつひとつの動きに集中すれば、結果は早くついてきます。',
+  'No equipment': '器具不要',
+  '30+ minutes a day': '1日30分以上',
+  'Free': '無料',
+  'Get started': 'はじめる',
 };

@@ -301,4 +301,10 @@ export const it: Record<string, string> = {
   'No {angle} photo in this check-in.': 'Nessuna foto "{angle}" in questo check-in.',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} in questo ciclo',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Ciclo {n} completato - un mese intero, ogni giorno di allenamento.',
+  'The new you starts today.': 'Il nuovo te inizia oggi.',
+  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': '30 secondi di lavoro alla volta, mai di più. Una giornata media supera i 30 minuti: tutta la tua attenzione su ogni movimento e i risultati arrivano in fretta.',
+  'No equipment': 'Senza attrezzi',
+  '30+ minutes a day': '30+ minuti al giorno',
+  'Free': 'Gratis',
+  'Get started': 'Inizia',
 };

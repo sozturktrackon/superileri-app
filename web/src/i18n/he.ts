@@ -301,4 +301,10 @@ export const he: Record<string, string> = {
   'No {angle} photo in this check-in.': 'אין תמונת {angle} בצ\'ק-אין הזה.',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} במחזור הזה',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 מחזור {n} הושלם - חודש שלם, כל יום אימון.',
+  'The new you starts today.': 'הגרסה החדשה שלך מתחילה היום.',
+  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': 'עובדים רק 30 שניות בכל פעם, אף פעם לא יותר. יום ממוצע נמשך יותר מ-30 דקות: ריכוז מלא בכל תרגיל, והתוצאות מגיעות מהר.',
+  'No equipment': 'בלי ציוד',
+  '30+ minutes a day': '30+ דקות ביום',
+  'Free': 'חינם',
+  'Get started': 'מתחילים',
 };

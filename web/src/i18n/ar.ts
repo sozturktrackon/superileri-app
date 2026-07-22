@@ -319,4 +319,10 @@ export const arAuth: Record<string, string> = {
   'No {angle} photo in this check-in.': 'لا توجد صورة {angle} في هذا التسجيل.',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} في هذه الدورة',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 اكتملت الدورة {n} - شهر كامل، كل يوم تدريب.',
+  'The new you starts today.': 'نسختك الجديدة تبدأ اليوم.',
+  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': '30 ثانية من الجهد في كل مرة، لا أكثر أبدًا. اليوم يستغرق في المتوسط أكثر من 30 دقيقة: امنح كل حركة تركيزك الكامل وستأتي النتائج سريعًا.',
+  'No equipment': 'بلا معدات',
+  '30+ minutes a day': '+30 دقيقة يوميًا',
+  'Free': 'مجاني',
+  'Get started': 'ابدأ',
 };

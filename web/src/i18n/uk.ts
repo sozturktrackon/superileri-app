@@ -301,4 +301,10 @@ export const uk: Record<string, string> = {
   'No {angle} photo in this check-in.': 'У цьому чек-іні немає фото для ракурсу «{angle}».',
   '✓ {done}/{total} this cycle': '✓ {done}/{total} у цьому циклі',
   '🏆 Cycle {n} completed - a full month, every training day.': '🏆 Цикл {n} завершено - цілий місяць, кожен тренувальний день.',
+  'The new you starts today.': 'Твоя нова версія починається сьогодні.',
+  '30 seconds of work at a time, never more. Average days run 30+ minutes: give each move your full focus and results come fast.': 'Лише 30 секунд роботи за раз, ніколи більше. День у середньому триває 30+ хвилин: повністю зосередься на кожному русі, і результат прийде швидко.',
+  'No equipment': 'Без інвентарю',
+  '30+ minutes a day': '30+ хвилин на день',
+  'Free': 'Безкоштовно',
+  'Get started': 'Почати',
 };
